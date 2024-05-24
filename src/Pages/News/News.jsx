@@ -103,9 +103,7 @@ export default function News() {
         },
 
     ];
-
     const rows = totel;
-
     const CustomFontTheme = createTheme({
         typography: {
             fontSize: 25,

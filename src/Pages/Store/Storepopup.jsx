@@ -186,7 +186,7 @@ export default function Storepopup() {
         }).then(response => {
 
 
-            Setcountry(response.data.data)
+            // Setcountry(response.data.data)
         })
         if (Store.Country_id !== "") {
             axios.get(`https://api.cannabaze.com/AdminPanel/FilterStatesByCountry/${Store.Country_id}`, {
