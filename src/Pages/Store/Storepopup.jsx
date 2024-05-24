@@ -42,6 +42,20 @@ export default function Storepopup() {
     const [imageError, SetimageError] = React.useState(false)
     const [LicError, SetLicError] = React.useState(false)
     const [LicenceImage, SetLicenceImage] = React.useState('');
+    //  let count =  0 
+    //  React.useEffect(()=>{
+    //     console.log(count === 0)
+    //   if(count === 0){
+    //     window.scroll({
+    //         top: 0, // 50% of the viewport height
+    //         left: 0,
+    //         behavior: "smooth"
+    //     });
+    //     count =  1
+    //     console.log(count , "runing count ")
+    //   }
+    //   console.log(count)
+    //  })
     const {
         placesService,
         placePredictions,
@@ -349,6 +363,11 @@ export default function Storepopup() {
 
         })
     }
+
+//    console.log(Boolean(errors.License_Type) && document?.getElementById('License_Type')?.focus()  )
+
+// 
+
     function mobile(e) {
         SetStore({
             ...Store, "Stores_MobileNo": e
@@ -511,7 +530,7 @@ export default function Storepopup() {
                                     </label>
                                     <TextField
                                         disabled={true}
-                                        type="text" placeholder='Add  Store Name' id="outlined-basic" variant="outlined" name='Store_Name' value={Store.Country}
+                                        type="text" placeholder='Country' id="outlined-basic" variant="outlined" name='Store_Name' value={Store.Country}
                                         sx={{
                                             width: '100%',
                                             '& .MuiOutlinedInput-root': {
@@ -541,15 +560,12 @@ export default function Storepopup() {
                                     <label>   State: </label>
                                     <TextField
                                         disabled={true}
-                                        type="text" placeholder='Add  Store Name' id="outlined-basic" variant="outlined" name='Store_Name' value={Store.state}
+                                        type="text" placeholder='State' id="outlined-basic" variant="outlined" name='Store_Name' value={Store.state}
                                         sx={{
                                             width: '100%',
                                             '& .MuiOutlinedInput-root': {
                                                 fontSize: '16px',
 
-                                                // '& fieldset': {
-                                                //     borderColor: error.Store_Name,
-                                                // },
                                             },
                                             '& .MuiOutlinedInput-input': {
                                                 padding: ' 10px',
@@ -571,7 +587,7 @@ export default function Storepopup() {
                                     <label > City :</label>
                                     <TextField
                                         disabled={true}
-                                        type="text" placeholder='Add  Store Name' id="outlined-basic" variant="outlined" name='Store_Name' value={Store.city}
+                                        type="text" placeholder='City' id="outlined-basic" variant="outlined" name='Store_Name' value={Store.city}
                                         sx={{
                                             width: '100%',
                                             '& .MuiOutlinedInput-root': {
@@ -611,7 +627,7 @@ export default function Storepopup() {
                                                 fontSize: '16px',
 
                                                 '& fieldset': {
-                                                    borderColor: error.Store_Name,
+                                                    // borderColor: error.Store_Name,
                                                 },
                                             },
                                             '& .MuiOutlinedInput-input': {
@@ -822,6 +838,7 @@ export default function Storepopup() {
                                 <FormControl fullWidth error={Boolean(errors.License_Type)}>
                                     <Controller
                                         name="License_Type"
+                              
                                         control={control}
                                         defaultValue=""
                                         rules={{
@@ -836,7 +853,7 @@ export default function Storepopup() {
                                                         handleChange(e, e.target.value);
                                                         field.onChange(e.target.value);
                                                     }}
-                                                    displayEmpty
+                                                    
                                                     placeholder="Select Store Type"
                                                     sx={{
                                                         width: '100%',
@@ -869,6 +886,7 @@ export default function Storepopup() {
                                                             }
                                                         }
                                                     }}
+                                                    id="License_Type"
                                                 >
                                                     <MenuItem value={"None"} style={{ fontSize: 15 }}>None</MenuItem>
                                                     <MenuItem value={"Adult-Use Cultivation"} style={{ fontSize: 15 }}>Adult-Use Cultivation</MenuItem>
