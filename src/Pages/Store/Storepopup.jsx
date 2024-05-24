@@ -180,43 +180,6 @@ export default function Storepopup() {
     };
 
     React.useEffect(() => {
-
-        axios("https://api.cannabaze.com/AdminPanel/ActiveCountry/", {
-
-            headers: {
-                'Authorization': `Bearer ${token_data}`
-            }
-
-        }).then(response => {
-
-
-            Setcountry(response.data.data)
-        })
-        if (Store.Country_id !== "") {
-            axios.get(`https://api.cannabaze.com/AdminPanel/FilterStatesByCountry/${Store.Country_id}`, {
-
-                headers: {
-                    'Authorization': `Bearer ${token_data}`
-                }
-
-            }).then(response => {
-                SetState(response.data.data)
-                SetStore(Store => ({ ...Store, State_id: response.data.data[0].id }))
-            })
-        }
-
-        if (Store.State_id !== "") {
-            axios.get(`https://api.cannabaze.com/AdminPanel/FilterCitiesByStates/${Store.State_id}`, {
-
-                headers: {
-                    'Authorization': `Bearer ${token_data}`
-                }
-
-            }).then(response => {
-                SetCity(response.data.data)
-                SetStore(Store => ({ ...Store, city_id: response.data.data[0].id }))
-            })
-        }
         axios.get('https://api.cannabaze.com/AdminPanel/Get-AllVendor/', {
             headers: {
                 'Authorization': `Bearer ${token_data}`
@@ -257,7 +220,6 @@ export default function Storepopup() {
     const Submit = () => {
 
         if (image === "") {
-            console.log("treue")
             SetimageError(true)
             window.scroll({
                 top: window.innerHeight * 0.4, // 50% of the viewport height
@@ -267,7 +229,6 @@ export default function Storepopup() {
 
         }
         else if (LicenceImage === "") {
-            console.log("LicenceImage")
             SetLicError(true)
         }
         else {
@@ -401,7 +362,7 @@ export default function Storepopup() {
         <div>
             <form onSubmit={handleSubmit(Submit)}>
                 <div className='container'>
-                    <div className='login_form_feild'>
+                    <div className='login_form_feild' >
                         <div className='lg_ip_feild Add_State Add_Category center'>
                             <h2>Store</h2>
                         </div>
