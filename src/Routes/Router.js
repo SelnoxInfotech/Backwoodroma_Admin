@@ -42,6 +42,7 @@ import TotalSales from '../Pages/Tablespages/TotalSales';
 import TopLocation from '../Pages/Tablespages/TopLocation';
 import Newspop from '../Pages/News/NewsPopup';
 import Updaterolesandpermission from '../Pages/Role/RoleDetailsAndPermission/Updaterolesandpermission';
+import Storepopup from '../Pages/Store/Storepopup';
 // export default function Router() {;
 //   return (
     
@@ -246,6 +247,10 @@ const routesConfig = [
       {
         path:"/addnews",
         element:<Protected  Component={Newspop}/>
+      },
+      {
+        path:"/addstore",
+        element:<Protected  Component={Storepopup}/>
       },
       {
         path:"/updateroles",

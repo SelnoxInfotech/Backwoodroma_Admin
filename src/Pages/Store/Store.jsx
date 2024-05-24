@@ -14,6 +14,7 @@ import Createcontext from '../../Hooks/Context/Context';
 import { useSnackbar } from 'notistack';
 import Tooltip from '@mui/material/Tooltip';
 import useStyles from '../../Style';
+import { Link } from 'react-router-dom';
 export default function Store() {
     const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles()
@@ -157,23 +158,18 @@ export default function Store() {
             }
         }
     });
+
     return (
         <div className='section_card'>
             <div className='row'>
-            
-
                     <div className='col-12 Add_Category margin_top m-2 mt-5 mb-5'>
                         <div className="col"> <h2>Store  <span className='total_count'>{`(${totel?.length})`}</span>
                         </h2></div>
                         { state.Roles.AddStore &&
-                        <div className="col  popup_A" > <span> <h2><Storepopup></Storepopup> </h2></span></div>
+                        <div className="col  popup_A" > <span> <Link to={"/addstore"}><h2>Store Add</h2></Link></span></div>
                         }
-
                     </div>
-
-
                     <Box className={classes.DataTableBoxStyle} >
-
                         <div className='col-12' >
                             <Box>
                                 <ThemeProvider theme={CustomFontTheme}>
@@ -188,7 +184,6 @@ export default function Store() {
                                         pagination
                                         className={classes.DataTableStyle}
                                         disableSelectionOnClick 
-
                                         />
                                     </div>
                                 </ThemeProvider>
