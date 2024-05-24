@@ -58,23 +58,41 @@ export default function StoreEdit(props) {
     const [open, setOpen] = React.useState(false);
     const [Cities, setCities] = React.useState([]);
     const [image, SetImage] = React.useState('');
-
+    const [vendorlist, setvendorlist] = React.useState([])
     const [Store, setStore] = React.useState({
         Store_Name: props.data.Store_Name,
-        city_id: props.data.City_id,
+        city_id: props.data.City,
         Store_Type: props.data.Store_Type,
         LicenceNo: props.data.LicenceNo,
         Store_Address: props.data.Store_Address,
         Stores_Website: props.data.Stores_Website,
         Stores_MobileNo: props.data.Stores_MobileNo,
         Status: props.data.Status,
-        Store_Image: props.data.Store_Image
+        Store_Image: props.data.Store_Image,
+        created_by:props.data.created_by,
     });
     React.useEffect(() => {
         let html = convertToHTML(editorState.getCurrentContent());
         setConvertedContent(html);
 
     }, [editorState]);
+
+    React.useEffect(() => {
+        const cookies = new Cookies();
+        const token_data = cookies.get('Token_access')
+        axios.get('https://api.cannabaze.com/AdminPanel/Get-AllVendor/', {
+            headers: {
+                'Authorization': `Bearer ${token_data}`
+            }
+
+        }).then((res) => {
+            setvendorlist(res.data.data)
+        }).catch((error) => {
+            console.trace(error)
+        })
+
+
+    }, []);
 
     const handleChange = (event) => {
         const value = event.target.value;
@@ -135,6 +153,7 @@ export default function StoreEdit(props) {
     formdata.append('Stores_MobileNo', Store.Stores_MobileNo);
     formdata.append('Status', Store.Status);
     formdata.append('Stores_Description', convertedContent);
+    formdata.append('created_by', Store.created_by);
 
     const Submit = () => {
         const cookies = new Cookies();
@@ -275,9 +294,7 @@ export default function StoreEdit(props) {
                                     
                                 </div>
                                 <div className='col-sm-6 lg_ip_feild'>
-                                   
                                         <label> Store Type:  </label>
-                                
                                         <Select
                                             name='Store_Type'
                                             value={Store.Store_Type}
@@ -317,7 +334,6 @@ export default function StoreEdit(props) {
 
 
                                         </Select>
-                                
                                 </div>
                                 <div className='col-sm-6 lg_ip_feild'>
                                         <label> LicenceNo: </label>
@@ -501,6 +517,52 @@ export default function StoreEdit(props) {
                                         /></div>
                                    
                                 </div>
+                                <Select
+                                                // {...field}
+                                                value={Store.created_by || ''}
+                                                onChange={(e) => {
+                                                    handleChange(e);
+                                                }}
+                                                name='created_by'
+                                                displayEmpty
+                                                placeholder="Select Store Type"
+                                                sx={{
+                                                    width: '100%',
+                                                    '& .MuiOutlinedInput-root': {
+                                                        fontSize: '16px',
+                                                        '& fieldset': {
+                                                            // borderColor: Boolean(errors.License_Type) ? 'red' : 'default',
+                                                        },
+                                                    },
+                                                    '& .MuiOutlinedInput-input': {
+                                                        padding: '10px',
+                                                    },
+                                                    "& label": {
+                                                        fontSize: 13,
+                                                        color: "red",
+                                                        "&.Mui-focused": {
+                                                            marginLeft: 0,
+                                                            color: "red",
+                                                        }
+                                                    },
+                                                    '& .MuiSelect-select': {
+                                                        fontSize: '16px',
+                                                        color: 'rgb(133, 133, 133)',
+                                                    }
+                                                }}
+                                            >
+                                                <MenuItem disabled value="" style={{ fontSize: 15 }}>
+                                                    <em>Select</em>
+                                                </MenuItem>
+
+                                                {
+                                                    vendorlist?.map((data, index) => {
+                                                        return (
+                                                            <MenuItem key={index} value={data?.id} style={{ fontSize: 15 }}>{data?.Name} ({data?.email})</MenuItem>
+                                                        )
+                                                    })
+                                                }
+                                            </Select>
                                 <div className='col-12 center top' >
                                     <button className='topbutton' autoFocus onClick={Submit} >
                                         Save changes

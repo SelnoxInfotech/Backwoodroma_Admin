@@ -41,7 +41,6 @@ export default function Login_logout() {
     }, []);
 
     const handleChange = (event) => {
-        console.log( event.target.value)
         const { name, value } = event.target;
         setInputs((prevInputs) => ({ ...prevInputs, [name]: value }));
     };
@@ -125,8 +124,8 @@ export default function Login_logout() {
     const alertFunc = () => {
         setOpen(false);
     };
-    return (
 
+    return (
         <div>
             <div className='login_logout_center'>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -259,17 +258,13 @@ export default function Login_logout() {
                     <DialogTitle>Enter Otp</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-
                             {
                                 otpvalid === "invalid Otp" &&
-
                                 <div className='col-12 center colorotp'>
                                     <p>{otpvalid}</p>
                                 </div>
                             }
                             Please Enter Otp Which Is Sent On Your Register Email
-
-
                         </DialogContentText>
 <div className='d-flex  justify-content-center text-center'>
                                     <OtpInput
@@ -308,8 +303,6 @@ export default function Login_logout() {
                             </p>
                                 : <button className='  ' onClick={otp_send}>Verify</button>
                         }
-
-
                     </DialogActions>
                 </Dialog>
             </div>
