@@ -779,4 +779,67 @@
 }
 .listtable ul li .listitems span {
   cursor: pointer;
+}
+
+.forgotcontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+.forgotcontainer .inputBox {
+  padding: 20px 0;
+}
+.forgotcontainer .inputBox label {
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  line-height: 1.5;
+}
+.forgotcontainer .inputBox input {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.7;
+  padding: 5px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+.forgotcontainer .inputBox input:focus-visible {
+  border-color: #31B655;
+  outline: none;
+}
+.forgotcontainer p.backtologin {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+  min-height: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.forgotcontainer p.backtologin a {
+  color: #31B655;
+  text-decoration: none;
+}
+.forgotcontainer p.backtologin a:hover {
+  font-size: 15px;
+  transition: all 0.4s ease;
+}
+.forgotcontainer .inputbtn {
+  width: 120px;
+  margin-top: 20px;
+  padding: 10px;
+  border: none;
+  background-color: #31B655;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-left: auto;
 }/*# sourceMappingURL=style.css.map */

@@ -801,3 +801,79 @@ cursor: pointer;
     }
   }
 }
+.forgotcontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    .inputBox{
+      padding: 20px 0;
+       label{
+        
+          font-size: 14px;
+          font-weight: 600;
+         display: block;
+          line-height: 1.5;
+       }
+       input{
+        width: 100%;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.7;
+        padding: 5px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        &:focus-visible{
+          border-color: #31B655;
+          outline: none;
+        }
+       }
+    }
+    // .checkinputBox{
+    //   display: flex;
+    //   margin-top: 10px;
+    //   gap: 10px;
+    //   justify-content: flex-start;
+    //   align-items: center;
+    //   label{
+    //     font-size: 14px;
+    //     font-weight: 600;
+       
+    //     line-height: 1.5;
+    //   }
+    // }
+    p.backtologin{
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.4;
+      text-align: center;
+      min-height: 20;
+      display: flex;
+      justify-content: center     ;
+      align-items: center;
+      gap: 5px;
+      a{
+        color: #31B655;
+        text-decoration: none;
+        &:hover{
+          font-size: 15px;
+          transition: all .4s ease;
+        }
+      }
+    }
+    .inputbtn{  
+      width: 120px;
+      margin-top: 20px;
+      padding: 10px;
+      border: none;
+      background-color: #31B655;
+      text-align: center;
+      color: #fff;
+      font-size: 14px;
+      border-radius: 5px;
+      font-weight: 500;
+      line-height: 1.5;
+      margin-left: auto;
+    }
+}

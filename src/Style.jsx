@@ -1004,6 +1004,38 @@ const useStyles = makeStyles(theme =>(
                 "& .MuiOutlinedInput-root":{
   fontSize:'14px'
                 }
+      },
+      otppopup:{
+        "& .MuiDialog-container":{
+          "& .MuiPaper-root":{
+            "& .MuiDialogTitle-root":{
+              fontSize:'18px',
+              fontWeight:'600',
+              lineHeight:'1.5',
+              color:'#31B655',
+            },
+            "& .MuiDialogContentText-root":{
+              fontSize:"14px",
+              fontWeight:'400',
+              color:'#a7a7a7',
+             marginBottom:'20px',
+            },
+            "& .MuiDialogActions-root":{
+                 "& button":{
+                  fontSize:'14px',
+                  fontWeight:'500',
+                  lineHeight:'1.5',
+                  color:'#fff',
+                  backgroundColor:'#31B655',
+                  border:'none',
+                  padding:'5px 10px',
+                  borderRadius:'5px',
+                 }
+            }
+          }
+        }
+       
+        
       }
   }
 ))

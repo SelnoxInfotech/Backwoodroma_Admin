@@ -7,6 +7,7 @@ import { GrProductHunt } from "react-icons/gr";
 import { FiPackage } from "react-icons/fi";
 import Cookies from 'universal-cookie'
 import {  IoIosArrowUp  } from "react-icons/io";
+import { IoNewspaperSharp } from "react-icons/io5";
 import { MdContentPaste } from "react-icons/md";
 import Icon from "@material-ui/core/Icon";
 import { BiLogIn } from "react-icons/bi";
@@ -211,7 +212,7 @@ const Sidebar = ({ sidebaropen, setsidebaropen }) => {
             }}
           >
             <Icon className={classes.sidebarIcon + ""}>
-              <FaHouseUser></FaHouseUser>{" "}
+              <IoNewspaperSharp></IoNewspaperSharp>{" "}
             </Icon>
             <span className={"sidebar_text"}>News</span>
           </li>

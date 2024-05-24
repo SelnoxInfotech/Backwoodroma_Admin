@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
+import {Link} from 'react-router-dom'
 export default function Forgot() {
     const [inputs, setInputs] = useState({});
     const [show, setOpen] = useState(false);
@@ -34,6 +34,8 @@ export default function Forgot() {
                 setOpen(true)
                 loading(false)
 
+            }).catch((error)=>{
+                loading(false) 
             })
             setTimeout(alertFunc, 5 * 60 * 1000)
         } catch (error) {
@@ -80,31 +82,29 @@ export default function Forgot() {
         }
     }
     return (
-        <div className='container login_border center'>
-            <div className='row gy-3'>
-                <div className='col-12'>
-                    <p className="Login_font color">Forgot Password</p>
-                </div>
-                <div className='col  '>
+        <div className='forgotcontainer'>
+            <div className='login_form_container'>
+                    <h3 className="Login_title">Forgot Password</h3>
                     <form onSubmit={handleSubmit}>
                         <div className='form mx-sm-3 mb-2'>
-
-                            <label>Email:
-                                <input required placeholder=' Email Address' type="email" name="Email" value={inputs.Email || ""} onChange={handleChange} />
-                            </label>
-
-                            <label> Remember me :
-                                <input type="checkbox" name='checkbox' value={inputs.checkbox || ""} onChange={handleChange} required ></input>
-
-                            </label>
+                                <div className='inputBox'>
+                                    <label>Email:</label>
+                                    <input required placeholder=' Email Address' type="email" name="Email" value={inputs.Email || ""} onChange={handleChange} />
+                                </div>
+                                {/* <div className='checkinputBox'>
+                                       <label className='d-inline flex-1'> Remember me :  </label>
+                                        <input type="checkbox" name='checkbox' value={inputs.checkbox || ""} onChange={handleChange} required ></input>
+                                </div> */}
+                                <p className='backtologin'>Go Back to <Link to={'/login'}>Login</Link> </p>
                             <div>
+                                <div className='text-center'>
                                 {isLoggedIn ? <>
-                                    <input className='color' id='Submit_but' type="submit" />
+                                    <input className='inputbtn' id='Submit_but' type="submit" />
                                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     <span className="visually-hidden">Loading...</span>
-                                </> : <input className='color' id='Submit_but' type="submit" />}
+                                </> : <input className='inputbtn' id='Submit_but' type="submit" />}
 
-
+                                </div>
                             </div>
                             <Dialog open={show} onClose={handleClose}>
                                 <DialogTitle>Enter Otp</DialogTitle>
@@ -134,9 +134,6 @@ export default function Forgot() {
                             </Dialog>
                         </div>
                     </form>
-
-                </div>
-
             </div>
 
         </div>

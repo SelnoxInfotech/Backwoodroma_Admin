@@ -8,9 +8,7 @@
 .required {
   color: red;
 }
-.color {
-  color: #31B665;
-}
+
 navbar *,
 *::after,
 *::before {
@@ -53,9 +51,7 @@ ul li path {
   width: 98%;
   margin: 0 auto;
 }
-.Login_font {
-  font-size: 30px;
-}
+
 .louout {
   color: white;
   font-size: 15px;

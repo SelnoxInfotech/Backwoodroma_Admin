@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import OtpInput from 'react-otp-input';
 import Cookies from 'universal-cookie';
 import { Link, useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
@@ -21,6 +22,7 @@ export default function Login_logout() {
     const navigate = useNavigate();
     const cookies = new Cookies();
     const { register, handleSubmit, errors, reset } = useForm();
+    const [invalide, Setinvalid] = React.useState(false)
     const [otpvalid, setotpvalid] = useState("");
     const [inputs, setInputs] = useState({ username: '', Email: '', password: '' });
     const [show, setOpen] = useState(false);
@@ -31,8 +33,6 @@ export default function Login_logout() {
         showPassword: false,
     });
     const classes = useStyles();
-
-    // Load saved username and email from cookies if they exist
     useEffect(() => {
         const savedUsername = cookies.get('username') || '';
         const savedEmail = cookies.get('email') || '';
@@ -47,8 +47,8 @@ export default function Login_logout() {
     };
 
     const handleotp = (event) => {
-        const { name, value } = event.target;
-        setotp((prevOtp) => ({ ...prevOtp, [name]: value }));
+        setotp(event);
+        Setinvalid(false)
     };
 
     const onSubmit = (data) => {
@@ -85,12 +85,14 @@ export default function Login_logout() {
     };
 
     const otp_send = () => {
+      
         setOpen(false);
-        axios.post("https://api.cannabaze.com/AdminPanel/VerifyOtp/", { email: inputs.Email, OTP: OTP.OTP })
+        axios.post("https://api.cannabaze.com/AdminPanel/VerifyOtp/", { email: inputs.Email, OTP: OTP })
         .then((response) => {
             if (response.data.data === "invalid Otp") {
                 setOpen(true);
                 setotpvalid(response.data.data);
+                Setinvalid(true)
             } else {
                 if (Boolean(response.data.permission.length !== 0) || response?.data?.is_superuser) {
                     if (!response.data.is_superuser && Boolean(response.data.permission.length === 0)) {
@@ -107,6 +109,8 @@ export default function Login_logout() {
             }
         }).catch((error)=>{
             window.alert("somthing went wrong")
+            Setinvalid(true)
+
         });
     };
 
@@ -125,7 +129,6 @@ export default function Login_logout() {
 
         <div>
             <div className='login_logout_center'>
-
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="login_form_container">
 
@@ -249,11 +252,10 @@ export default function Login_logout() {
                         </div>
                     </div>
                 </form>
-
             </div>
             <div>
 
-                <Dialog open={show} onClose={handleClose} disableEscapeKeyDown>
+                <Dialog open={true} onClose={handleClose} disableEscapeKeyDown className={classes.otppopup}>
                     <DialogTitle>Enter Otp</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -269,17 +271,42 @@ export default function Login_logout() {
 
 
                         </DialogContentText>
+<div className='d-flex  justify-content-center text-center'>
+                                    <OtpInput
+                                    shouldAutoFocus
+                                    value={OTP}
+                                    onChange={handleotp}
+                                    numInputs={4}
+                                    renderSeparator={<span> </span>}
+                                    autofocus={true}
+                                    isInputNum={true}
+                                    hasErrored={true}
+                                    renderInput={(props) => <input {...props}  />}
+                                    inputStyle={{
+                                                width: "30px",
+                                                marginBottom: "10px",
+                                                height: "30px",
+                                                margin:'0 3px',
+                                                backgroundColor: "transparent",
+                                                outline: "none",
+                                                borderColor:invalide ? 'red' : "#31B655",
+                                            }}  
+                                />
+                                </div>
+<div className='d-flex  justify-content-center text-center'>
 
-
-                        <input className='otp' placeholder='Enter Otp' type="number" id="otp" name="OTP" min="4" max="4" value={OTP.OTP || ""} onChange={handleotp} />
+                                {
+                                    invalide && <span style={{ color: "red" }}>Invalid OTP</span>
+                                                            }
+                                                            </div>
                     </DialogContent>
                     <DialogActions>
                         {
                             otpvalid === "invalid Otp" ? <p>
-                                <button className='topbutton size ' onClick={handleSubmit}>resend</button>
-                                <button className='topbutton  size' onClick={otp_send}>Verify</button>
+                                <button className='  ' onClick={handleSubmit}>resend</button>
+                                <button className='  ' onClick={otp_send}>Verify</button>
                             </p>
-                                : <button className='topbutton  size' onClick={otp_send}>Verify</button>
+                                : <button className='  ' onClick={otp_send}>Verify</button>
                         }
 
 

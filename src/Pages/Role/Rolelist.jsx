@@ -9,6 +9,7 @@ import Unsuccesspopup from '../../Components/Component/Successfullypopup'
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import Createcontext from '../../Hooks/Context/Context'
+import { SlSocialDropbox } from "react-icons/sl";
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 import useStyles from '../../Style';
@@ -133,8 +134,7 @@ const Rolelist = () => {
         {
             field: 'Delete', headerName: 'Delete', editable: false, sortable: false, flex: 1, headerClassName: 'super-app-theme--header', headerAlign: 'center', align: 'center',
             renderCell: (params) => {
-                // // console.log(params.row.id)
-                // setisdDelete(() => params.row.id)
+               
                 return <span onClick={() => { setdeleteoprn(true); setisdDelete(() => params.row.id) }} ><MdOutlineDeleteOutline size={22} color='red' />
                 </span>
             }
@@ -148,7 +148,7 @@ const Rolelist = () => {
             <div className='section_card'>
                 <div className='row'>
                     <div className=' Add_Category  my-4 d-flex align-items-center justify-content-between px-4'>
-                        <h2 className='pagetitle'>Roles </h2>
+                        <h2 className='pagetitle'> <SlSocialDropbox color='#31B655' size={25}/> Roles </h2>
                         {/* <button className='customiconbtn' onClick={()=>navigate('/addrole' , {state:{ type:'add'}})} >Add Roles</button> */}
                         <Headerbutton onClick={() => navigate('/addrole', { state: { type: 'add' } })}>Add Roles</Headerbutton>
                     </div>
