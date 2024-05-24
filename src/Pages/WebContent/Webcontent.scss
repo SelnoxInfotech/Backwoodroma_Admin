@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 .webcontentform{
     width: 800px;
     margin: 0 auto;
@@ -10,6 +12,33 @@
         line-height: 1.5;
         color: #757575;
     }
+    .locationcontainerstyle{
+        .stdropdown-container{
+            border: none;
+            padding: 0;
+            .stsearch-box{
+                padding: 0;
+                .locationinputstyle{
+                    width: 100%;
+                padding: 10px;
+                    font-size: 14px;
+                    font-weight: 400;
+                    font-family: "Roboto", sans-serif;
+                    line-height: normal;
+                    border-radius: 4px;
+                    &:focus-visible{
+                      border-color: #31B655;
+                      outline-color: #31B655;
+                    }
+                }
+            }
+        }
+        
+        .stdropdown-tools{
+            display: none;
+        }
+    }
+   
     .faqs{
        
         button.addfaqbtn{
@@ -28,7 +57,7 @@
             position: relative;
         
             input{
-                font-size: 16px;
+                font-size: 14px;
                 padding: 5px; 
                 width: 100%;
                 border-radius: 4px;
@@ -39,7 +68,7 @@
                 }
             }
             textarea{
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: 400;
                 line-height: 1.4;
                 resize: none;
@@ -59,7 +88,84 @@
     }
 }
 
-
+.faqsubmitbtn , .faqcancelbtn{
+    width: 120px;
+    padding: 10px;
+    text-align: center;
+    background-color: #31B655;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 4px;
+    border: none;
+}
+.faqcancelbtn{
+    background-color: #790000;
+}
 .MuiPopper-root{
     display: none !important;
+}
+.faqtoggle{
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        color: #757575;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+            &:checked {
+                & ~ .checkmark {
+                    background-color: #31B655;
+                    &:after {
+                        display: block;
+                    }
+                }
+            }
+        }
+        &:hover {
+            input {
+                & ~ .checkmark {
+                    background-color: #31b65493;
+                }
+            }
+        }
+        .checkmark {
+            &:after {
+                left: 25%;
+                top: 50%;
+                width: 8px;
+                height: 15px;
+                border: solid white;
+                border-width: 0 3px 3px 0;
+                -webkit-transform: rotate(45deg)  translate(-50%, -50%);
+                -ms-transform: rotate(45deg)  translate(-50%, -50%);
+                transform: rotate(45deg)  translate(-50%, -50%);
+            }
+        }
+    }
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        &:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+    }
 }

@@ -10,7 +10,7 @@ const Unsuccesspopup = ({setsucsesopen ,link='' , popupset=''}) => {
         setsucsesopen(false)
        
         if(link !== ''){
-            navigate(link)
+            // navigate(link)
         }else if(popupset !== ''){
             popupset(false)  
         }

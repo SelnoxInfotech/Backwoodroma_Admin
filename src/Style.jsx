@@ -961,7 +961,7 @@ const useStyles = makeStyles(theme =>(
       },
       faqtextfeild:{
           width:'100%', 
-          fontSize:'16px',
+          fontSize:'14px',
           marginBottom:'20px !important',
           "& .MuiOutlinedInput-root": {
             fontSize:'15px',
@@ -971,6 +971,9 @@ const useStyles = makeStyles(theme =>(
             '&:hover fieldset': {
               borderColor: '#31B665', // - Set the Input border when parent has :hover
             },
+          },
+          "& .MuiOutlinedInput-input":{
+                padding:'10px',
           }
       },
       faqselectBox:{
@@ -979,6 +982,9 @@ const useStyles = makeStyles(theme =>(
               "& .MuiOutlinedInput-notchedOutline":{
                   borderColor:'#31B655 !important'
               }, 
+         },
+         "& .MuiOutlinedInput-input":{
+            padding:'10px'
          },
          '& #my-simple-select': {
           fontSize: '2rem',

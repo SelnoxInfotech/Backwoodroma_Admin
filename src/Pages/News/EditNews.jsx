@@ -577,7 +577,13 @@ export default function NewsEdit(props) {
                       sx={{
                         "& .rdw-editor-toolbar": {
                           width: "100%",
+                         
                         },
+                        "& .rdw-editor-wrapper": {
+                          height: "240px",
+                          // width: "991px",
+                          marginBottom:'70px',
+                         },
                         ".rdw-editor-main": {
                           background: "",
                           border: "1px solid #c4c4c4",

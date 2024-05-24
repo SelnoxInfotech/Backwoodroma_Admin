@@ -86,7 +86,7 @@ export default function Login_logout() {
 
     const otp_send = () => {
         setOpen(false);
-        axios.post("https://api.cannabaze.com/AdminPanel/VerifyOtp/", { email: inputs.Email, OTP: OTP })
+        axios.post("https://api.cannabaze.com/AdminPanel/VerifyOtp/", { email: inputs.Email, OTP: OTP.OTP })
         .then((response) => {
             if (response.data.data === "invalid Otp") {
                 setOpen(true);
@@ -105,6 +105,8 @@ export default function Login_logout() {
                     window.alert("You are not an authorized user");
                 }
             }
+        }).catch((error)=>{
+            window.alert("somthing went wrong")
         });
     };
 
