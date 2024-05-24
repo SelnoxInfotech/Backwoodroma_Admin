@@ -254,7 +254,7 @@ export default function Login_logout() {
             </div>
             <div>
 
-                <Dialog open={true} onClose={handleClose} disableEscapeKeyDown className={classes.otppopup}>
+                <Dialog open={show} onClose={handleClose} disableEscapeKeyDown className={classes.otppopup}>
                     <DialogTitle>Enter Otp</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
