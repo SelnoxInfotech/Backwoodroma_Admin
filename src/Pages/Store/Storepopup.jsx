@@ -30,6 +30,7 @@ import { FormHelperText } from "@material-ui/core";
 import MuiPhoneNumber from 'material-ui-phone-number';
 export default function Storepopup() {
     const { register, handleSubmit, errors, control, setError } = useForm();
+    const { dispatch} = useContext(Createcontext)
     const Licence = useRef(null);
     const cookies = new Cookies();
     const inputRef = useRef(null);
@@ -257,7 +258,6 @@ export default function Storepopup() {
                 formdata,
                 config
             ).then((response) => {
-                setOpen(false);
                 dispatch({ type: 'api', api: true })
             }).catch(
                 function (error) {
@@ -353,10 +353,6 @@ export default function Storepopup() {
         SetStore({
             ...Store, "Stores_MobileNo": e
         });
-        // SetDuplicateError(prevState => ({
-        //     ...prevState,
-        //     "Stores_MobileNo": ""
-        // }))
     }
     return (
         <div>
