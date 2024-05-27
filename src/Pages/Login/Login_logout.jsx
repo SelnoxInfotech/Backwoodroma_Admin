@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState, useContext,useEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 import IconButton from '@mui/material/IconButton';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -12,21 +12,29 @@ import { Link, useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import { AiFillEye } from 'react-icons/ai';
 import { AiFillEyeInvisible } from "react-icons/ai"
+import Aos from "aos";
+import "aos/dist/aos.css";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import useStyles from '../../Style'
-import Createcontext from "../../Hooks/Context/Context"
 import { LoadingButton } from '@mui/lab';
+import { MdVerified } from "react-icons/md";
 import { useForm, Controller } from "react-hook-form";
-
+Aos.init({
+    duration: 1200
+  });
 export default function Login_logout() {
     const navigate = useNavigate();
     const cookies = new Cookies();
-    const { register, handleSubmit, errors, reset } = useForm();
-    const [invalide, Setinvalid] = React.useState(false)
+    const { register, handleSubmit, errors, reset , control ,clearErrors } = useForm();
+    const [invalide, Setinvalid] = React.useState(false);
+    const [loginsucces, setloginsucces] = React.useState(false);
     const [otpvalid, setotpvalid] = useState("");
     const [inputs, setInputs] = useState({ username: '', Email: '', password: '' });
     const [show, setOpen] = useState(false);
     const [isLoggedIn, setLoading] = useState(false);
+    React.useEffect(function () {
+        Aos.init({ duration: 500 });
+      }, []);
     const [OTP, setotp] = useState("");
     const [values, setValues] = React.useState({
         password: "",
@@ -39,14 +47,19 @@ export default function Login_logout() {
         const rememberMe = cookies.get('rememberMe') || false;
         setInputs({ username: savedUsername, Email: savedEmail, password: '' , rememberMe: rememberMe });
     }, []);
-
+    // React.useEffect(function () {
+    //     Aos.init({ duration: 5000 });
+    //   }, [loginsucces]);
     const handleChange = (event) => {
         const { name, value } = event.target;
         setInputs((prevInputs) => ({ ...prevInputs, [name]: value }));
     };
 
     const handleotp = (event) => {
+       
         setotp(event);
+        // setotp(() => event);
+        clearErrors("otp")
         Setinvalid(false)
     };
 
@@ -59,7 +72,7 @@ export default function Login_logout() {
         })
         .then((response) => {
             setLoading(false);
-            alert(response.data.message);
+            
             setOpen(true);
 
             if (Boolean(inputs.rememberMe)) {
@@ -112,7 +125,11 @@ export default function Login_logout() {
 
         });
     };
-
+    const handleMeetingCreateDialogClose = (event, reason) => {
+        if (reason && reason === "backdropClick")   return; 
+        // setFormData(formInitial);
+        setOpen(false);
+};
     const handleClose = () => {
         setOpen(false);
     };
@@ -124,28 +141,62 @@ export default function Login_logout() {
     const alertFunc = () => {
         setOpen(false);
     };
+    const onOtpSubmit= (data)=>{
+      
+      setOpen(false);
+      axios.post("https://api.cannabaze.com/AdminPanel/VerifyOtp/", { email: data.Email, OTP: data.otp })
+      .then((response) => {
+          if (response.data.data === "invalid Otp") {
+              setOpen(true);
+              setotpvalid(response.data.data);
+              Setinvalid(true)
+          } else {
+              if (Boolean(response.data.permission.length !== 0) || response?.data?.is_superuser) {
+                  if (!response.data.is_superuser && Boolean(response.data.permission.length === 0)) {
+                      setloginsucces(true)
+                      setTimeout(()=>{
+                         navigate("/*");
+                        setloginsucces(false)
+
+                      }, 1000)
+                  } else {
+                        let date = new Date();
+                        date.setTime(date.getTime() + (60 * 60 * 8000));
+                        cookies.set('Token_access', response.data.tokens.access, { expires: date });
+                        setTimeout(()=>{
+                            navigate("/");
+                        setloginsucces(false)
+
+                        }, 1000)
+                        setloginsucces(true)
+
+                  }
+              } else {
+                  window.alert("You are not an authorized user");
+              }
+          }
+      }).catch((error)=>{
+        setOpen(true);
+        // setotpvalid(response.data.data);
+        Setinvalid(true)
+      });
+    }
 
     return (
         <div>
             <div className='login_logout_center'>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="login_form_container">
-
                         <p className="Login_title">ADMIN PANEL</p>
                         <p className='login_description'> Login to access your account</p>
-
                         <div className='login_form_feild'>
-
                             <div className='lg_ip_feild'>
-
-
                                 <label htmlFor='name'>
                                     Name<span className='required '>*</span>:
                                 </label>
 
                                 <TextField placeholder='User Name'
                                     fullWidth
-                                    // id="name"
                                     type='text'
                                     variant="outlined"
                                     name="username"
@@ -242,7 +293,6 @@ export default function Login_logout() {
 
                                 <LoadingButton style={{  backgroundColor: isLoggedIn && '#fff'}}
                                     loading={isLoggedIn}
-                                    // loadingPosition="start"
                                     type='submit'
                                 > Submit </LoadingButton>
 
@@ -251,11 +301,13 @@ export default function Login_logout() {
                         </div>
                     </div>
                 </form>
+                {/* <button onClick={()=>{setloginsucces(!loginsucces)}}>click me</button> */}
             </div>
             <div>
 
-                <Dialog open={show} onClose={handleClose} disableEscapeKeyDown className={classes.otppopup}>
-                    <DialogTitle>Enter Otp</DialogTitle>
+                <Dialog open={show} onClose={handleMeetingCreateDialogClose} disableBackdropClick  disableEscapeKeyDown className={classes.otppopup}>
+                    <DialogTitle>Enter OTP</DialogTitle>
+                    <form  onSubmit={handleSubmit(onOtpSubmit)}>
                     <DialogContent>
                         <DialogContentText>
                             {
@@ -264,49 +316,57 @@ export default function Login_logout() {
                                     <p>{otpvalid}</p>
                                 </div>
                             }
-                            Please Enter Otp Which Is Sent On Your Register Email
+                            Please Enter OTP Which Is Sent On Your Register Email
                         </DialogContentText>
-<div className='d-flex  justify-content-center text-center'>
-                                    <OtpInput
-                                    shouldAutoFocus
-                                    value={OTP}
-                                    onChange={handleotp}
-                                    numInputs={4}
-                                    renderSeparator={<span> </span>}
-                                    autofocus={true}
-                                    isInputNum={true}
-                                    hasErrored={true}
-                                    renderInput={(props) => <input {...props}  />}
-                                    inputStyle={{
-                                                width: "30px",
-                                                marginBottom: "10px",
-                                                height: "30px",
-                                                margin:'0 3px',
-                                                backgroundColor: "transparent",
-                                                outline: "none",
-                                                borderColor:invalide ? 'red' : "#31B655",
-                                            }}  
-                                />
-                                </div>
-<div className='d-flex  justify-content-center text-center'>
-
-                                {
-                                    invalide && <span style={{ color: "red" }}>Invalid OTP</span>
-                                                            }
-                                                            </div>
+                     
+                                    <div className='d-flex  justify-content-center text-center'>
+                                    <Controller
+                                        render={( field ) => (
+                                            <OtpInput   shouldAutoFocus    value={field.value}  onChange={(e)=>{handleotp(e) ; field.onChange(e)}}    numInputs={4} renderSeparator={<span> </span>}    autofocus={true}    isInputNum={true}  hasErrored={true}  renderInput={(props) => <input {...props} type='number' className='otpinputboxstyle'  />}
+                                                                               inputStyle={{
+                                                                                    width: "30px",
+                                                                                    marginBottom: "10px",
+                                                                                    height: "30px",
+                                                                                    margin:'0 3px',
+                                                                                    backgroundColor: "transparent",
+                                                                                    outline: "none",
+                                                                                    borderColor:(errors.otp || invalide ) ? 'red' : "#31B655",
+                                                                                }}  
+                                                                    />
+                                                                )}
+                                                                control={control}
+                                                                name="otp"  
+                                                               value={OTP}
+                                                                rules={{ required: 'Please enter OTP' }}
+                                                              />
+                                    </div>
+                                    <div className='d-flex  justify-content-center text-center'>
+                                        { invalide && <span style={{ color: "red" }}>Invalid OTP</span>   }
+                                        {
+                                            errors.otp && <span style={{ color: "red" }}> {errors.otp.message}</span>  
+                                        }
+                                    </div>
                     </DialogContent>
                     <DialogActions>
                         {
                             otpvalid === "invalid Otp" ? <p>
-                                <button className='  ' onClick={handleSubmit}>resend</button>
-                                <button className='  ' onClick={otp_send}>Verify</button>
+                                <button className=' ' onClick={handleSubmit}>resend</button>
+                                <button className=' ' onClick={otp_send}>Verify</button>
                             </p>
-                                : <button className='  ' onClick={otp_send}>Verify</button>
+                                : <button className='  ' type='submit' >Verify</button>
                         }
                     </DialogActions>
+                    </form>
                 </Dialog>
             </div>
-
+              { loginsucces &&  <div className='verifiedopt'>
+                    <div className='verifiedotpcontent'  data-aos={'zoom-in'}>
+                        <span> <MdVerified  size={52} color='#31B655' /> </span>
+                        <h3>Successfully</h3>
+                        <p>Your OTP has been Matched successfully</p>
+                        <button onClick={()=>{setloginsucces(false) ;navigate("/"); }}>Continue</button>
+                    </div>
+                </div>}
         </div>
     )
 }

@@ -4,6 +4,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import axios from "axios";
+import { SlSocialDropbox } from "react-icons/sl";
 import Cookies from 'universal-cookie';
 import Storepopup from "./Storepopup"
 import StoreEdit from './StoreEdit';
@@ -15,6 +16,7 @@ import { useSnackbar } from 'notistack';
 import Tooltip from '@mui/material/Tooltip';
 import useStyles from '../../Style';
 import { Link } from 'react-router-dom';
+import { SectionCard } from '../../molecules/SectionCard/Index';
 export default function Store() {
     const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles()
@@ -160,14 +162,11 @@ export default function Store() {
     });
 
     return (
-        <div className='section_card'>
+        <SectionCard>
             <div className='row'>
-                    <div className='col-12 Add_Category margin_top m-2 mt-5 mb-5'>
-                        <div className="col"> <h2>Store  <span className='total_count'>{`(${totel?.length})`}</span>
-                        </h2></div>
-                        { state.Roles.AddStore &&
-                        <div className="col  popup_A" > <span> <Link to={"/addstore"}><h2>Store Add</h2></Link></span></div>
-                        }
+                   <div className='col-12  mb-3 d-flex justify-content-between'>
+                        <h2>  <SlSocialDropbox color='#31B655' size={25}/> Store  <span className='total_count'>{`(${totel?.length})`}</span> </h2>
+                        { state.Roles.AddStore &&  <span> <Link to={"/addstore"}><h2 className=''>Store Add</h2></Link></span>  }
                     </div>
                     <Box className={classes.DataTableBoxStyle} >
                         <div className='col-12' >
@@ -192,6 +191,6 @@ export default function Store() {
 
                     </Box>
             </div>
-        </div>
+        </SectionCard>
     );
 }

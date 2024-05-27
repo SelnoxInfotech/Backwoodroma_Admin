@@ -15,6 +15,7 @@ import TexDelete from './TaxDelete';
 import { useSnackbar } from 'notistack';
 import Tooltip from '@mui/material/Tooltip';
 import useStyles from '../../Style';
+import { SectionCard } from '../../molecules/SectionCard/Index';
 
 export default function Tax() {
     const { enqueueSnackbar } = useSnackbar();
@@ -151,9 +152,9 @@ export default function Tax() {
     const rows = totel
     return (
       
-            <div className='section_card'>
+            <SectionCard>
               
-                    <div className='col-12 Add_Category d-flex justify-content-between align-items-center  p-5 mt-2'>
+                    <div className='col-12  mb-3'>
                         <h2 className='pagetitle'> Tax </h2>
                          <h2> <Taxpop></Taxpop> </h2>
                     </div>
@@ -180,7 +181,7 @@ export default function Tax() {
                         </ThemeProvider>
                         </Box>
                     </div>
-                </div>
+                </SectionCard>
 
 
     )

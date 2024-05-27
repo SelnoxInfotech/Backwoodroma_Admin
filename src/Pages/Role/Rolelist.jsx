@@ -15,6 +15,7 @@ import axios from 'axios';
 import useStyles from '../../Style';
 import Deletepopup from '../../Components/Component/Deletepopup'
 import { Headerbutton } from '../../molecules/Button/index'
+import { SectionCard } from '../../molecules/SectionCard/Index';
 const Rolelist = () => {
     let navigate = useNavigate();
     const [pageSize, setPageSize] = useState(5);
@@ -145,9 +146,9 @@ const Rolelist = () => {
     //  const Token_access = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM2NTcwOTQ1LCJpYXQiOjE3MDUwMzQ5NDUsImp0aSI6IjkzMTFlYTFkYTViNjRlOTk4NGY2YjUxN2M2MzI5NGM4IiwidXNlcl9pZCI6MX0.dZlMMBW7B93MWh1xSRklg1c7FRL7tKQttM0J9RjZKq0'
     return (
         <React.Fragment>
-            <div className='section_card'>
+            <SectionCard>
                 <div className='row'>
-                    <div className=' Add_Category  my-4 d-flex align-items-center justify-content-between px-4'>
+                    <div className=' col mb-3   d-flex align-items-center justify-content-between '>
                         <h2 className='pagetitle'> <SlSocialDropbox color='#31B655' size={25}/> Roles </h2>
                         {/* <button className='customiconbtn' onClick={()=>navigate('/addrole' , {state:{ type:'add'}})} >Add Roles</button> */}
                         <Headerbutton onClick={() => navigate('/addrole', { state: { type: 'add' } })}>Add Roles</Headerbutton>
@@ -175,7 +176,7 @@ const Rolelist = () => {
                 </div>
 
 
-            </div>
+            </SectionCard>
             {sucsesopen && <Successfullypopup setsucsesopen={setsucsesopen} link={'/Roles'} />}
             {unsucsesopen && <Unsuccesspopup setsucsesopen={setunsucsesopen} link={'/Roles'} />}
             {deleteoptn && <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete} />}

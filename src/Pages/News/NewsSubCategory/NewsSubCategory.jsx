@@ -13,6 +13,7 @@ import Createcontext from "../../../Hooks/Context/Context"
 import DeleteSubCategory from "./DeleteSubCategory"
 import AddNewsCategory from "./AddSubCategory"
 import useStyles from '../../../Style'
+import { SectionCard } from '../../../molecules/SectionCard/Index';
 export default function NewsSubCategory() {
     const classes = useStyles()
     const { state} = useContext(Createcontext)
@@ -85,7 +86,7 @@ export default function NewsSubCategory() {
  console.log(totel)
 return (
         <div>
-                <div className='section_card'>
+                <SectionCard>
 
                 
             
@@ -114,7 +115,7 @@ return (
                                 </ThemeProvider>
                             </Box>
                         </div> */}
-                </div>
+                </SectionCard>
                 <div className="col-12">
                     <div className="listtable">
                         <ul>

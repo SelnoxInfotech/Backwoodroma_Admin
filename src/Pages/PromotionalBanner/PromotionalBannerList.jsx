@@ -73,7 +73,7 @@ const PromotionalBannerList = () => {
                            </div>
                        </div>
                         <SectionCard className="row section_card  ">
-                            <div className="d-flex justify-content-between px-4 align-items-center my-5" >
+                            <div className="d-flex justify-content-between align-items-center mb-3" >
                                 <h2 className='d-flex align-items-center pagetitle'> <SlSocialDropbox color='#31B655' size={25}/>{detailstype==='Promotional' ? "Promotional Banner" : "Offer Banner"}</h2>
                             
                                 {   state.Roles.AddBanners    &&

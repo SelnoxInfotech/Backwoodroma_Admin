@@ -103,7 +103,7 @@ const WebContent = () => {
     console.log(faqscount)
   return (
     <SectionCard >
-        <div className='col-12 Add_Category m-2  mb-3 px-4'>
+        <div className='col-12  mb-3'>
             <h2 className='pagetitle '> <SlSocialDropbox color='#31B655' size={25}/>  Add Content  </h2>
         
         </div>

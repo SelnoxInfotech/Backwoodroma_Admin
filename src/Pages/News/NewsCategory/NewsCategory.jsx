@@ -10,6 +10,7 @@ import Deletepopup from '../../../Components/Component/Deletepopup';
 import Successfullypopup from '../../../Components/Component/Successfullypopup';
 import NewsCategoryEditbox from './EditNewsCategory'
 import Unsuccesspopup from '../../../Components/Component/Unsuccesspopup';
+import { SectionCard } from "../../../molecules/SectionCard/Index";
 export default function NewsCategory(props) {
   const [deleteoptn , setdeleteoprn] = React.useState(false)
   const [isdelete , setsisDelete] = React.useState(false)
@@ -62,14 +63,14 @@ export default function NewsCategory(props) {
   }, [state.api]);
   return (
     <div>
-        <div className="section_card">
+        <SectionCard  >
         <div className="col-12 p-3 d-flex justify-content-between align-items-center">
           <h2 className="pagetitle">
             <SlSocialDropbox color="#31B655" size={25} /> News Category
           </h2>
           <span>{<AddNewsCategory></AddNewsCategory>}</span>
         </div>
-        </div>
+        </SectionCard>
         <div className="col-12">
           <div className="listtable">
             <ul>

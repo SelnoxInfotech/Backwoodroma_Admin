@@ -14,8 +14,10 @@ import Successfullypopup from '../../Components/Component/Successfullypopup'
 import Unsuccesspopup from '../../Components/Component/Unsuccesspopup'
 import Deletepopup from '../../Components/Component/Deletepopup'
 import { LuEye } from "react-icons/lu";
+import { SlSocialDropbox } from "react-icons/sl";
 import useStyles from '../../Style';
 import {Link} from 'react-router-dom'
+import { SectionCard } from '../../molecules/SectionCard/Index';
 const CustomFontTheme = createTheme({
     typography: {
         fontSize: 25
@@ -259,8 +261,10 @@ const Vendorlist = () => {
         )
     }
   return (
-    <div className='section_card'>
-        <h2 className='pagetitle p-5'>Vendor List</h2>
+    <SectionCard>
+         <div className='col-12  mb-3'>
+           <h2 className='pagetitle'> <SlSocialDropbox color='#31B655' size={25}/>  Vendor List</h2>
+         </div>
         <div className='row'>
                             <Box
                                className={classes.DataTableBoxStyle}
@@ -299,7 +303,7 @@ const Vendorlist = () => {
         {   sucsesopen && <Successfullypopup  setsucsesopen={setsucsesopen} link={'/Roles'}/>}
      {   unsucsesopen && <Unsuccesspopup setsucsesopen={setunsucsesopen} link={'/Roles'}/>}
      {   deleteoptn &&  <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete} />}
-    </div>
+    </SectionCard>
   )
 }
 

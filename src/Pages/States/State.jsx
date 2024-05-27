@@ -154,9 +154,8 @@ export default function State() {
     ];
     const rows = totel
     return (
-       
                 <SectionCard>
-                    <div className='col-12  p-4 d-flex justify-content-between align-items-center'>
+                    <div className='col-12  mb-3 d-flex justify-content-between align-items-center'>
                           <h2 className='pagetitle'> States </h2>
                           <span > <h2><StatePopUp></StatePopUp></h2></span>
                     </div>

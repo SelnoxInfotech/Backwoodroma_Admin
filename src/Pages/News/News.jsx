@@ -65,9 +65,8 @@ export default function News() {
         },
         { field: 'Status', headerName: 'Views', editable: false,  minWidth: 80, flex: 1,sortable:false, headerClassName: 'super-app-theme--header' ,  renderCell: (params) => (
             <span>
-               <a target='blank' href={`https://www.weedx.io/cannabis-news/${modifystr(params.row.Title)}/${params.row.id}`}> <FiEye color='#31B655' size={22} /></a>
+               <a target='blank' href={`https://www.weedx.io/${ params.row.category_name === "BLOGS" ? "blogs":'cannabis-news'}/${modifystr(params.row.Title)}/${params.row.id}`}> <FiEye color='#31B655' size={22} /></a>
             </span>
-
         )},
         {
             field: 'Edit', headerName: 'Edit', editable: false, minWidth: 80, flex: 1,sortable:false, headerClassName: 'super-app-theme--header',
@@ -124,12 +123,10 @@ export default function News() {
     return (
        
                 <SectionCard>
-                        <div className='d-flex justify-content-between align-items-center w-100 p-4'>
+                        <div className='d-flex justify-content-between align-items-center w-100 mb-3'>
                             <h2 className='pagetitle'> <SlSocialDropbox color='#31B655' size={25}/> Latest News
                             </h2>
-                           {state?.Roles?.AddBlogs &&   <button className="topbutton" onClick={()=>{navigate('/addnews')}}>
-                + Add News
-            </button>}
+                           {state?.Roles?.AddBlogs &&   <button className="topbutton" onClick={()=>{navigate('/addnews')}}> + Add News </button>}
                         </div>
                         <div className='col-12' >
                             <Box className={classes.DataTableBoxStyle} >

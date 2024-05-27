@@ -159,9 +159,9 @@ export default function Brand() {
     });
     return (
         <SectionCard >
-            <div className='col-12 Add_Category m-2 mt-5 mb-3 px-4'>
+            <div className='col-12 mb-3 d-flex justify-content-between align-content-center '>
                 <h2 className='pagetitle '> <SlSocialDropbox color='#31B655' size={25}/>  Brand  </h2>
-                { state.Roles.AddBrand  && <div className="col  popup_A" ><span> <h2> <Brandpopup></Brandpopup> </h2></span></div>}
+                { state.Roles.AddBrand  && <span> <h2> <Brandpopup></Brandpopup> </h2></span>}
             </div>
             <div className='col-12 '>
 

@@ -118,7 +118,7 @@ const TotalSales = () => {
     <div className=' my-4 '>
         <div className='py-4 section_card'>
             <div  className='d-flex gap-4 align-content-center px-4'> 
-                <h3 className='pagetitle'><SlSocialDropbox color='#31B655' size={25}/> Total Sales </h3>
+                <h2 className='pagetitle'><SlSocialDropbox color='#31B655' size={25}/> Total Sales </h2>
                 <div>
              
                 <Counterbox bgcolor={topdata.Growth ? 'rgba(81, 176, 157, 0.15)' : 'rgb(255 0 0 / 15%)' }  padding="3px 5px" color={topdata.Growth ? 'rgba(0, 172, 79, 1)' : 'rgb(255 0 0 / 90%)'} size='24px' height='1.2' fontweight='700' >

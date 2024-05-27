@@ -16,6 +16,7 @@ import Createcontext from "../../Hooks/Context/Context";
 import SubCategoryDelete from "./SubCategoryDelete";
 import Tooltip from "@mui/material/Tooltip";
 import useStyles from "../../Style";
+import { SectionCard } from "../../molecules/SectionCard/Index";
 export default function SubCategory() {
   const { enqueueSnackbar } = useSnackbar();
   const { state, dispatch } = useContext(Createcontext);
@@ -195,16 +196,16 @@ export default function SubCategory() {
 
   const rows = totel;
   return (
-    <div className="section_card">
+    <SectionCard>
       <div className="row">
-        <div className="col-12 Add_Category p-5">
-          <h2 className="pagetitle"><SlSocialDropbox color='#31B655' size={25}/> SubCategory</h2>
+        <div className='col-12  mb-3'>
+             <h2 className="pagetitle"><SlSocialDropbox color='#31B655' size={25}/> SubCategory</h2>
           
-          <div className="col text-end">
-          { state.Roles.AddSubcategory && 
-            <span > <h2>  <PopUp></PopUp> </h2> </span>
-          }
-          </div>
+            <div className="col text-end">
+            { state.Roles.AddSubcategory && 
+              <span > <h2>  <PopUp></PopUp> </h2> </span>
+            }
+            </div>
         </div>
 
         <div className="col-12">
@@ -232,6 +233,6 @@ export default function SubCategory() {
           </Box>
         </div>
       </div>
-    </div>
+    </SectionCard>
   );
 }
