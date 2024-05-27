@@ -159,13 +159,13 @@ export default function Storepopup() {
     };
 
     React.useEffect(() => {
-        axios.get('https://api.cannabaze.com/AdminPanel/Get-AllVendor/', {
+        axios.get('https://api.cannabaze.com/AdminPanel/Get-AllVendorListApi/', {
             headers: {
                 'Authorization': `Bearer ${token_data}`
             }
 
         }).then((res) => {
-            setvendorlist(res.data.data)
+            setvendorlist(res.data)
         }).catch((error) => {
             console.trace(error)
         })

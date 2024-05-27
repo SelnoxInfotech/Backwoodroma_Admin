@@ -16,7 +16,6 @@
     "@mui/material": "^5.15.13",
     "@mui/styled-engine-sc": "^5.11.0",
     "@mui/styles": "^5.14.0",
-    "material-ui-phone-number": "^3.0.0",
     "@mui/x-data-grid": "^5.17.16",
     "@mui/x-data-grid-generator": "^5.17.15",
     "@testing-library/jest-dom": "^5.16.5",
@@ -43,6 +42,7 @@
     "material-ui-phone-number": "^3.0.0",
     "mui-phone-number": "^3.0.3",
     "notistack": "^2.0.8",
+    "quill": "^2.0.2",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-bootstrap": "^2.7.0",
@@ -51,6 +51,7 @@
     "react-date-range": "^2.0.0-alpha.4",
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
+    "react-google-autocomplete": "^2.7.3",
     "react-hook-form": "^6.15.8",
     "react-icons": "^4.12.0",
     "react-lazy-load-image-component": "^1.6.0",
@@ -65,8 +66,7 @@
     "react-select-country-list": "^2.2.3",
     "styled-components": "^5.3.11",
     "sweetalert2": "^11.10.1",
-    "web-vitals": "^2.1.4",
-    "react-google-autocomplete": "^2.7.3"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
