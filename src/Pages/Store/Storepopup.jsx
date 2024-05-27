@@ -1,9 +1,4 @@
 import React, { useRef, useContext } from 'react';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import { TextField } from "@mui/material";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,7 +14,6 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { IoLocationSharp } from "react-icons/io5"
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
-import countryList from 'react-select-country-list'
 import Createcontext from "../../Hooks/Context/Context"
 import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -28,6 +22,7 @@ import useGoogle from 'react-google-autocomplete/lib/usePlacesAutocompleteServic
 import { useForm, Controller } from "react-hook-form";
 import { FormHelperText } from "@material-ui/core";
 import MuiPhoneNumber from 'material-ui-phone-number';
+import { useNavigate } from 'react-router-dom';
 export default function Storepopup() {
     const { register, handleSubmit, errors, control, setError } = useForm();
     const { dispatch} = useContext(Createcontext)
@@ -42,6 +37,7 @@ export default function Storepopup() {
     const [imageError, SetimageError] = React.useState(false)
     const [LicError, SetLicError] = React.useState(false)
     const [LicenceImage, SetLicenceImage] = React.useState('');
+    const navigate =  useNavigate()
     //  let count =  0 
     //  React.useEffect(()=>{
     //     console.log(count === 0)
@@ -66,8 +62,6 @@ export default function Storepopup() {
         apiKey: 'AIzaSyBRchIzUTBZskwvoli9S0YxLdmklTcOicU'
     });
 
-
-
     const [error, seterror] = React.useState({
         Store_Name: "",
         Store_Address: "",
@@ -75,7 +69,6 @@ export default function Storepopup() {
         LicenceNo: ""
 
     })
-    // console.log(options)
     const [massage, setmassage] = React.useState({
         Store_Name: "",
         Store_Address: "",
@@ -84,15 +77,6 @@ export default function Storepopup() {
 
 
     })
-
-    function tomorrowdate() {
-        var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-        var day = String(currentDate.getDate()).padStart(2, '0')
-        var month = String(currentDate.getMonth() + 1).padStart(2, '0')
-
-        var year = currentDate.getFullYear()
-        return `${year}-${month}-${day}`
-    }
 
     const [Store, SetStore] = React.useState({
         Store_Name: "",
@@ -106,29 +90,9 @@ export default function Storepopup() {
         expires: '',
         created_by: '',
     });
-    // function getStatesOfCountry(countryName) {
-    //     const country = Country.getCountryByCode(countryName);
-
-    //     if (!country) {
-    //         return [];
-    //     }
-    //     SetStore(prevStore => ({
-    //         ...prevStore,
-    //         Country_Name: country.name,
-    //         // country_Code:country.isoCode
-    //     }));
-    //     const states = State.getStatesOfCountry(country.isoCode);
-    //     SetCity([])
-    //     SetState(states)
-    //     return states;
-    // }
-
-
-    // console.log(City.getCitiesOfState('BT','33'))
     const handleChange = (event) => {
 
         const value = event.target.value;
-        // if (event.target.name === "Country_id") {
         //     SetStore(prevStore => ({
         //         ...prevStore,
         //         Country_id: value
@@ -209,29 +173,6 @@ export default function Storepopup() {
 
     }, [token_data]);
 
-    // email: swapnilchauhan08@gmail.com    
-    // Store_Name: dasda
-    // Store_Image: (binary)
-    // City: Queens
-    // Country: United States
-    // State: New-York
-    // StoreFront: false
-    // Delivery: true
-    // CurbSide_Pickup: false
-    // Store_Type: delivery
-    // LicenceNo: fgfdgdfgdfgdfg
-    // LicenseDoc: (binary)
-    // License_Type: Adult-Use Nonstorefront
-    // Expiration: Thu May 09 2024 16:49:00 GMT+0530 (India Standard Time)
-    // Store_Address: Queens, NY, USA
-    // Stores_Website: https://stackoverflow.com/questions/34764287/turning-off-eslint-rule-for-a-specific-file
-    // Stores_MobileNo: +91 35546-54545
-    // Status: Hide
-    // Stores_Description: <p></p>
-    // StoreFront: false
-    // Delivery: true
-    // CurbSide_Pickup: false
-
     const Submit = () => {
 
         if (image === "") {
@@ -273,6 +214,7 @@ export default function Storepopup() {
                 config
             ).then((response) => {
                 dispatch({ type: 'api', api: true })
+                navigate("/Store")
             }).catch(
                 function (error) {
                     Boolean(error.response.data.error.Stores_MobileNo) && setError('Stores_MobileNo', { type: 'manual', message: 'Mobile number already exists' }); 
