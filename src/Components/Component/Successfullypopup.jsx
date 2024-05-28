@@ -1,5 +1,5 @@
 import React from 'react'
-import ClickAwayListener from '@mui/base/ClickAwayListener';
+import {ClickAwayListener} from '@mui/base/ClickAwayListener';
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import {useNavigate} from 'react-router-dom'
 

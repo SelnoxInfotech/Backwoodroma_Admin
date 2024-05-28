@@ -99,6 +99,10 @@ const routesConfig = [
     path:"*",
     element:<Pagenotfound/>
   },
+  // {
+  //   path:"/webcontent",
+  //   element:<WebContent/>
+  // },
   {
     path:"/Forgot",
     element:<Forgot/>

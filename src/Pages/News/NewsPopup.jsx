@@ -1,21 +1,19 @@
-import React, { useRef,useState, useContext } from "react";
+import React, { useRef, useState, useContext } from "react";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import Successfullypopup from '../../Components/Component/Successfullypopup'
 import Unsuccesspopup from '../../Components/Component/Unsuccesspopup'
-import {SectionCard} from '../../molecules/SectionCard/Index'
+import { SectionCard } from '../../molecules/SectionCard/Index'
 import { TextField } from "@material-ui/core";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Cookies from "universal-cookie";
 import Axios from "axios";
 import axios from "axios";
-import { Editor } from "react-draft-wysiwyg";
-import draftToHtml from "draftjs-to-html";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState } from "draft-js";
+
+import Editer from "../../Components/Editer/Editer"
 import InputAdornment from "@mui/material/InputAdornment";
 import Createcontext from "../../Hooks/Context/Context";
 import { SlSocialDropbox } from "react-icons/sl";
@@ -23,7 +21,7 @@ import Box from "@mui/material/Box";
 import { useForm } from "react-hook-form";
 import LoadingButton from "@mui/lab/LoadingButton";
 import useStyles from "../../Style";
-import {useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function Newspop() {
   const form = useForm({
@@ -32,9 +30,9 @@ export default function Newspop() {
       Meta_title: "",
     },
   });
-  const [sucsesopen , setsucsesopen] = useState(false)
-  const [unsucsesopen , setunsucsesopen] = useState(false)
-  const classes =useStyles()
+  const [sucsesopen, setsucsesopen] = useState(false)
+  const [unsucsesopen, setunsucsesopen] = useState(false)
+  const classes = useStyles()
   const navigate = useNavigate()
   const { register, handleSubmit, formState, watch, reset } = form;
   const { errors } = formState;
@@ -42,14 +40,11 @@ export default function Newspop() {
   const inputRef = useRef(null);
   const cookies = new Cookies();
   const token_data = cookies.get("Token_access");
-  const [editorState, setEditorState] = React.useState(() =>
-    EditorState.createEmpty()
-  );
-  const [convertedContent, setConvertedContent] = React.useState("");
   const [Category, SetCategory] = React.useState([]);
   const [SubCategory, SetSubCategory] = React.useState([]);
   const [Image, SetImage] = React.useState("");
-  const [loading, Setloading] = React.useState(false);  
+  const [loading, Setloading] = React.useState(false);
+  const [Description, SetDescription] = React.useState('')
   const [News, setNews] = React.useState({
     Title: "",
     Category_id: "",
@@ -83,52 +78,46 @@ export default function Newspop() {
   const toolbar = {
     options: ['blockType', 'inline', 'list', 'colorPicker', 'link', 'image'],
     blockType: {
-        inDropdown: true,
-        options: ['H2', 'H3', 'H4', 'Normal', 'Blockquote']
+      inDropdown: true,
+      options: ['H2', 'H3', 'H4', 'Normal', 'Blockquote']
     },
     inline: {
-        inDropdown: false,
-        options: ['bold', 'italic', 'underline']
+      inDropdown: false,
+      options: ['bold', 'italic', 'underline']
     },
     link: {
-        defaultTargetOption: '_self',
-        options: ['link', 'unlink']
+      defaultTargetOption: '_self',
+      options: ['link', 'unlink']
     },
     list: { options: ['ordered', 'unordered'] },
     image: {
-        urlEnabled: true,
-        uploadEnabled: true,
-        alignmentEnabled: true,
-        uploadCallback: undefined,
-        alt: { present: true, mandatory: true }
+      urlEnabled: true,
+      uploadEnabled: true,
+      alignmentEnabled: true,
+      uploadCallback: undefined,
+      alt: { present: true, mandatory: true }
     }
-};
+  };
 
-const localization = {
+  const localization = {
     locale: 'en-us',
     translations: {
-        'generic.add': 'Add',
-        'generic.cancel': 'Cancel',
-        'components.controls.blocktype.normal': 'Normal',
-        'components.controls.blocktype.h2': 'Heading 2',
-        'components.controls.blocktype.h3': 'Heading 3',
-        'components.controls.blocktype.h4': 'Heading 4  ',
-        'components.controls.blocktype.blockquote': 'Blockquote',
-        'components.controls.link.link': 'Link',
-        'components.controls.link.unlink': 'Unlink',
-        'components.controls.image.image': 'Image',
-        'components.controls.image.fileUpload': 'File Upload',
-        'components.controls.image.byURL': 'URL',
-        'components.controls.image.dropFileText': 'Drop the file or click to upload'
+      'generic.add': 'Add',
+      'generic.cancel': 'Cancel',
+      'components.controls.blocktype.normal': 'Normal',
+      'components.controls.blocktype.h2': 'Heading 2',
+      'components.controls.blocktype.h3': 'Heading 3',
+      'components.controls.blocktype.h4': 'Heading 4  ',
+      'components.controls.blocktype.blockquote': 'Blockquote',
+      'components.controls.link.link': 'Link',
+      'components.controls.link.unlink': 'Unlink',
+      'components.controls.image.image': 'Image',
+      'components.controls.image.fileUpload': 'File Upload',
+      'components.controls.image.byURL': 'URL',
+      'components.controls.image.dropFileText': 'Drop the file or click to upload'
     }
-};
-  const handleContentStateChange = (contentState) => {
-    setConvertedContent(draftToHtml(contentState));
   };
 
-  const handleEditorStateChange = (editorState) => {
-    setEditorState(editorState);
-  };
   const handleimage = (event) => {
     SetImage(event.target.files[0]);
     setmassage("");
@@ -171,7 +160,7 @@ const localization = {
   }, [token_data]);
 
   const Submit = (data) => {
-
+    console.log(Description)
     const formdata = new FormData();
     formdata.append("Title", data.Title);
     formdata.append("Category_id", News.Category_id);
@@ -187,7 +176,7 @@ const localization = {
     );
     formdata.append("Alt_Text", data.Alt_Text);
     formdata.append("Image", Image);
-    formdata.append("Description", convertedContent);
+    formdata.append("Description", Description);
     Setloading(true);
     const config = {
       headers: { Authorization: `Bearer ${token_data}` },
@@ -197,24 +186,22 @@ const localization = {
       formdata,
       config
     ).then(() => {
-        dispatch({ type: "api", api: true });
-      
-        setNews((Brand) => ({
-          ...Brand,
-          Title: "",
-          Link: "",
-          Meta_Description: "",
-          Meta_title: "",
-          Url_slug: "",
-          Alt_Text: "",
-        }));
+      dispatch({ type: "api", api: true });
 
-        setEditorState(() => EditorState.createEmpty());
-        reset();
-        SetImage("");
-        Setloading(false);
-        setsucsesopen(true)
-      })
+      setNews((Brand) => ({
+        ...Brand,
+        Title: "",
+        Link: "",
+        Meta_Description: "",
+        Meta_title: "",
+        Url_slug: "",
+        Alt_Text: "",
+      }));
+      reset();
+      SetImage("");
+      Setloading(false);
+      setsucsesopen(true)
+    })
       .catch(function (error) {
         Setloading(false);
         setunsucsesopen(true)
@@ -285,330 +272,280 @@ const localization = {
       <SectionCard className="row">
         <form onSubmit={handleSubmit(Submit)}>
           <div className="row justify-content-between">
-                <div className="col-lg-7">
-                  <div className="col-12 Add_Category center">
-                  
-                  <h2 className='d-flex align-items-center pagetitle'> <SlSocialDropbox color='#31B655' size={25}/>Add News</h2>
-              
-                  </div>
-                  <div className="addnewinputbox">
-                  
-                      <label >
-                        <span className="required"></span>
-                        Title:
-                      </label>              
-                      <TextField
-                          type="Text"
-                          fullWidth
-                          placeholder="Title"
-                          id="outlined-basic"
-                          name="Title"
-                          className={classes.addnewstext}
-                          InputProps={{
-                            disableUnderline: true,
-                            startAdornment: (
-                              <InputAdornment position="start"> </InputAdornment>
-                            ),
-                            
-                          }}
-                          label={massage.Title}
-                          inputRef={register({
-                            required: "Title is Required",
-                          })}
-                          error={Boolean(errors?.Title)}
-                          helperText={errors?.Title?.message}
-                      />
-                
-                  </div>
-                  <div className="col gap-5  justify-content-between" style={{display:"flex"}}> 
-                    <div className="col addnewinputbox" >
-                      <div className="">
-                        <label >Category:</label>
-                      </div>
-                      <div className="">
-                        <Select
-                        fullWidth
-                          name="Category_id"
-                          value={News.Category_id}
-                          onChange={handleChange}
-                          displayEmpty
-                          size="small"
-                          inputProps={{ "aria-label": "Without label" }}
-                          className={classes.addnewselect}
-                        >
-                          <MenuItem value="" style={{ fontSize: 15 }}>
-                            <em>Select option</em>
-                          </MenuItem>
-                          {Category.map((Category, index) => {
-                            return (
-                              <MenuItem
-                                value={Category.id}
-                                style={{ fontSize: 15 }}
-                                key={index}
-                              >
-                                {Category.name}
-                              </MenuItem>
-                            );
-                          })}
-                        </Select>
-                      </div>
-                    </div>
-                    <div className="col addnewinputbox">
-                    
-                        <label >Sub Category:</label>
-                  
-                        <Select
-                          name="SubCategory_id"
-                          value={News.SubCategory_id}
-                          onChange={handleChange}
-                          displayEmpty
-                          fullWidth
-                          size="small"
-                          inputProps={{ "aria-label": "Without label" }}
-                          className={classes.addnewselect}
-                        >
-                          <MenuItem value="" style={{ fontSize: 15 }}>
-                            <em>Select option</em>
-                          </MenuItem>
-                          {SubCategory.map((SubCategory, index) => {
-                            return (
-                              <MenuItem
-                                value={SubCategory.id}
-                                style={{ fontSize: 15 }}
-                                key={index}
-                              >
-                                {SubCategory.name}
-                              </MenuItem>
-                            );
-                          })}
-                        </Select>
-                
-                    </div>
-                  </div>
-                  <div className=" addnewinputbox  ">
-              
-                    <label >
-                      <span className="required">*</span>
-                      Description:
-                    </label>
-      
-                    <Box
-                      sx={{
-                        "& .rdw-editor-toolbar": {
-                          width: "100%",
-                        },
-                        "& .rdw-editor-wrapper": {
-                          height: "240px",
-                          // width: "991px",
-                        },
-                        ".rdw-editor-main": {
-                          background: "",
-                          border: "1px solid #c4c4c4",
-                          padding: "3px",
-                        },
-                      }}
-                    >
-                      <Editor
-                        editorState={editorState}
-                        toolbar={toolbar}
-                        localization={localization}
-                        onEditorStateChange={handleEditorStateChange}
-                        onContentStateChange={handleContentStateChange}
-                        toolbarClassName="toolbarClassName"
-                        wrapperClassName="wrapperClassName"
-                        editorClassName="editorClassName"
-                      />
-                    </Box>
-                
-                  </div>
-                </div>
-                <div className="col-lg-4">      
-                  <div className="  ">
-                    <div className="col-12 Add_Category center">
-                
-                <h2> SEO</h2>
-        
-                    </div>
-                  </div>
-                  <div className=" addnewinputbox">
-                
-                      <label >
-                      <span className="required">*</span>
-                      Meta Title:
-                      </label>
-                
-                      <TextField
-                      type="Text"
-                      placeholder="Title... "
-                      id="outlined-basic"
-                      name="Meta_title"
-                      value={News.Meta_title}
-                      onChange={handleChange}
-                      fullWidth
-                      InputProps={{
-                        maxLength: 4,
-                        disableUnderline: true,
-                          startAdornment: (
-                          <InputAdornment position="start"> </InputAdornment>
-                          ),
-                          
-                      }}
-                      label={massage.Meta_title}
-                      className={classes.addnewstext}
-                      inputRef={register({
-                        required: " Meta Title is Required",
-                        maxLength:{value:60,message:'Character limit is only 60'},
-                      })}
-                      error={Boolean(errors?.Meta_title)}
-                      helperText={errors?.Meta_title?.message}
-                      />
-                    {News.Meta_title.length > 160 && <span className="required">Maximum limit is 160 Characters</span>}
-                   
-                  </div>
-                  <div className="  addnewinputbox ">
-                
+            <div className="col-lg-7">
+              <div className="col-12 Add_Category center">
+
+                <h2 className='d-flex align-items-center pagetitle'> <SlSocialDropbox color='#31B655' size={25} />Add News</h2>
+
+              </div>
+              <div className="addnewinputbox  ">
+
                 <label >
-                <span className="required">*</span>
+                  <span className="required">*</span>
+                  Title:
+                </label>
+                <TextField
+                  type="Text"
+                  fullWidth
+                  placeholder="Title"
+                  id="outlined-basic"
+                  name="Title"
+                  className={classes.addnewstext}
+
+                  variant="outlined"
+                  label={massage.Title}
+                  inputRef={register({
+                    required: "Title is Required",
+                  })}
+                  error={Boolean(errors?.Title)}
+                  helperText={errors?.Title?.message}
+                />
+
+              </div>
+              <div className="col gap-5  justify-content-between mb-4" style={{ display: "flex" }}>
+                <div className="col " >
+                  <div className="">
+                    <label >Category:</label>
+                  </div>
+
+                  <Select
+                    fullWidth
+                    name="Category_id"
+                    value={News.Category_id}
+                    onChange={handleChange}
+                    displayEmpty
+                    // size="small"
+                    inputProps={{ "aria-label": "Without label" }}
+                    className={classes.addnewselect}
+                  >
+                    <MenuItem value="" style={{ fontSize: 15 }}>
+                      <em>Select option</em>
+                    </MenuItem>
+                    {Category.map((Category, index) => {
+                      return (
+                        <MenuItem
+                          value={Category.id}
+                          style={{ fontSize: 15 }}
+                          key={index}
+                        >
+                          {Category.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+
+                </div>
+                <div className="col">
+
+                  <label >Sub Category:</label>
+
+                  <Select
+                    name="SubCategory_id"
+                    value={News.SubCategory_id}
+                    onChange={handleChange}
+                    displayEmpty
+                    fullWidth
+                    // size="small"
+                    inputProps={{ "aria-label": "Without label" }}
+                    className={classes.addnewselect}
+                  >
+                    <MenuItem value="" style={{ fontSize: 15 }}>
+                      <em>Select option</em>
+                    </MenuItem>
+                    {SubCategory.map((SubCategory, index) => {
+                      return (
+                        <MenuItem
+                          value={SubCategory.id}
+                          style={{ fontSize: 15 }}
+                          key={index}
+                        >
+                          {SubCategory.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+
+                </div>
+              </div>
+              <div className=" addnewinputbox  ">
+
+                <label >
+                  <span className="required">*</span>
+                  Description:
+                </label>
+                <Editer SetDescription={SetDescription} Description={Description}></Editer>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="  ">
+                <div className="col-12 Add_Category center">
+
+                  <h2> SEO</h2>
+
+                </div>
+              </div>
+              <div className=" addnewinputbox">
+
+                <label >
+                  <span className="required">*</span>
+                  Meta Title:
+                </label>
+
+                <TextField
+                  type="Text"
+                  placeholder="Title... "
+                  id="outlined-basic"
+                  name="Meta_title"
+                  value={News.Meta_title}
+                  onChange={handleChange}
+                  fullWidth
+
+                  variant="outlined"
+                  label={massage.Meta_title}
+                  className={classes.addnewstext}
+                  inputRef={register({
+                    required: " Meta Title is Required",
+                    maxLength: { value: 60, message: 'Character limit is only 60' },
+                  })}
+                  error={Boolean(errors?.Meta_title)}
+                  helperText={errors?.Meta_title?.message}
+                />
+                {News.Meta_title.length > 160 && <span className="required">Maximum limit is 160 Characters</span>}
+
+              </div>
+              <div className="  addnewinputbox ">
+
+                <label >
+                  <span className="required">*</span>
                   Url slug :
                 </label>
-          
-                <TextField
-                type="Text"
-                placeholder="https://"
-                name="Url_slug"
-                value={News.Url_slug}
-                id="outlined-basic"
-                
-                onChange={handleChange}
-                InputProps={{
-                  disableUnderline: true,
-                    startAdornment: (
-                    <InputAdornment position="start"> </InputAdornment>
-                    ),
-                  
-                }}
-                label={massage.Url_slug}
-                className={classes.addnewstext}
-                inputRef={register({
-                  required: "Url Slug is Required",
-                })}
-                error={Boolean(errors?.Url_slug)}
-                helperText={errors?.Url_slug?.message}
-                />
-          
-                  </div>
-                  <div className=" addnewinputbox">
-                
-                      <label >
-                      <span className="required">*</span>
-                        Meta Description :
-                      </label>
-                  
-                      <TextField
-                      type="Text"
-                      placeholder="Meta description"
-                      id="outlined-basic"
-                      name="Meta_Description"
-                      InputProps={{
-                        disableUnderline: true,
-                          startAdornment: (
-                          <InputAdornment position="start"> </InputAdornment>
-                          ),
-                          
-                      }}
-                      label={massage.Meta_Description}
-                      className={classes.addnewstext}
-                      inputRef={register({
-                          required: "Meta Description is Required",
-                          maxLength:{value:160,message:'Character limit is only 160'},
-                      })}
-                      error={Boolean(errors?.Meta_Description)}
-                      helperText={errors?.Meta_Description?.message}
-                      />
-        
-                  </div>
-               
-                  <div className="mb-4">
-                      <label >
-                        Banner  <span className="required">*</span>
-                      </label>
-                      <div  className="image_uploade" >
-                        
-                              {Image ? (
-                              <div className="addnewsimagebox">
-                                  <img
-                                  src={URL.createObjectURL(Image)}
-                                  alt=""
-                                  style={{
-                                      width: "90px",
-                                      height: "81px",
-                                      borderRadius: "10px",
-                                  }}
-                                  />
-                                  <Button color="success" onClick={()=>{SetImage('')}}>
-                                      Cancel
-                                  </Button>
-                              </div>
-                              ) :   
-                              <div className="addnewsimagebox">
-                              <input
-                                  type="file"
-                                  id="file"
-                                  ref={inputRef}
-                                  className="file"
-                                  onChange={handleimage}
-                                  accept="image/png, image/gif, image/jpeg"
-                              />
-                              <label htmlFor="file">
-                                <AiOutlineCloudUpload size={32} />  Drop files here or click to upload
-                              </label>
-                              </div>
-                              }
-                        
-                      </div>
-                  </div>
-                  {
-                      Image &&
 
-                      <div className="  addnewinputbox ">
-                    
-                          <label >
-                          <span className="required">*</span>
-                          Alt Text:
-                          </label>
-                    
-                          <TextField
-                          type="text"
-                          placeholder="Add Alt Text"
-                          name="Alt_Text"
-                          id="outlined-basic"
-                          
-                          InputProps={{
-                            disableUnderline: true,
-                              startAdornment: (
-                              <InputAdornment position="start"> </InputAdornment>
-                              ),
-                            
-                          }}
-                          label={massage.Alt_Text}
-                          className={classes.addnewstext}
-                          inputRef={register({
-                              required: "Alt_Text is Required",
-                          })}
-                          error={Boolean(errors?.Alt_Text)}
-                          helperText={errors?.Alt_Text?.message}
-                          />
-                      </div>
+                <TextField
+                  type="Text"
+                  placeholder="https://"
+                  name="Url_slug"
+                  value={News.Url_slug}
+                  id="outlined-basic"
+                  fullWidth
+                  variant="outlined"
+                  onChange={handleChange}
+                  label={massage.Url_slug}
+                  className={classes.addnewstext}
+                  inputRef={register({
+                    required: "Url Slug is Required",
+                  })}
+                  error={Boolean(errors?.Url_slug)}
+                  helperText={errors?.Url_slug?.message}
+                />
+
+              </div>
+              <div className=" addnewinputbox">
+
+                <label >
+                  <span className="required">*</span>
+                  Meta Description :
+                </label>
+
+                <TextField
+                  type="Text"
+                  placeholder="Meta description"
+                  id="outlined-basic"
+                  name="Meta_Description"
+                  fullWidth
+                  variant="outlined"
+                  label={massage.Meta_Description}
+                  className={classes.addnewstext}
+                  inputRef={register({
+                    required: "Meta Description is Required",
+                    maxLength: { value: 160, message: 'Character limit is only 160' },
+                  })}
+                  error={Boolean(errors?.Meta_Description)}
+                  helperText={errors?.Meta_Description?.message}
+                />
+
+              </div>
+
+              <div className="mb-4">
+                <label >
+                  Banner  <span className="required">*</span>
+                </label>
+                <div className="image_uploade" >
+
+                  {Image ? (
+                    <div className="addnewsimagebox">
+                      <img
+                        src={URL.createObjectURL(Image)}
+                        alt=""
+                        style={{
+                          width: "90px",
+                          height: "81px",
+                          borderRadius: "10px",
+                        }}
+                      />
+                      <Button color="success" onClick={() => { SetImage('') }}>
+                        Cancel
+                      </Button>
+                    </div>
+                  ) :
+                    <div className="addnewsimagebox">
+                      <input
+                        type="file"
+                        id="file"
+                        ref={inputRef}
+                        className="file"
+                        onChange={handleimage}
+                        accept="image/png, image/gif, image/jpeg"
+                      />
+                      <label htmlFor="file">
+                        <AiOutlineCloudUpload size={32} />  Drop files here or click to upload
+                      </label>
+                    </div>
                   }
+
                 </div>
+              </div>
+              {
+                Image &&
+
+                <div className="  addnewinputbox ">
+
+                  <label >
+                    <span className="required">*</span>
+                    Alt Text:
+                  </label>
+
+                  <TextField
+                    type="text"
+                    placeholder="Add Alt Text"
+                    name="Alt_Text"
+                    id="outlined-basic"
+
+                    InputProps={{
+                      disableUnderline: true,
+                      startAdornment: (
+                        <InputAdornment position="start"> </InputAdornment>
+                      ),
+
+                    }}
+                    label={massage.Alt_Text}
+                    className={classes.addnewstext}
+                    inputRef={register({
+                      required: "Alt_Text is Required",
+                    })}
+                    error={Boolean(errors?.Alt_Text)}
+                    helperText={errors?.Alt_Text?.message}
+                  />
+                </div>
+              }
             </div>
-         
+          </div>
+
 
           <div className="col-12 d-flex justify-content-start gap-4 mb-4 top">
-          <LoadingButton
+            <LoadingButton
               loading={loading}
               autoFocus
-              onClick={()=>{navigate('/News')}}
+              onClick={() => { navigate('/News') }}
               style={{
                 backgroundColor: "rgb(49, 182, 101)",
                 color: "white",
@@ -622,21 +559,21 @@ const localization = {
               autoFocus
               type="submit"
               style={{
-                backgroundColor:'white',
+                backgroundColor: 'white',
                 color: "rgb(49, 182, 101)",
                 fontSize: "14px",
-                border:'1px solid #31B655'
+                border: '1px solid #31B655'
               }}
-             
+
             >
               Add News
             </LoadingButton>
-           
+
           </div>
         </form>
       </SectionCard>
-                { sucsesopen && <Successfullypopup  setsucsesopen={setsucsesopen} link={'/News'} />}
-                { unsucsesopen && <Unsuccesspopup setsucsesopen={setunsucsesopen} link={'/News'}  />}
+      {sucsesopen && <Successfullypopup setsucsesopen={setsucsesopen} link={'/News'} />}
+      {unsucsesopen && <Unsuccesspopup setsucsesopen={setunsucsesopen} link={'/News'} />}
     </div>
   );
 }

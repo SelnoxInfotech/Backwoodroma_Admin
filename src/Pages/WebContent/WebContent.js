@@ -11,8 +11,6 @@ import {
     StateSelect,
   } from "react-country-state-city";
   import "react-country-state-city/dist/react-country-state-city.css";
-  import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import draftToHtml from "draftjs-to-html";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -221,10 +219,10 @@ const WebContent = () => {
                                     editorClassName="editorClassName"
                                 /> */}
                                 <Editortoolbar  />
-                                <ReactQuill theme="snow" value={value} onChange={setValue}
+                                {/* <ReactQuill theme="snow" value={value} onChange={setValue}
                                     modules={modules}
                                     formats={formats}
-                                />
+                                /> */}
                                 </Box>
                             </div>
                         </div>
@@ -277,6 +275,8 @@ const WebContent = () => {
         </div>
         </div>
     </SectionCard> 
+
+
   )
 }
 export default WebContent

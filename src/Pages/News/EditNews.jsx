@@ -14,15 +14,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Cookies from "universal-cookie";
 import Axios from "axios";
 import axios from "axios";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState, ContentState } from "draft-js";
 import { MdFileUpload } from "react-icons/md";
 import Createcontext from "../../Hooks/Context/Context";
 import InputAdornment from "@mui/material/InputAdornment";
 import Box from "@mui/material/Box";
-import htmlToDraft from "html-to-draftjs";
 import useStyles from "../../Style";
-import EditNewsEditer from "./EditNewsEditer";
+import Editer from "../../Components/Editer/Editer"
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -43,22 +40,10 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 function BootstrapDialogTitle(props) { }
-const getInitialState = (defaultValue) => {
-  if (defaultValue) {
-    const blocksFromHtml = htmlToDraft(defaultValue);
-    const { contentBlocks, entityMap } = blocksFromHtml;
-    const contentState = ContentState.createFromBlockArray(
-      contentBlocks,
-      entityMap
-    );
-    return EditorState.createWithContent(contentState);
-  } else {
-    return EditorState.createEmpty();
-  }
-};
+
 
 export default function NewsEdit(props) {
-  const defaultValue = props?.data?.Description;
+  // const defaultValue = props?.data?.Description;
 
   const { state, dispatch } = useContext(Createcontext);
   const [sucsesopen, setsucsesopen] = useState(false)
@@ -68,7 +53,7 @@ export default function NewsEdit(props) {
   const cookies = new Cookies();
   const token_data = cookies.get("Token_access");
 
-  const [convertedContent, setConvertedContent] = React.useState();
+  const [Description , SetDescription] =  React.useState(props?.data?.Description) 
 
   const [Category, SetCategory] = React.useState([]);
   const [SubCategory, SetSubCategory] = React.useState([]);
@@ -183,7 +168,7 @@ export default function NewsEdit(props) {
   }
   Image && formdata.append("Image", Image);
 
-  formdata.append("Description", convertedContent === undefined ? defaultValue : convertedContent);
+  formdata.append("Description",Description);
   formdata.append("Url_slug", News.Url_slug);
   const Submit = () => {
     const config = {
@@ -592,10 +577,11 @@ export default function NewsEdit(props) {
                       }}
                     >
 
-                      <EditNewsEditer
+                      {/* <EditNewsEditer
                         defaultValue={defaultValue}
                         convertedContent={convertedContent} setConvertedContent={setConvertedContent}
-                      ></EditNewsEditer>
+                      ></EditNewsEditer> */}
+                         <Editer SetDescription={SetDescription} Description={Description}></Editer>
                     </Box>
 
                   </div>

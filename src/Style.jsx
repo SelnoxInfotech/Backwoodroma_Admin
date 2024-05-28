@@ -922,20 +922,20 @@ const useStyles = makeStyles(theme =>(
         }
       },
       addnewstext:{
-          width:'100%',
+          // width:'100%',
           "& .MuiInputBase-root":{
             fontSize:' 14px ',
-            fontWeight:' 400 ',
-            lineHeight: '21px ',
-            letterSpacing: '0em ',
+            // fontWeight:' 400 ',
+            // lineHeight: '21px ',
+            // letterSpacing: '0em ',
             textAlign: 'left ',
             color:'#000 ',
-            padding:'10px 0',
+            // padding:'10px 0',
           },
        
           "& .MuiInput-underline":{
              "&::before":{
-              borderBottom:"none",
+              // borderBottom:"none",
              },
              "&:hover":{
 
@@ -947,17 +947,17 @@ const useStyles = makeStyles(theme =>(
       },
       addnewselect:{
         width:'100%',
-        fontFamily: 'Poppins !important',
-        fontSize: '14px !important',
-        fontWeight: '400 !important',
-        lineHeight: '21px !important',
-        letterSpacing: '0em !important',
-        textAlign: 'left !important',
+        // fontFamily: 'Poppins !important',
+        // fontSize: '14px !important',
+        // fontWeight: '400 !important',
+        // lineHeight: '21px !important',
+        // letterSpacing: '0em !important',
+        // textAlign: 'left !important',
         color:'#000',
 
-        "& fieldset":{
-          border:'none !important'
-        },
+        // "& fieldset":{
+        //   border:'none !important'
+        // },
       },
       faqtextfeild:{
           width:'100%', 
