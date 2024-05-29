@@ -23,6 +23,7 @@ import { useForm, Controller } from "react-hook-form";
 import { FormHelperText } from "@material-ui/core";
 import MuiPhoneNumber from 'material-ui-phone-number';
 import { useNavigate } from 'react-router-dom';
+import useStyles from '../../Style';
 export default function Storepopup() {
     const { register, handleSubmit, errors, control, setError } = useForm();
     const { dispatch} = useContext(Createcontext)
@@ -38,6 +39,7 @@ export default function Storepopup() {
     const [LicError, SetLicError] = React.useState(false)
     const [LicenceImage, SetLicenceImage] = React.useState('');
     const navigate =  useNavigate()
+    const classes = useStyles()
     const {
         placesService,
         placePredictions,
@@ -94,7 +96,7 @@ export default function Storepopup() {
         //         State_id: value,
         //         storeStateName:result.name
         //     }));
-        //     console.log(City.getCitiesOfState(result.countryCode,result.stateCode) , result.countryCode,result.isoCode, result)
+       
         //     SetCity(City.getCitiesOfState(result.countryCode,result.isoCode))
         // }
         // else if (event.target.name === "city_id") {
@@ -322,6 +324,10 @@ export default function Storepopup() {
                                     '& .MuiOutlinedInput-input': {
                                         padding: ' 10px',
                                     },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: '#31B655',
+                                        
+                                      },
                                     "& label": {
                                         fontSize: 13,
                                         color: "red",
@@ -331,6 +337,7 @@ export default function Storepopup() {
                                         }
                                     }
                                 }}
+                                className={classes.textFieldFocusBorderColor}
                                 inputRef={register({
                                     required: "Store Name is required*.",
                                     minLength: {
@@ -389,6 +396,11 @@ export default function Storepopup() {
                                                     '& .MuiSelect-select': {
                                                         fontSize: '16px',
                                                         color: 'rgb(133, 133, 133)',
+                                                    },
+                                                    "&.Mui-focused": {
+                                                        "& .MuiOutlinedInput-notchedOutline": {
+                                                            borderColor: '#31B655 !important'
+                                                        }
                                                     }
                                                 }}
                                             >
@@ -436,6 +448,7 @@ export default function Storepopup() {
                                                     getPlacePredictions({ input: e.target.value });
                                                 }}
                                                 type="text"
+                                                className={classes.textFieldFocusBorderColor}
                                                 placeholder="Enter Location.."
                                                 helperText={errors.Store_Address?.message}
                                                 error={Boolean(errors?.Store_Address)}
@@ -454,6 +467,7 @@ export default function Storepopup() {
                                     <TextField
                                         disabled={true}
                                         type="text" placeholder='Country' id="outlined-basic" variant="outlined" name='Store_Name' value={Store.Country}
+                                        className={classes.textFieldFocusBorderColor}
                                         sx={{
                                             width: '100%',
                                             '& .MuiOutlinedInput-root': {
@@ -466,6 +480,10 @@ export default function Storepopup() {
                                             '& .MuiOutlinedInput-input': {
                                                 padding: ' 10px',
                                             },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#31B655',
+                                                border:'none',
+                                              },
                                             "& label": {
                                                 fontSize: 13,
                                                 color: "red",
@@ -484,6 +502,7 @@ export default function Storepopup() {
                                     <TextField
                                         disabled={true}
                                         type="text" placeholder='State' id="outlined-basic" variant="outlined" name='Store_Name' value={Store.state}
+                                        className={classes.textFieldFocusBorderColor}
                                         sx={{
                                             width: '100%',
                                             '& .MuiOutlinedInput-root': {
@@ -493,6 +512,10 @@ export default function Storepopup() {
                                             '& .MuiOutlinedInput-input': {
                                                 padding: ' 10px',
                                             },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#31B655',
+                                                border:'none',
+                                              },
                                             "& label": {
                                                 fontSize: 13,
                                                 color: "red",
@@ -511,6 +534,8 @@ export default function Storepopup() {
                                     <TextField
                                         disabled={true}
                                         type="text" placeholder='City' id="outlined-basic" variant="outlined" name='Store_Name' value={Store.city}
+                                        className={classes.textFieldFocusBorderColor}
+
                                         sx={{
                                             width: '100%',
                                             '& .MuiOutlinedInput-root': {
@@ -519,6 +544,10 @@ export default function Storepopup() {
                                             '& .MuiOutlinedInput-input': {
                                                 padding: ' 10px',
                                             },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#31B655',
+                                                border:'none',
+                                              },
                                             "& label": {
                                                 fontSize: 13,
                                                 color: "red",
@@ -544,6 +573,7 @@ export default function Storepopup() {
                                     <TextField type="text" placeholder='Add Store Website:' id="outlined-basic" variant="outlined" name='Stores_Website' value={Store.Stores_Website} style={{ minWidth: 120, fontSize: 15 }}
                                         onChange={(e) => handleChange(e)}
                                         InputProps={{ style: { fontSize: 14 } }}
+                                        className={classes.textFieldFocusBorderColor}
                                         sx={{
                                             width: '100%',
                                             '& .MuiOutlinedInput-root': {
@@ -564,6 +594,10 @@ export default function Storepopup() {
                                                     color: "red",
                                                 }
                                             },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#31B655',
+                                                border:'none',
+                                              },
                                             '& .MuiSelect-select': {
                                                 fontSize: '16px',
                                                 color: 'rgb(133, 133, 133)',
@@ -716,6 +750,7 @@ export default function Storepopup() {
                             </label>
                             <TextField  type="text" placeholder='Add LicenceNo' id="LicenceNo" variant="outlined"  name='LicenceNo' value={Store.LicenceNo} style={{ minWidth: "90%", fontSize: 15 }}
                                 onChange={handleChange}
+                                className={classes.textFieldFocusBorderColor}
                                 InputProps={{ startAdornment: <InputAdornment position="start"> </InputAdornment>, style: { fontSize: 14 } }}
                                 label={massage.LicenceNo}
                                 sx={{
@@ -738,6 +773,10 @@ export default function Storepopup() {
                                             color: "red",
                                         }
                                     },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: '#31B655',
+                                        border:'none',
+                                      },
                                     '& .MuiSelect-select': {
                                         fontSize: '16px',
                                         color: 'rgb(133, 133, 133)',
@@ -837,6 +876,7 @@ export default function Storepopup() {
                                     value={Store.expires}
                                     name="expires"
                                     onChange={handleChange}
+                                    className={classes.textFieldFocusBorderColor}
                                     type="date"
                                     sx={{
                                         width: '100%',
@@ -858,6 +898,10 @@ export default function Storepopup() {
                                                 color: "red",
                                             }
                                         },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: '#31B655 !important' ,
+                                           
+                                          },
                                         '& .MuiSelect-select': {
                                             fontSize: '16px',
                                             color: 'rgb(133, 133, 133)',
@@ -937,8 +981,12 @@ export default function Storepopup() {
                                     '& .MuiSelect-select': {
                                         fontSize: '16px',
                                         color: 'rgb(133, 133, 133)',
+                                    },
+                                    "&.Mui-focused": {
+                                        "& .MuiOutlinedInput-notchedOutline": {
+                                            borderColor: '#31B655 !important'
+                                        }
                                     }
-
                                 }}
                             >
 
@@ -991,6 +1039,11 @@ export default function Storepopup() {
                                                     '& .MuiSelect-select': {
                                                         fontSize: '16px',
                                                         color: 'rgb(133, 133, 133)',
+                                                    },
+                                                    "&.Mui-focused": {
+                                                        "& .MuiOutlinedInput-notchedOutline": {
+                                                            borderColor: '#31B655 !important'
+                                                        }
                                                     }
                                                 }}
                                             >
@@ -1011,11 +1064,7 @@ export default function Storepopup() {
                                     )}
                                 />
                             </FormControl>
-
-
-
                         </div>
-
                         <div className='lg_ip_feild center top' >
                             <button className='topbutton' autoFocus >
                                 Add Store

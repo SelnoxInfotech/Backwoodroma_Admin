@@ -160,7 +160,6 @@ export default function Newspop() {
   }, [token_data]);
 
   const Submit = (data) => {
-    console.log(Description)
     const formdata = new FormData();
     formdata.append("Title", data.Title);
     formdata.append("Category_id", News.Category_id);

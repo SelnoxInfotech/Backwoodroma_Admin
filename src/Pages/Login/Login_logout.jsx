@@ -16,7 +16,7 @@ import useStyles from '../../Style'
 import { LoadingButton } from '@mui/lab';
 import { MdVerified } from "react-icons/md";
 import { useForm, Controller } from "react-hook-form";
-Aos.init({
+  Aos.init({
     duration: 1200
   });
 export default function Login_logout() {
@@ -29,6 +29,8 @@ export default function Login_logout() {
     const [show, setOpen] = useState(false);
     const [isLoggedIn, setLoading] = useState(false);
     const [OTP, setotp] = useState("");
+    // const [timer, setTimer] = useState(30);
+    const [timer, setTimer] = useState(10); 
     React.useEffect(function () {
         Aos.init({ duration: 500 });
     }, []);
@@ -43,19 +45,33 @@ export default function Login_logout() {
         const rememberMe = cookies.get('rememberMe') || false;
         setInputs({ username: savedUsername, Email: savedEmail, password: '' , rememberMe: rememberMe });
     }, []);
- 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setInputs((prevInputs) => ({ ...prevInputs, [name]: value }));
     };
     const handleotp = (event) => {
-       
         setotp(event);
-        // setotp(() => event);
         clearErrors("otp")
         Setinvalid(false)
     };
-
+    useEffect(()=>{
+        if(show && timer >0){
+          
+            const intervalId = setInterval(() => {
+                setTimer(timer => {
+                    if (timer === 1) {
+                        clearInterval(intervalId);
+                        setOpen(false);
+                        return 0;
+                    } else {
+                        return timer - 1;
+                    }
+                });
+            }, 1000);
+            return () => clearInterval(intervalId);
+        }
+    },[show , timer])
+  
     const onSubmit = (data) => {
         setLoading(true);
         axios.post("https://api.cannabaze.com/AdminPanel/Login/", {
@@ -67,6 +83,8 @@ export default function Login_logout() {
             setLoading(false);
             
             setOpen(true);
+            // timerfun()
+            setTimer(30)
 
             if (Boolean(inputs.rememberMe)) {
                 let date = new Date();
@@ -88,17 +106,10 @@ export default function Login_logout() {
         });
       
     };
-
-
     const handleMeetingCreateDialogClose = (event, reason) => {
         if (reason && reason === "backdropClick")   return; 
-        // setFormData(formInitial);
         setOpen(false);
     };
-    const handleClose = () => {
-        setOpen(false);
-    };
-
     const handleClickShowPassword = () => {
         setValues({ ...values, showPassword: !values.showPassword });
     };
@@ -142,7 +153,6 @@ export default function Login_logout() {
         Setinvalid(true)
       });
     }
-   
     return (
         <div>
             <div className='login_logout_center'>
@@ -295,7 +305,7 @@ export default function Login_logout() {
                                                                     rules={{ required: 'Please enter OTP' }}
                                                                 />
                                         </div>
-                                        <p className='timer_box'>Didn't get a code? resend after <span> </span></p>
+                                        <p className='timer_box'>Didn't get a code? resend after <span> {`${Math.floor(timer / 60)}`.padStart(2, 0)}: {`${timer % 60}`.padStart(2, 0)}</span></p>
                                         <div className='d-flex mt-2 justify-content-center text-center'>
                                             { invalide && <span className='errormessage'>Invalid OTP</span>   }
                                             {

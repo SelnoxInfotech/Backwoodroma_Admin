@@ -10,7 +10,7 @@
 //         setEditorData(data);
 //     };
 
-//     console.log(editorData);
+
 
 //     return (
 //         <div className="App">
@@ -20,14 +20,11 @@
 //                 data={editorData}
 //                 onReady={editor => {
 //                     // You can store the "editor" and use when it is needed.
-//                     console.log('Editor is ready to use!', editor);
 //                 }}
 //                 onChange={handleEditorChange}
 //                 onBlur={(event, editor) => {
-//                     console.log('Blur.', editor);
 //                 }}
 //                 onFocus={(event, editor) => {
-//                     console.log('Focus.', editor);
 //                 }}
 //                 config={{
 //                     ckfinder: {

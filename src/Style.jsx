@@ -31,8 +31,8 @@ const useStyles = makeStyles(theme =>(
           width:'100%',
           "& .MuiOutlinedInput-input": {
             backgroundColor:'White',
-            padding:'8px 15px',
-            fontSize:'14px',
+            padding:'10px 15px',
+            fontSize:'16px',
             fontWeight:'400',
           },
           " &.Mui-focused fieldset": {
