@@ -3,7 +3,7 @@ import Successfullypopup from '../../Components/Component/Successfullypopup'
 import Unsuccesspopup from '../../Components/Component/Unsuccesspopup'
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import { FaEdit } from "react-icons/fa";
+// import { FaEdit } from "react-icons/fa";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { LuUpload } from "react-icons/lu";
@@ -20,6 +20,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Box from "@mui/material/Box";
 import useStyles from "../../Style";
 import Editer from "../../Components/Editer/Editer"
+import { useLocation } from "react-router";
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -42,9 +43,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 function BootstrapDialogTitle(props) { }
 
 
-export default function NewsEdit(props) {
+export default function NewsEdit() {
   // const defaultValue = props?.data?.Description;
-
+  let data = useLocation();
   const { state, dispatch } = useContext(Createcontext);
   const [sucsesopen, setsucsesopen] = useState(false)
   const [unsucsesopen, setunsucsesopen] = useState(false)
@@ -53,23 +54,23 @@ export default function NewsEdit(props) {
   const cookies = new Cookies();
   const token_data = cookies.get("Token_access");
 
-  const [Description , SetDescription] =  React.useState(props?.data?.Description) 
+  const [Description , SetDescription] =  React.useState(data.state?.Description) 
 
   const [Category, SetCategory] = React.useState([]);
   const [SubCategory, SetSubCategory] = React.useState([]);
   const [Image, SetImage] = React.useState("");
   const inputRef = useRef(null);
   const [News, setNews] = React.useState({
-    Title: props.data.Title,
-    Category_id: props.data.Category_id,
-    Link: props.data.Link,
-    Meta_Description: props.data.Meta_Description,
-    Meta_title: props.data.Meta_title,
-    StrainType: props.data.StrainType,
-    SubCategory_id: props.data.SubCategory_id,
-    Url_slug: props.data.Url_slug,
-    Alt_Text: props.data.Alt_Text,
-    Image: props.data.Image,
+    Title:data.state.Title,
+    Category_id:data.state.Category_id,
+    Link:data.state.Link,
+    Meta_Description:data.state.Meta_Description,
+    Meta_title:data.state.Meta_title,
+    StrainType:data.state.StrainType,
+    SubCategory_id:data.state.SubCategory_id,
+    Url_slug:data.state.Url_slug,
+    Alt_Text:data.state.Alt_Text,
+    Image:data.state.Image,
   });
 
   const [error, seterror] = React.useState({
@@ -130,12 +131,12 @@ export default function NewsEdit(props) {
     inputRef.current.value = null;
     SetImage(null);
   };
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
   React.useEffect(() => {
     axios("https://api.cannabaze.com/AdminPanel/Get-NewsCategory/", {
@@ -178,7 +179,7 @@ export default function NewsEdit(props) {
       },
     };
     Axios.post(
-      `https://api.cannabaze.com/AdminPanel/update-News/${props.data.id}`,
+      `https://api.cannabaze.com/AdminPanel/update-News/${data.state.id}`,
       formdata,
       config
     )
@@ -261,13 +262,13 @@ export default function NewsEdit(props) {
   }, [sucsesopen, unsucsesopen])
   return (
     <div>
-      <span color="success" onClick={handleClickOpen}>
+      {/* <span color="success" onClick={handleClickOpen}>
      
 <FaEdit size={22} color='#31B655'/>
 
 
-      </span>
-      <BootstrapDialog
+      </span> */}
+      {/* <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="Customizeed-dialog-title"
         open={open}
@@ -303,7 +304,16 @@ export default function NewsEdit(props) {
         </BootstrapDialogTitle>
 
         <DialogContent dividers>
-          <div className="container-fluid ">
+      
+        </DialogContent>
+        <DialogActions> */}
+{/* 
+          <Button sx={{ color: "#31B665" }} autoFocus onClick={handleClose}>
+            Exit
+          </Button>
+        </DialogActions> */}
+
+        <div className="container-fluid ">
             <div className="row ">
               <div className="col-12">
 
@@ -599,15 +609,11 @@ export default function NewsEdit(props) {
               </div>
             </div>
           </div>
-        </DialogContent>
-        <DialogActions>
-          <Button sx={{ color: "#31B665" }} autoFocus onClick={handleClose}>
-            Exit
-          </Button>
-        </DialogActions>
+
+
         {sucsesopen && <Successfullypopup setsucsesopen={setsucsesopen} link={'/News'} popupset={setOpen} />}
         {unsucsesopen && <Unsuccesspopup setsucsesopen={setunsucsesopen} link={'/News'} popupset={setOpen} />}
-      </BootstrapDialog>
+      {/* </BootstrapDialog> */}
     </div>
   );
 }

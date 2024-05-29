@@ -6,7 +6,7 @@ import { createTheme } from "@mui/material/styles";
 import axios from "axios";
 import Cookies from 'universal-cookie';
 import NewsEdit from "./EditNews"
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { FaEdit } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import Createcontext from "../../Hooks/Context/Context"
 import DeleteNews from "./DeleteNews"
@@ -91,9 +91,9 @@ export default function News() {
                         }
                       }} >
                        
-                            {state.Roles.EditBlogs &&<NewsEdit data={params?.row}></NewsEdit>}
+                            {state.Roles.EditBlogs &&  <Link to={"/editNews"}   state={params?.row}> <FaEdit size={22} color='#31B655'/></Link>}
                            {state.Roles.DeleteBlogs && <DeleteNews data={params?.row}></DeleteNews>}
-                     
+                     {/* //<NewsEdit data={params?.row}></NewsEdit>  */}
                     </Box>
                     }
                 </>)
