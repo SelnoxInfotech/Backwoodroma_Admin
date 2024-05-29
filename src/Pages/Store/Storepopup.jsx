@@ -38,20 +38,6 @@ export default function Storepopup() {
     const [LicError, SetLicError] = React.useState(false)
     const [LicenceImage, SetLicenceImage] = React.useState('');
     const navigate =  useNavigate()
-    //  let count =  0 
-    //  React.useEffect(()=>{
-    //     console.log(count === 0)
-    //   if(count === 0){
-    //     window.scroll({
-    //         top: 0, // 50% of the viewport height
-    //         left: 0,
-    //         behavior: "smooth"
-    //     });
-    //     count =  1
-    //     console.log(count , "runing count ")
-    //   }
-    //   console.log(count)
-    //  })
     const {
         placesService,
         placePredictions,
@@ -61,7 +47,6 @@ export default function Storepopup() {
         language: 'en',
         apiKey: 'AIzaSyBRchIzUTBZskwvoli9S0YxLdmklTcOicU'
     });
-
     const [error, seterror] = React.useState({
         Store_Name: "",
         Store_Address: "",
@@ -77,7 +62,6 @@ export default function Storepopup() {
 
 
     })
-
     const [Store, SetStore] = React.useState({
         Store_Name: "",
         Store_Type: "",
@@ -151,13 +135,11 @@ export default function Storepopup() {
         let html = convertToHTML(editorState.getCurrentContent());
         setConvertedContent(html);
     }, [editorState]);
-
     const resetFileInput = () => {
         inputRef.current.value = null;
         SetImage(null)
         SetimageError(true)
     };
-
     React.useEffect(() => {
         axios.get('https://api.cannabaze.com/AdminPanel/Get-AllVendor/', {
             headers: {
@@ -172,7 +154,6 @@ export default function Storepopup() {
 
 
     }, [token_data]);
-
     const Submit = () => {
 
         if (image === "") {
@@ -226,8 +207,6 @@ export default function Storepopup() {
         }
 
     };
-
-
     async function handlechnage(e, value) {
         let store_address = ""
         let country1 = ""
@@ -305,16 +284,18 @@ export default function Storepopup() {
 
         })
     }
-
-//    console.log(Boolean(errors.License_Type) && document?.getElementById('License_Type')?.focus()  )
-
-// 
-
     function mobile(e) {
         SetStore({
             ...Store, "Stores_MobileNo": e
         });
     }
+    React.useEffect(()=>{
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
+    },[])
     return (
         <div>
             <form onSubmit={handleSubmit(Submit)}>

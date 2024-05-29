@@ -23,6 +23,7 @@ $border-color_1: #fff transparent transparent transparent;
     align-items: center;
     gap: 18px;
   }
+ 
 }
 .namecircles{
   background-color: rgba(220, 202, 255, 1);
@@ -876,4 +877,36 @@ cursor: pointer;
       line-height: 1.5;
       margin-left: auto;
     }
+}
+.otppopup{
+  padding: 20px;
+   h4{
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 0;
+    text-align: center;
+   }
+   P{
+    font-size: 14px;
+    font-weight: 400;
+    color: #414141;
+    text-align: center;
+    margin-bottom: 0;
+     margin-top: 10px;
+   }
+   button{
+    border: none;
+    border-radius: 4px;
+    background-color: #31B655;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    padding: 5px 12px;
+   }
+   .errormessage{
+    font-size: 12px;
+    font-weight: 500;
+    color: rgb(182, 0, 0);
+   }
 }

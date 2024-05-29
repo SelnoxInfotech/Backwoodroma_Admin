@@ -100,7 +100,6 @@ const WebContent = () => {
            })
            setfaqscount(a)
     }
-    console.log(faqscount)
   return (
     <SectionCard >
         <div className='col-12  mb-3'>

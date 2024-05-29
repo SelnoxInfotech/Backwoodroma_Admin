@@ -83,7 +83,6 @@ export default function NewsSubCategory() {
     ]
 
     const rows = totel
- console.log(totel)
 return (
         <div>
                 <SectionCard>

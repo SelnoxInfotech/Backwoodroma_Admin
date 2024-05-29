@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { ThemeProvider } from "@mui/material/styles";
@@ -15,7 +15,7 @@ import Createcontext from '../../Hooks/Context/Context';
 import { useSnackbar } from 'notistack';
 import Tooltip from '@mui/material/Tooltip';
 import useStyles from '../../Style';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SectionCard } from '../../molecules/SectionCard/Index';
 export default function Store() {
     const { enqueueSnackbar } = useSnackbar();
@@ -25,6 +25,7 @@ export default function Store() {
     const token_data = cookies.get('Token_access')
     const [totel, setTotal] = React.useState([])
     const [pageSize, setPageSize] = React.useState(10)
+    const Navigate = useNavigate()
     React.useEffect(() => {
         axios("https://api.cannabaze.com/AdminPanel/Get-Stores/", {
 
@@ -37,8 +38,6 @@ export default function Store() {
 
         })
     }, [token_data, state])
-
-
     const Submit = (params) => {
       if(state.Roles.EditStore){  const formdata = new FormData();
         formdata.append('Store_Name', params.row.Store_Name);
@@ -68,7 +67,6 @@ export default function Store() {
             enqueueSnackbar('Edit Store Status  success !', { variant: 'success' });
         })}
     };
-
     const columns = [
         
         { field: 'Store_Name', headerName: 'Name', editable: false, minWidth: 60, flex: 1, sortable:false,headerClassName: 'super-app-theme--header' },
@@ -142,7 +140,6 @@ export default function Store() {
         },
 
     ];
-
     const rows = totel;
     const CustomFontTheme = createTheme({
         typography: {
@@ -160,13 +157,19 @@ export default function Store() {
             }
         }
     });
-
+    useEffect(()=>{
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
+    },[])
     return (
         <SectionCard>
             <div className='row'>
-                   <div className='col-12  mb-3 d-flex justify-content-between'>
+                    <div className='col-12  mb-3 d-flex justify-content-between'>
                         <h2>  <SlSocialDropbox color='#31B655' size={25}/> Store  <span className='total_count'>{`(${totel?.length})`}</span> </h2>
-                        { state.Roles.AddStore &&  <span> <Link to={"/addstore"}><h2 className=''>Store Add</h2></Link></span>  }
+                        { state.Roles.AddStore &&  <button className='topbutton' onClick={()=>{Navigate("/addstore")}}>Store Add</button>  }
                     </div>
                     <Box className={classes.DataTableBoxStyle} >
                         <div className='col-12' >

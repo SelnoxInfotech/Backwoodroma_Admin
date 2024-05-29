@@ -51,7 +51,6 @@ export default function NewsCategory(props) {
         })
     }
   },[isdelete])
-  console.log(isdelete)
   useEffect(() => {
     axios("https://api.cannabaze.com/AdminPanel/Get-NewsCategory/", {
       headers: {

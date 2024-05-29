@@ -2,10 +2,7 @@ import axios from 'axios'
 import React, { useState,useEffect } from 'react'
 import IconButton from '@mui/material/IconButton';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import OtpInput from 'react-otp-input';
 import Cookies from 'universal-cookie';
 import { Link, useNavigate } from 'react-router-dom';
@@ -28,14 +25,13 @@ export default function Login_logout() {
     const { register, handleSubmit, errors, reset , control ,clearErrors } = useForm();
     const [invalide, Setinvalid] = React.useState(false);
     const [loginsucces, setloginsucces] = React.useState(false);
-    const [otpvalid, setotpvalid] = useState("");
     const [inputs, setInputs] = useState({ username: '', Email: '', password: '' });
     const [show, setOpen] = useState(false);
     const [isLoggedIn, setLoading] = useState(false);
+    const [OTP, setotp] = useState("");
     React.useEffect(function () {
         Aos.init({ duration: 500 });
-      }, []);
-    const [OTP, setotp] = useState("");
+    }, []);
     const [values, setValues] = React.useState({
         password: "",
         showPassword: false,
@@ -47,14 +43,11 @@ export default function Login_logout() {
         const rememberMe = cookies.get('rememberMe') || false;
         setInputs({ username: savedUsername, Email: savedEmail, password: '' , rememberMe: rememberMe });
     }, []);
-    // React.useEffect(function () {
-    //     Aos.init({ duration: 5000 });
-    //   }, [loginsucces]);
+ 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setInputs((prevInputs) => ({ ...prevInputs, [name]: value }));
     };
-
     const handleotp = (event) => {
        
         setotp(event);
@@ -93,53 +86,21 @@ export default function Login_logout() {
                 setLoading(false);
             }
         });
-        setTimeout(alertFunc, 5 * 60 * 1000);
-    };
-
-    const otp_send = () => {
       
-        setOpen(false);
-        axios.post("https://api.cannabaze.com/AdminPanel/VerifyOtp/", { email: inputs.Email, OTP: OTP })
-        .then((response) => {
-            if (response.data.data === "invalid Otp") {
-                setOpen(true);
-                setotpvalid(response.data.data);
-                Setinvalid(true)
-            } else {
-                if (Boolean(response.data.permission.length !== 0) || response?.data?.is_superuser) {
-                    if (!response.data.is_superuser && Boolean(response.data.permission.length === 0)) {
-                        navigate("/*");
-                    } else {
-                        let date = new Date();
-                        date.setTime(date.getTime() + (60 * 60 * 8000));
-                        cookies.set('Token_access', response.data.tokens.access, { expires: date });
-                        navigate("/");
-                    }
-                } else {
-                    window.alert("You are not an authorized user");
-                }
-            }
-        }).catch((error)=>{
-            window.alert("somthing went wrong")
-            Setinvalid(true)
-
-        });
     };
+
+
     const handleMeetingCreateDialogClose = (event, reason) => {
         if (reason && reason === "backdropClick")   return; 
         // setFormData(formInitial);
         setOpen(false);
-};
+    };
     const handleClose = () => {
         setOpen(false);
     };
 
     const handleClickShowPassword = () => {
         setValues({ ...values, showPassword: !values.showPassword });
-    };
-
-    const alertFunc = () => {
-        setOpen(false);
     };
     const onOtpSubmit= (data)=>{
       
@@ -148,7 +109,7 @@ export default function Login_logout() {
       .then((response) => {
           if (response.data.data === "invalid Otp") {
               setOpen(true);
-              setotpvalid(response.data.data);
+              
               Setinvalid(true)
           } else {
               if (Boolean(response.data.permission.length !== 0) || response?.data?.is_superuser) {
@@ -177,11 +138,11 @@ export default function Login_logout() {
           }
       }).catch((error)=>{
         setOpen(true);
-        // setotpvalid(response.data.data);
+       
         Setinvalid(true)
       });
     }
-
+   
     return (
         <div>
             <div className='login_logout_center'>
@@ -194,7 +155,6 @@ export default function Login_logout() {
                                 <label htmlFor='name'>
                                     Name<span className='required '>*</span>:
                                 </label>
-
                                 <TextField placeholder='User Name'
                                     fullWidth
                                     type='text'
@@ -301,62 +261,53 @@ export default function Login_logout() {
                         </div>
                     </div>
                 </form>
-                {/* <button onClick={()=>{setloginsucces(!loginsucces)}}>click me</button> */}
+              
             </div>
             <div>
-
                 <Dialog open={show} onClose={handleMeetingCreateDialogClose} disableBackdropClick  disableEscapeKeyDown className={classes.otppopup}>
-                    <DialogTitle>Enter OTP</DialogTitle>
-                    <form  onSubmit={handleSubmit(onOtpSubmit)}>
-                    <DialogContent>
-                        <DialogContentText>
-                            {
-                                otpvalid === "invalid Otp" &&
-                                <div className='col-12 center colorotp'>
-                                    <p>{otpvalid}</p>
-                                </div>
-                            }
-                            Please Enter OTP Which Is Sent On Your Register Email
-                        </DialogContentText>
-                     
-                                    <div className='d-flex  justify-content-center text-center'>
-                                    <Controller
-                                        render={( field ) => (
-                                            <OtpInput   shouldAutoFocus    value={field.value}  onChange={(e)=>{handleotp(e) ; field.onChange(e)}}    numInputs={4} renderSeparator={<span> </span>}    autofocus={true}    isInputNum={true}  hasErrored={true}  renderInput={(props) => <input {...props} type='number' className='otpinputboxstyle'  />}
-                                                                               inputStyle={{
-                                                                                    width: "30px",
-                                                                                    marginBottom: "10px",
-                                                                                    height: "30px",
-                                                                                    margin:'0 3px',
-                                                                                    backgroundColor: "transparent",
-                                                                                    outline: "none",
-                                                                                    borderColor:(errors.otp || invalide ) ? 'red' : "#31B655",
-                                                                                }}  
-                                                                    />
-                                                                )}
-                                                                control={control}
-                                                                name="otp"  
-                                                               value={OTP}
-                                                                rules={{ required: 'Please enter OTP' }}
-                                                              />
-                                    </div>
-                                    <div className='d-flex  justify-content-center text-center'>
-                                        { invalide && <span style={{ color: "red" }}>Invalid OTP</span>   }
-                                        {
-                                            errors.otp && <span style={{ color: "red" }}> {errors.otp.message}</span>  
-                                        }
-                                    </div>
-                    </DialogContent>
-                    <DialogActions>
-                        {
-                            otpvalid === "invalid Otp" ? <p>
-                                <button className=' ' onClick={handleSubmit}>resend</button>
-                                <button className=' ' onClick={otp_send}>Verify</button>
-                            </p>
-                                : <button className='  ' type='submit' >Verify</button>
-                        }
-                    </DialogActions>
-                    </form>
+                   <div className='otppopup'>
+                            <h4> Enter OTP</h4>
+                            <p> Please Enter OTP Which Is Sent On Your Register Email</p>
+
+                        <form  onSubmit={handleSubmit(onOtpSubmit)}>
+                        <DialogContent>
+                            
+                              
+                        
+                                        <div className='d-flex  justify-content-center text-center'>
+                                        <Controller
+                                            render={( field ) => (
+                                                <OtpInput   shouldAutoFocus    value={field.value}  onChange={(e)=>{handleotp(e) ; field.onChange(e)}}    numInputs={4} renderSeparator={<span> </span>}    autofocus={true}    isInputNum={true}  hasErrored={true}  renderInput={(props) => <input {...props} type='number' className='otpinputboxstyle'  />}
+                                                                                inputStyle={{
+                                                                                        width: "30px",
+                                                                                        marginBottom: "10px",
+                                                                                        height: "30px",
+                                                                                        margin:'0 3px',
+                                                                                        backgroundColor: "transparent",
+                                                                                        outline: "none",
+                                                                                        borderColor:(errors.otp || invalide ) ? 'red' : "#31B655",
+                                                                                    }}  
+                                                                        />
+                                                                    )}
+                                                                    control={control}
+                                                                    name="otp"  
+                                                                    value={OTP}
+                                                                    rules={{ required: 'Please enter OTP' }}
+                                                                />
+                                        </div>
+                                        <p className='timer_box'>Didn't get a code? resend after <span> </span></p>
+                                        <div className='d-flex mt-2 justify-content-center text-center'>
+                                            { invalide && <span className='errormessage'>Invalid OTP</span>   }
+                                            {
+                                                errors.otp && <span className='errormessage' > {errors.otp.message}</span>  
+                                            }
+                                        </div>
+                        </DialogContent>
+                        <div className='d-flex justify-content-end'>        
+                            <button className='' type='submit' >Verify</button>
+                        </div>
+                        </form>
+                    </div>
                 </Dialog>
             </div>
               { loginsucces &&  <div className='verifiedopt'>

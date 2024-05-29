@@ -27,7 +27,6 @@ export default function NewsCategoryDelete(props) {
   })
     }
   },[isdelete])
-  console.log(isdelete)
   return (
     <React.Fragment>
     <div>
