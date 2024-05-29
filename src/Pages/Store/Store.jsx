@@ -6,7 +6,7 @@ import { createTheme } from "@mui/material/styles";
 import axios from "axios";
 import { SlSocialDropbox } from "react-icons/sl";
 import Cookies from 'universal-cookie';
-import Storepopup from "./Storepopup"
+// import Storepopup from "./Storepopup"
 import StoreEdit from './StoreEdit';
 import StoreView from "./StoreView"
 import StoreDelete from "./StoreDelete"

@@ -642,7 +642,8 @@ return (
 
 
                                     <TextField type="text" placeholder='Add  Store Website:' id="outlined-basic" variant="outlined" name='Stores_Website' value={Store.Stores_Website} style={{ minWidth: 190, fontSize: 15 }}
-                                        onChange={handleChange} sx={{
+                                        onChange={handleChange} 
+                                        sx={{
                                             width: '100%',
                                             '& .MuiOutlinedInput-root': {
                                                 fontSize: '16px',
@@ -680,7 +681,6 @@ return (
                                         })}
                                         helperText={errors.Stores_Website?.message}
                                         error={Boolean(errors?.Stores_Website)}
-
                                     />
 
                                 </div>
@@ -756,7 +756,8 @@ return (
                                         onChange={handleChange}
                                         size="small"
                                         displayEmpty
-                                        inputProps={{ 'aria-label': 'Without label' }} sx={{
+                                        inputProps={{ 'aria-label': 'Without label' }} 
+                                        sx={{
                                             width: '100%',
                                             '& .MuiOutlinedInput-root': {
                                                 fontSize: '16px',

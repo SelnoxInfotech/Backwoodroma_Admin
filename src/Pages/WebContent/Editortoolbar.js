@@ -134,8 +134,6 @@ import { CKEditor } from 'ckeditor4-react';
 
 function App() {
     const [data, setData] = React.useState(``);
-    
-
     return (
         <div>
             <CKEditor
