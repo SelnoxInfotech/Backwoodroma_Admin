@@ -5,6 +5,9 @@
   padding: 0;
   font-family: 'Poppins', sans-serif;
 }
+
+
+
 .required {
   color: red;
 }
@@ -24,14 +27,14 @@ body {
   font-size: 14px;
 }
 
-li {
+/* li {
   display: contents;
   list-style: none;
 }
 
 ul li path {
   color: #31B665;
-}
+} */
 
 /* login  */
 

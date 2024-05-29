@@ -1,5 +1,5 @@
 import React from 'react'
-import ClickAwayListener from '@mui/base/ClickAwayListener';
+import {ClickAwayListener} from '@mui/base/ClickAwayListener';
 import {useNavigate} from 'react-router-dom'
 import { RxCrossCircled } from "react-icons/rx";
 

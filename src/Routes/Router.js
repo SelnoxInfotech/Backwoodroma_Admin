@@ -43,6 +43,7 @@ import TopLocation from '../Pages/Tablespages/TopLocation';
 import Newspop from '../Pages/News/NewsPopup';
 import Updaterolesandpermission from '../Pages/Role/RoleDetailsAndPermission/Updaterolesandpermission';
 import Storepopup from '../Pages/Store/Storepopup';
+import EditNews from "../Pages/News/EditNews"
 // export default function Router() {;
 //   return (
     
@@ -99,6 +100,10 @@ const routesConfig = [
     path:"*",
     element:<Pagenotfound/>
   },
+  // {
+  //   path:"/webcontent",
+  //   element:<WebContent/>
+  // },
   {
     path:"/Forgot",
     element:<Forgot/>
@@ -251,6 +256,10 @@ const routesConfig = [
       {
         path:"/addstore",
         element:<Protected  Component={Storepopup}/>
+      },
+      {
+        path:"/editNews",
+        element:<Protected  Component={EditNews}/>
       },
       {
         path:"/updateroles",

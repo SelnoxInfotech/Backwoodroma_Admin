@@ -1,155 +1,156 @@
-import React from "react";
-import { Quill } from "react-quill";
+// import React, { useState } from 'react';
+// import { CKEditor } from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+// const App = () => {
+//     const [editorData, setEditorData] = useState("<p>Hello from CKEditor&nbsp;5!</p>");
 
-const CustomUndo = () => (
-    <svg viewBox="0 0 18 18">
-      <polygon className="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10" />
-      <path
-        className="ql-stroke"
-        d="M8.09,13.91A4.6,4.6,0,0,0,9,14,5,5,0,1,0,4,9"
-      />
-    </svg>
-  );
-  const CustomRedo = () => (
-    <svg viewBox="0 0 18 18">
-      <polygon className="ql-fill ql-stroke" points="12 10 14 12 16 10 12 10" />
-      <path
-        className="ql-stroke"
-        d="M9.91,13.91A4.6,4.6,0,0,1,9,14a5,5,0,1,1,5-5"
-      />
-    </svg>
-  );
-  function undoChange() {
-    this.quill.history.undo();
-  }
-  function redoChange() {
-    this.quill.history.redo();
-  }
-  const Size = Quill.import("formats/size");
-  Size.whitelist = ["extra-small", "small", "medium", "large"];
-  Quill.register(Size, true);
-  
-  const Font = Quill.import("formats/font");
-  Font.whitelist = [
-    "arial",
-    "comic-sans",
-    "courier-new",
-    "georgia",
-    "helvetica",
-    "lucida"
-  ];
-  Quill.register(Font, true);
-  
-  // Modules object for setting up the Quill editor
-  export const modules = {
-    toolbar: {
-      container: "#toolbar",
-      handlers: {
-        undo: undoChange,
-        redo: redoChange
-      }
-    },
-    history: {
-      delay: 500,
-      maxStack: 100,
-      userOnly: true
-    }
-  };
-  
-  // Formats objects for setting up the Quill editor
-  export const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "align",
-    "strike",
-    "script",
-    "blockquote",
-    "background",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "color",
-    "code-block"
-  ];
-const Editortoolbar = () => {
+//     const handleEditorChange = (event, editor) => {
+//         const data = editor.getData();
+//         setEditorData(data);
+//     };
+
+//     console.log(editorData);
+
+//     return (
+//         <div className="App">
+//             <h2>Using CKEditor&nbsp;5 build in React</h2>
+//             <CKEditor
+//                 editor={ClassicEditor}
+//                 data={editorData}
+//                 onReady={editor => {
+//                     // You can store the "editor" and use when it is needed.
+//                     console.log('Editor is ready to use!', editor);
+//                 }}
+//                 onChange={handleEditorChange}
+//                 onBlur={(event, editor) => {
+//                     console.log('Blur.', editor);
+//                 }}
+//                 onFocus={(event, editor) => {
+//                     console.log('Focus.', editor);
+//                 }}
+//                 config={{
+//                     ckfinder: {
+//                         uploadUrl: 'your-upload-url'
+//                     },
+//                     // Add more plugins here
+//                     toolbar: [
+//                         'heading',
+//                         '|',
+//                         'bold',
+//                         'italic',
+//                         'link',
+//                         'bulletedList',
+//                         'numberedList',
+//                         '|',
+//                         'indent',
+//                         'outdent',
+//                         '|',
+//                         'blockQuote',
+//                         'insertTable',
+//                         'mediaEmbed',
+//                         'undo',
+//                         'redo',
+//                         '|',
+//                         'alignment',
+//                         'fontBackgroundColor',
+//                         'fontColor',
+//                         'fontSize',
+//                         'fontFamily',
+//                         'highlight',
+//                         'horizontalLine',
+//                         'removeFormat',
+//                         'specialCharacters',
+//                         'subscript',
+//                         'superscript',
+//                         'underline',
+//                         '|',
+//                         'imageInsert',
+//                         'imageUpload',
+//                         'MathType',
+//                         'ChemType',
+//                         'htmlEmbed',
+//                         '|',
+//                         'codeBlock',
+//                         'code',
+//                         'exportPdf',
+//                         'insertFile',
+//                         'todoList'
+//                     ],
+//                     image: {
+//                         toolbar: [
+//                             'imageTextAlternative',
+//                             '|',
+//                             'imageStyle:alignLeft',
+//                             'imageStyle:full',
+//                             'imageStyle:alignRight'
+//                         ],
+//                         styles: [
+//                             'full',
+//                             'alignLeft',
+//                             'alignRight'
+//                         ],
+//                         resizeOptions: [
+//                             {
+//                                 name: 'resizeImage:original',
+//                                 label: 'Original',
+//                                 value: null
+//                             },
+//                             {
+//                                 name: 'resizeImage:50',
+//                                 label: '50%',
+//                                 value: '50'
+//                             },
+//                             {
+//                                 name: 'resizeImage:75',
+//                                 label: '75%',
+//                                 value: '75'
+//                             }
+//                         ],
+//                         toolbar: [
+//                             'imageStyle:alignLeft',
+//                             'imageStyle:full',
+//                             'imageStyle:alignRight',
+//                             '|',
+//                             'resizeImage',
+//                             '|',
+//                             'imageTextAlternative'
+//                         ]
+//                     },
+//                     table: {
+//                         contentToolbar: [
+//                             'tableColumn',
+//                             'tableRow',
+//                             'mergeTableCells'
+//                         ]
+//                     }
+//                 }}
+//             />
+//         </div>
+//     );
+// }
+
+// export default App;
+
+import React from 'react';
+import { CKEditor } from 'ckeditor4-react';
+
+function App() {
+    const [data, setData] = React.useState(``);
     
-  return (
-    <div id="toolbar">
-    <span className="ql-formats">
-      <select className="ql-font" defaultValue="arial">
-        <option value="arial">Arial</option>
-        <option value="comic-sans">Comic Sans</option>
-        <option value="courier-new">Courier New</option>
-        <option value="georgia">Georgia</option>
-        <option value="helvetica">Helvetica</option>
-        <option value="lucida">Lucida</option>
-      </select>
-      <select className="ql-size" defaultValue="medium">
-        <option value="extra-small">Size 1</option>
-        <option value="small">Size 2</option>
-        <option value="medium">Size 3</option>
-        <option value="large">Size 4</option>
-      </select>
-      <select className="ql-header" defaultValue="7">
-        <option value="1">Heading h1</option>
-        <option value="2">Heading h2</option>
-        <option value="3">Heading h3</option>
-        <option value="4">Heading h4</option>
-        <option value="5">Heading h5</option>
-        <option value="6">Heading h6</option>
-        <option value="7">Normal</option> 
-      </select>
-    </span>
-    <span className="ql-formats">
-      <button className="ql-bold" />
-      <button className="ql-italic" />
-      <button className="ql-underline" />
-      <button className="ql-strike" />
-    </span>
-    <span className="ql-formats">
-      <button className="ql-list" value="ordered" />
-      <button className="ql-list" value="bullet" />
-      <button className="ql-indent" value="-1" />
-      <button className="ql-indent" value="+1" />
-    </span>
-    <span className="ql-formats">
-      <button className="ql-script" value="super" />
-      <button className="ql-script" value="sub" />
-      <button className="ql-blockquote" />
-      <button className="ql-direction" />
-    </span>
-    <span className="ql-formats">
-      <select className="ql-align" />
-      <select className="ql-color" />
-      <select className="ql-background" />
-    </span>
-    <span className="ql-formats">
-      <button className="ql-link" />
-      <button className="ql-image" />
-      <button className="ql-video" />
-    </span>
-    <span className="ql-formats">
-      <button className="ql-formula" />
-      <button className="ql-code-block" />
-      <button className="ql-clean" />
-    </span>
-    <span className="ql-formats">
-      <button className="ql-undo">
-        <CustomUndo />
-      </button>
-      <button className="ql-redo">
-        <CustomRedo />
-      </button>
-    </span>
-  </div>
-  )
+
+    return (
+        <div>
+            <CKEditor
+                //   config={ckeditorConfig}
+                onChange={(event) => {
+                    setData(event.editor.getData());
+                }}
+                initData={data}
+                // data={data} // Provide initial data to the CKEditor component
+            />
+        </div>
+    );
 }
 
-export default Editortoolbar
+export default App;

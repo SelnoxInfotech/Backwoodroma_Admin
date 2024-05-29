@@ -11,8 +11,6 @@ import {
     StateSelect,
   } from "react-country-state-city";
   import "react-country-state-city/dist/react-country-state-city.css";
-  import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import draftToHtml from "draftjs-to-html";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -84,12 +82,12 @@ const WebContent = () => {
     const handleChange = (event) => {
       setAge(event.target.value);
     };
-    const handleContentStateChange = (contentState) => {
-        setConvertedContent(draftToHtml(contentState));
-    };
-    const handleEditorStateChange = (editorState) => {
-        setEditorState(editorState);
-    };
+    // const handleContentStateChange = (contentState) => {
+    //     setConvertedContent(draftToHtml(contentState));
+    // };
+    // const handleEditorStateChange = (editorState) => {
+    //     setEditorState(editorState);
+    // };
     const questionchange=(e , index)=>{
         faqscount[index].title =e.target.value;
         setfaqscount([...faqscount])
@@ -102,7 +100,7 @@ const WebContent = () => {
     }
   return (
     <SectionCard >
-        <div className='col-12  mb-3'>
+        <div className='col-12 Add_Category m-2  mb-3 px-4'>
             <h2 className='pagetitle '> <SlSocialDropbox color='#31B655' size={25}/>  Add Content  </h2>
         
         </div>
@@ -130,13 +128,7 @@ const WebContent = () => {
                         </div>
                         <div className='col-lg-3 col-md-6'>
                         <label className='label_faq'> Contary</label>
-                        {/* <Autocomplete
-                            disablePortal
-                            id="combo-box-demo"
-                            options={contary}
-                            renderInput={(params) => <TextField {...params} />}
-                            className={classes.faqautofeild}
-                        /> */}
+                  
                             <CountrySelect
                             onChange={(e) => {
                             setCountryid(e.id);
@@ -225,11 +217,11 @@ const WebContent = () => {
                                     wrapperClassName="wrapperClassName"
                                     editorClassName="editorClassName"
                                 /> */}
-                                <Editortoolbar/>
-                                <ReactQuill theme="snow" value={value} onChange={setValue}
+                                <Editortoolbar  />
+                                {/* <ReactQuill theme="snow" value={value} onChange={setValue}
                                     modules={modules}
                                     formats={formats}
-                                />
+                                /> */}
                                 </Box>
                             </div>
                         </div>
@@ -282,6 +274,8 @@ const WebContent = () => {
         </div>
         </div>
     </SectionCard> 
+
+
   )
 }
 export default WebContent

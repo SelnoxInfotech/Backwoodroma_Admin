@@ -90,13 +90,13 @@ export default function StoreEdit(props) {
     React.useEffect(() => {
         const cookies = new Cookies();
         const token_data = cookies.get('Token_access')
-        axios.get('https://api.cannabaze.com/AdminPanel/Get-AllVendor/', {
+        axios.get('https://api.cannabaze.com/AdminPanel/Get-AllVendorListApi/', {
             headers: {
                 'Authorization': `Bearer ${token_data}`
             }
 
         }).then((res) => {
-            setvendorlist(res.data.data)
+            setvendorlist(res.data)
         }).catch((error) => {
             console.trace(error)
         })
@@ -235,66 +235,68 @@ export default function StoreEdit(props) {
                 object[l] = data.long_name
                 return object
             })
-            if (Boolean(object.country)) {
+                 if(Boolean(object)){
+                    if (Boolean(object.country)) {
 
-                country1 = object.country
-            }
-            else if (Object.keys(object).length === 1) {
-                country1 = Object.values(object)[0].replace(/\s/g, '-')
-
-            }
-
-            if (Boolean(object.administrative_area_level_1)) {
-
-                state1 = object.administrative_area_level_1.replace(/\s/g, '-');
-
-
-            }
-            if (Boolean(object.administrative_area_level_3) || Boolean(object.establishment) || Boolean(object.locality) || Boolean(object.sublocality) || Boolean(object.administrative_area_level_2)) {
-
-
-                if (Boolean(object.administrative_area_level_3)) {
-                    city1 = object.administrative_area_level_3
-                }
-                if (Boolean(object.sublocality) && Boolean(object.locality)) {
-
-                    city1 = object.sublocality.replace(/\s/g, '-')
-                }
-                else if (Boolean(object.locality)) {
-
-                    city1 = object.locality.replace(/\s/g, '-')
-                }
-                else if (Object.keys(object).length !== 1 && Boolean(object.establishment)) {
-                    city1 = object.establishment.replace(/\s/g, '-')
-                }
-                else if (Boolean(object.sublocality_level_1)) {
-                    city1 = object.sublocality_level_1.replace(/\s/g, '-')
-                }
-
-                if (Boolean(object.sublocality_level_1) && Boolean(object.locality)) {
-                    city1 = object.sublocality_level_1.replace(/\s/g, '-')
-                }
-
-                if ((Boolean(object.administrative_area_level_3) && Boolean(object.locality)) && (Boolean(object.administrative_area_level_1) && Boolean(object.locality))) {
-
-                    city1 = object.locality.replace(/\s/g, '-')
-                }
-                else {
-                    if (!Boolean(object.administrative_area_level_3) && !Boolean(object.establishment) && !Boolean(object.locality) && !Boolean(object.sublocality) && Boolean(object.administrative_area_level_2)) {
-                        if (!city1) {
-                            city1 = object.administrative_area_level_2.replace(/\s/g, '-')
-
+                        country1 = object.country
+                    }
+                    else if (Object.keys(object).length === 1) {
+                        country1 = Object.values(object)[0].replace(/\s/g, '-')
+        
+                    }
+        
+                    if (Boolean(object.administrative_area_level_1)) {
+        
+                        state1 = object.administrative_area_level_1.replace(/\s/g, '-');
+        
+        
+                    }
+                    if (Boolean(object.administrative_area_level_3) || Boolean(object.establishment) || Boolean(object.locality) || Boolean(object.sublocality) || Boolean(object.administrative_area_level_2)) {
+        
+        
+                        if (Boolean(object.administrative_area_level_3)) {
+                            city1 = object.administrative_area_level_3
+                        }
+                        if (Boolean(object.sublocality) && Boolean(object.locality)) {
+        
+                            city1 = object.sublocality.replace(/\s/g, '-')
+                        }
+                        else if (Boolean(object.locality)) {
+        
+                            city1 = object.locality.replace(/\s/g, '-')
+                        }
+                        else if (Object.keys(object).length !== 1 && Boolean(object.establishment)) {
+                            city1 = object.establishment.replace(/\s/g, '-')
+                        }
+                        else if (Boolean(object.sublocality_level_1)) {
+                            city1 = object.sublocality_level_1.replace(/\s/g, '-')
+                        }
+        
+                        if (Boolean(object.sublocality_level_1) && Boolean(object.locality)) {
+                            city1 = object.sublocality_level_1.replace(/\s/g, '-')
+                        }
+        
+                        if ((Boolean(object.administrative_area_level_3) && Boolean(object.locality)) && (Boolean(object.administrative_area_level_1) && Boolean(object.locality))) {
+        
+                            city1 = object.locality.replace(/\s/g, '-')
+                        }
+                        else {
+                            if (!Boolean(object.administrative_area_level_3) && !Boolean(object.establishment) && !Boolean(object.locality) && !Boolean(object.sublocality) && Boolean(object.administrative_area_level_2)) {
+                                if (!city1) {
+                                    city1 = object.administrative_area_level_2.replace(/\s/g, '-')
+        
+                                }
+                            }
                         }
                     }
-                }
-            }
-            setStore((prevStore) => ({
-                ...prevStore,
-                "Store_Address": store_address,
-                "Country": country1,
-                "state": state1,
-                "city": city1
-            }));
+                    setStore((prevStore) => ({
+                        ...prevStore,
+                        "Store_Address": store_address,
+                        "Country": country1,
+                        "state": state1,
+                        "city": city1
+                    }));
+                 }
 
         })
     }
@@ -599,7 +601,7 @@ return (
                                             <Autocomplete
                                                 freeSolo
                                                 disableClearable
-                                                inputValue={Store?.Store_Address}
+                                                inputValue={Store?.Store_Address || ''}
                                                 options={placePredictions}
                                                 onChange={(event, value) => {
                                                     handleAddress(event, value);
@@ -607,7 +609,7 @@ return (
                                                 }}
                                                 renderOption={(props, option) => (
                                                     <li {...props} >
-                                                        <IoLocationSharp />{option.description}
+                                                        <IoLocationSharp />{option?.description}
                                                     </li>
                                                 )}
                                                 getOptionLabel={(option) => option?.description }

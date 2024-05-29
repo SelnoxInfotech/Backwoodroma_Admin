@@ -1,6 +1,6 @@
 import React from 'react'
 import { RxCrossCircled } from "react-icons/rx";
-import  ClickAwayListener  from '@mui/base/ClickAwayListener';
+import  {ClickAwayListener}  from '@mui/base/ClickAwayListener';
 import Aos from "aos";
 import "aos/dist/aos.css";
 Aos.init({
