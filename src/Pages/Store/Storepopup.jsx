@@ -310,7 +310,7 @@ export default function Storepopup() {
                             <label> Store Name:</label>
                             <TextField type="text" placeholder='Add  Store Name' id="outlined-basic" variant="outlined" name='Store_Name' value={Store.Store_Name}
                                 onChange={(e) => handleChange(e)}
-                                InputProps={{ startAdornment: <InputAdornment position="start"> </InputAdornment> }}
+                                // InputProps={{ startAdornment: <InputAdornment position="start"> </InputAdornment> }}
                                 label={massage.Store_Name}
                                 sx={{
                                     width: '100%',
@@ -473,9 +473,7 @@ export default function Storepopup() {
                                             '& .MuiOutlinedInput-root': {
                                                 fontSize: '16px',
 
-                                                // '& fieldset': {
-                                                //     borderColor: error.Store_Name,
-                                                // },
+                                               
                                             },
                                             '& .MuiOutlinedInput-input': {
                                                 padding: ' 10px',
