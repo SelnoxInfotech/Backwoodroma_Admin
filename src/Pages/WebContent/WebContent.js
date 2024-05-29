@@ -161,13 +161,6 @@ const WebContent = () => {
                         </div>
                         <div className='col-lg-3 col-md-6'>
                         <label className='label_faq'>City</label>
-                        {/* <Autocomplete
-                            disablePortal
-                            id="combo-box-demo"
-                            options={city}
-                            className={classes.faqautofeild}
-                            renderInput={(params) => <TextField {...params} />}
-                        /> */}
                             <CitySelect
                         countryid={countryid}
                         stateid={stateid}
@@ -207,21 +200,8 @@ const WebContent = () => {
                                 }
                                 }}
                             >
-                                {/* <Editor
-                                    editorState={editorState}
-                                    toolbar={toolbar}
-                                    localization={localization}
-                                    onEditorStateChange={handleEditorStateChange}
-                                    onContentStateChange={handleContentStateChange}
-                                    toolbarClassName="toolbarClassName"
-                                    wrapperClassName="wrapperClassName"
-                                    editorClassName="editorClassName"
-                                /> */}
+                             
                                 <Editortoolbar  />
-                                {/* <ReactQuill theme="snow" value={value} onChange={setValue}
-                                    modules={modules}
-                                    formats={formats}
-                                /> */}
                                 </Box>
                             </div>
                         </div>
