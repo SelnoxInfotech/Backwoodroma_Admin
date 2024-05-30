@@ -47,7 +47,7 @@ const WebContent = () => {
     },[Content])
     const classes = useStyles()
     const [isfaq, setIsaq] = useState(false)
-    const [faqscount, setfaqscount] = React.useState([{
+    const [Faq, setFaq] = React.useState([{
         title: '',
         answer: ''
     }]);
@@ -94,18 +94,18 @@ const WebContent = () => {
         }
     };
     const questionchange = (e, index) => {
-        faqscount[index].title = e.target.value;
-        setfaqscount([...faqscount])
+        Faq[index].title = e.target.value;
+        setFaq([...Faq])
     }
     const Answerchange = (e, index) => {
-        faqscount[index].answer = e.target.value;
-        setfaqscount([...faqscount])
+        Faq[index].answer = e.target.value;
+        setFaq([...Faq])
     }
     const removefaqbox = (indx) => {
-        let a = faqscount.filter((item, index) => {
+        let a = Faq.filter((item, index) => {
             return index !== indx
         })
-        setfaqscount(a)
+        setFaq(a)
     }
     function Submit() {
         const config = {
@@ -114,7 +114,7 @@ const WebContent = () => {
         const combinedData = {
             ...data,
             Content,
-            faqscount
+            Faq
         };
 
        if( Content !== "") {
@@ -460,7 +460,7 @@ const WebContent = () => {
 
                                         <div>
                                             {
-                                                faqscount.map((items, index) => {
+                                                Faq.map((items, index) => {
                                                     return <div className='faqinputbox' key={index}>
                                                         <input type='text' value={items.title} placeholder='Question' onChange={(e) => { questionchange(e, index) }} />
                                                         <textarea placeholder='Answer'  onChange={(e) => { Answerchange(e, index) }} value={items.answer}></textarea>
@@ -474,7 +474,7 @@ const WebContent = () => {
 
                                         </div>
                                         <button className='addfaqbtn' onClick={() => {
-                                            setfaqscount([...faqscount, {
+                                            setFaq([...Faq, {
                                                 title: '',
                                                 answer: ''
                                             }])
