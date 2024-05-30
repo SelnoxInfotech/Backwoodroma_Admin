@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import axios from "axios";
@@ -26,6 +26,7 @@ export default function Store() {
     const [totel, setTotal] = React.useState([])
     const [pageSize, setPageSize] = React.useState(10)
     const Navigate = useNavigate()
+    
     React.useEffect(() => {
         axios("https://api.cannabaze.com/AdminPanel/Get-Stores/", {
 
@@ -38,8 +39,11 @@ export default function Store() {
 
         })
     }, [token_data, state])
+
+
     const Submit = (params) => {
-      if(state.Roles.EditStore){  const formdata = new FormData();
+      if(state.Roles.EditStore){  
+        const formdata = new FormData();
         formdata.append('Store_Name', params.row.Store_Name);
         formdata.append('Store_Type', params.row.Store_Type);
         formdata.append('LicenceNo', params.row.LicenceNo);
@@ -128,8 +132,8 @@ export default function Store() {
                         }
                     }} >
                        
-                                        {   state.Roles.EditStore && <StoreEdit data={params.row}></StoreEdit> }
-                                        {   state.Roles.DeleteStore && <StoreDelete data={params.row} ></StoreDelete> }
+                                        {state.Roles.EditStore && <StoreEdit data={params.row}></StoreEdit> }
+                                        { state.Roles.DeleteStore && <StoreDelete data={params.row} ></StoreDelete> }
                                         {   state.Roles.ViewStore && <StoreView></StoreView> }
                      
                     </Box>

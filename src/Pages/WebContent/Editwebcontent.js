@@ -9,6 +9,8 @@ import axios from "axios";
 import Cookies from 'universal-cookie';
 import { useForm, Controller } from "react-hook-form";
 import _ from 'lodash';
+import { FormHelperText } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -16,25 +18,36 @@ import './Webcontent.css'
 import TextField from '@mui/material/TextField';
 import useStyles from '../../Style';
 import { useSnackbar } from 'notistack';
+import { Link, useNavigate  , useLocation} from 'react-router-dom';
+
 const WebContent = () => {
+    const location = useLocation();
+    console.log(location.state)
     const cookies = new Cookies();
+    const Navigate = useNavigate()
     const { enqueueSnackbar } = useSnackbar();
     const token_data = cookies.get('Token_access')
-    const { register, handleSubmit, errors, control, setError } = useForm();
+    const { register, handleSubmit, errors, control, setError , clearErrors } = useForm();
     const [country, setcontary] = React.useState(Country.getAllCountries());
+    const [isLoggedIn, setLoading] = useState(false);
+    const [editer , setediter] =  React.useState(false)
     const [data, Setdata] = React.useState({
-        type: "dispensary",
-        Country: "",
-        state: "",
-        city: ""
+        Type: "dispensary",
+        Country: location.state.Country,
+        State: location.state.State,
+        City: location.state.City,
+        Title: location.state.Title
     });
-    const [Description, SetDescription] = React.useState(``);
+    const [Content, SetDescription] = React.useState(location.state.Content);
     const [city, setcity] = React.useState([]);
     const [state, setstate] = React.useState(() => {
         // const saved = _.find(country, function (o) { return data?.state === o.isoCode });
         return [];
-      });
+    });
 
+    React.useEffect(()=>{
+        Content !== "" && setediter(false)
+    },[Content])
     const classes = useStyles()
     const [isfaq, setIsaq] = useState(false)
     const [faqscount, setfaqscount] = React.useState([{
@@ -48,24 +61,33 @@ const WebContent = () => {
             Setdata(prevState => ({
                 ...prevState,
                 "Country": find.name,
-                "state": "",
-                "city": ""
+                "State": "",
+                "City": ""
             }));
             setstate(State.getStatesOfCountry(event.target.value))
+            clearErrors('Country')
+            clearErrors('State')
+            clearErrors('City')
         }
-        else if (event.target.name === "state") {
+        else if (event.target.name === "State") {
             const statefind = _.find(state, function (o) { return event.target.value === o.isoCode });
             Setdata(prevState => ({
                 ...prevState,
-                "state": statefind.name
+                "State": statefind.name
             }));
             setcity(City.getCitiesOfState(statefind.countryCode, statefind.isoCode))
+            clearErrors('Country')
+            clearErrors('State')
+            clearErrors('City')
         }
-        else if (event.target.name === "city") {
+        else if (event.target.name === "City") {
             Setdata(prevState => ({
                 ...prevState,
-                "city": event.target.value
+                "City": event.target.value
             }));
+            clearErrors('Country')
+            clearErrors('State')
+            clearErrors('City')
         }
         else {
             Setdata(prevState => ({
@@ -76,6 +98,10 @@ const WebContent = () => {
     };
     const questionchange = (e, index) => {
         faqscount[index].title = e.target.value;
+        setfaqscount([...faqscount])
+    }
+    const Answerchange = (e, index) => {
+        faqscount[index].answer = e.target.value;
         setfaqscount([...faqscount])
     }
     const removefaqbox = (indx) => {
@@ -90,19 +116,54 @@ const WebContent = () => {
         };
         const combinedData = {
             ...data,
-            Description,
+            Content,
             faqscount
         };
 
+       if( Content !== "") {
+        setLoading(true)
         axios.post(
-            `https://api.cannabaze.com/AdminPanel/Add-Webpagedescription/`,
+            `https://api.cannabaze.com/AdminPanel/Update-Webpagedescription/${location.state.id}`,
             combinedData,
             config
         ).then(() => {
             enqueueSnackbar('Web Content success !', { variant: 'success' });
+            Navigate("/webcontent")
+            setLoading(false)
         }).catch((error) => {
-            console.log(error)
+            setLoading(false)
+            if (error.response.data.Country) {
+                setError('Country', { type: 'manual', message: 'already exists' })
+                const countryField = document.getElementById('Country');
+                if (countryField) {
+                    countryField.scrollIntoView({ behavior: 'smooth' });
+                    countryField.focus();
+                }
+            }
+            else if (error.response.data.State) {
+               
+                setError('State', { type: 'manual', message: 'already exists' })
+                const countryField = document.getElementById('State');
+                if (countryField) {
+                    countryField.scrollIntoView({ behavior: 'smooth' });
+                    countryField.focus();
+                }
+            }
+            else if (error.response.data.City) {
+               
+                setError('City', { type: 'manual', message: 'already exists' })
+                const countryField = document.getElementById('City');
+                if (countryField) {
+                    countryField.scrollIntoView({ behavior: 'smooth' });
+                    countryField.focus();
+                }
+            }
         })
+       }
+    
+       else{
+        setediter(true)
+       }
     }
 
     return (
@@ -120,12 +181,12 @@ const WebContent = () => {
                             <div className='col-lg-3 col-md-6'>
                                 <label className='label_faq'>Type </label>
                                 <Box >
-                                    <FormControl fullWidth error={Boolean(errors?.type)}>
+                                    <FormControl fullWidth error={Boolean(errors?.Type)}>
                                         <Controller
-                                            name="type"
+                                            name="Type"
                                             control={control}
                                             rules={{ equired: "Store Type is required", }}
-                                            defaultValue={data.type || ''}
+                                            defaultValue={data.Type || ''}
                                             render={(field) => (
                                                 <>
                                                     <Select
@@ -142,7 +203,7 @@ const WebContent = () => {
                                                             '& .MuiOutlinedInput-root': {
                                                                 fontSize: '16px',
                                                                 '& fieldset': {
-                                                                    borderColor: Boolean(errors.type) ? 'red' : 'default',
+                                                                    borderColor: Boolean(errors.Type) ? 'red' : 'default',
                                                                 },
                                                             },
                                                             '& .MuiOutlinedInput-input': {
@@ -179,6 +240,7 @@ const WebContent = () => {
                                     <FormControl fullWidth error={Boolean(errors?.Country)}>
                                         <Controller
                                             name="Country"
+                                            id="Country"
                                             control={control}
                                             rules={{
                                                 required: "Country is required",
@@ -224,7 +286,11 @@ const WebContent = () => {
                                                         {country.map((country) => {
                                                             return (<MenuItem value={country.isoCode} style={{ fontSize: 15 }}>{country.name}</MenuItem>)
                                                         })}
+
                                                     </Select>
+                                                    {errors?.Country && (
+                                                        <FormHelperText>{errors?.Country?.message}</FormHelperText>
+                                                    )}
                                                 </>
                                             )}
                                         />
@@ -235,18 +301,22 @@ const WebContent = () => {
                             <div className='col-lg-3 col-md-6'>
                                 <label className='label_faq'>State </label>
                                 <Box >
+                                    <FormControl fullWidth  error={Boolean(errors.State)}>
                                     <Select
-                                        name='state'
-                                        value={_.find(state, function (o) { return data.state === o.name })?.isoCode || ""}
+                                        name='State'
+                                        id="State"
+                                        value={_.find(state, function (o) { return data?.State === o.name })?.isoCode || ""}
                                         onChange={(e) => { handleChange(e) }}
                                         displayEmpty
                                         placeholder="Select state"
+                                        error={Boolean(errors.State)}
+                                        // helperText={errors.State.message}
                                         sx={{
                                             width: '100%',
                                             '& .MuiOutlinedInput-root': {
                                                 fontSize: '16px',
                                                 '& fieldset': {
-                                                    borderColor: Boolean(errors.type) ? 'red' : 'default',
+                                                    borderColor: Boolean(errors.State) ? 'red' : 'default',
                                                 },
                                             },
                                             '& .MuiOutlinedInput-input': {
@@ -269,16 +339,23 @@ const WebContent = () => {
                                         {state.map((state) => {
                                             return <MenuItem value={state.isoCode} style={{ fontSize: 15 }}>{state.name}</MenuItem>
                                         })}
-
+                                    
                                     </Select>
+                                    {errors?.State && (
+                                                        <FormHelperText>{errors?.State?.message}</FormHelperText>
+                                                    )}
+                                    </FormControl>
                                 </Box>
+                             
                             </div>
                             <div className='col-lg-3 col-md-6'>
                                 <label className='label_faq'>City</label>
                                 <Box >
+                                    <FormControl fullWidth error={Boolean(errors.City)}>
                                     <Select
-                                        name='city'
-                                        value={data.city}
+                                    id="City"
+                                        name='City'
+                                        value={data?.City}
                                         onChange={(e) => { handleChange(e) }}
                                         displayEmpty
                                         placeholder="Select state"
@@ -287,7 +364,7 @@ const WebContent = () => {
                                             '& .MuiOutlinedInput-root': {
                                                 fontSize: '16px',
                                                 '& fieldset': {
-                                                    borderColor: Boolean(errors.type) ? 'red' : 'default',
+                                                    borderColor: Boolean(errors.City) ? 'red' : 'default',
                                                 },
                                             },
                                             '& .MuiOutlinedInput-input': {
@@ -308,10 +385,14 @@ const WebContent = () => {
                                         }}
                                     >
                                         {city.map((city) => {
-                                            return <MenuItem value={city.isoCode} style={{ fontSize: 15 }}>{city.name}</MenuItem>
+                                            return <MenuItem value={city.name} style={{ fontSize: 15 }}>{city.name}</MenuItem>
                                         })}
 
                                     </Select>
+                                    {errors?.City && (
+                                                        <FormHelperText>{errors?.City?.message}</FormHelperText>
+                                                    )}
+                                    </FormControl>
                                 </Box>
                             </div>
                         </div>
@@ -325,7 +406,8 @@ const WebContent = () => {
                                         placeholder='Title'
                                         variant="outlined"
                                         className={classes.faqtextfeild}
-                                        name='title'
+                                        name='Title'
+                                        value={data.Title}
                                         inputRef={register({
                                             required: "Title is required*.",
                                             minLength: {
@@ -333,8 +415,8 @@ const WebContent = () => {
                                                 message: "Enter min 3 character"
                                             }
                                         })}
-                                        helperText={errors.title?.message}
-                                        error={Boolean(errors?.title)}
+                                        helperText={errors.Title?.message}
+                                        error={Boolean(errors?.Title)}
                                     />
                                 </div>
                                 <div>
@@ -358,7 +440,8 @@ const WebContent = () => {
                                             }
                                         }}
                                     >
-                                        <Editortoolbar Description={Description} SetDescription={SetDescription} />
+                                        <Editortoolbar Description={Content} SetDescription={SetDescription} />
+                                       {editer && <p style={{color:'red'}}>sdfsd</p>  }
                                     </Box>
                                 </div>
                             </div>
@@ -383,7 +466,7 @@ const WebContent = () => {
                                                 faqscount.map((items, index) => {
                                                     return <div className='faqinputbox' key={index}>
                                                         <input type='text' value={items.title} placeholder='Question' onChange={(e) => { questionchange(e, index) }} />
-                                                        <textarea placeholder='Answer' value={items.answer}></textarea>
+                                                        <textarea placeholder='Answer'  onChange={(e) => { Answerchange(e, index) }} value={items.answer}></textarea>
                                                         {
                                                             index !== 0 &&
                                                             <span className='removefaqbtn' onClick={() => { removefaqbox(index) }}><FaTrashAlt /></span>
@@ -405,7 +488,10 @@ const WebContent = () => {
                         </div>
                         <div className='row'>
                             <div className='d-flex justify-content-end gap-3'>
-                                <button className='faqsubmitbtn' type='submit' > Submit</button>
+                            <LoadingButton style={{   width:"20px", backgroundColor: isLoggedIn ? '#fff' : '#31B655', color:"white"}}
+                                    loading={isLoggedIn}
+                                    type='submit'
+                                > Submit </LoadingButton>
                                 <button className='faqcancelbtn'>Cancel</button>
                             </div>
                         </div>
@@ -416,7 +502,6 @@ const WebContent = () => {
 
             </div>
         </SectionCard>
-
 
     )
 }

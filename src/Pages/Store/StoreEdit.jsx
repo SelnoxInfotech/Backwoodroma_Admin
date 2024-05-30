@@ -212,14 +212,14 @@ export default function StoreEdit(props) {
             enqueueSnackbar('Edit Sub-Category  success !', { variant: 'success' });
         })
     };
-    function tomorrowdate() {
-        var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-        var day = String(currentDate.getDate()).padStart(2, '0')
-        var month = String(currentDate.getMonth() + 1).padStart(2, '0')
+    // function tomorrowdate() {
+    //     var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+    //     var day = String(currentDate.getDate()).padStart(2, '0')
+    //     var month = String(currentDate.getMonth() + 1).padStart(2, '0')
 
-        var year = currentDate.getFullYear()
-        return `${year}-${month}-${day}`
-    }
+    //     var year = currentDate.getFullYear()
+    //     return `${year}-${month}-${day}`
+    // }
 
     async function handleAddress(e, value) {
         let store_address = ""

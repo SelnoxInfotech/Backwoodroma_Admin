@@ -36,7 +36,8 @@ import Topproducts from '../Pages/Tablespages/Topproducts';
 import Allrecentorder from '../Pages/Tablespages/Allrecentorder'
 import Topstore from '../Pages/Tablespages/Topstore';
 import AllReview from '../Pages/Tablespages/AllReview';
-import WebContent from '../Pages/WebContent/WebContent'
+import WebContent from '../Pages/WebContent/Webcontent';
+import AddWebContent from '../Pages/WebContent/AddWebContent';
 import UserProfile from '../Pages/UserProfile/UserProfile';
 import TotalSales from '../Pages/Tablespages/TotalSales';
 import TopLocation from '../Pages/Tablespages/TopLocation';
@@ -44,6 +45,7 @@ import Newspop from '../Pages/News/NewsPopup';
 import Updaterolesandpermission from '../Pages/Role/RoleDetailsAndPermission/Updaterolesandpermission';
 import Storepopup from '../Pages/Store/Storepopup';
 import EditNews from "../Pages/News/EditNews"
+import EditwebContent from "../Pages/WebContent/Editwebcontent"
 // export default function Router() {;
 //   return (
     
@@ -236,6 +238,14 @@ const routesConfig = [
       {
         path:"/webcontent",
         element:<Protected  Component={WebContent}/>
+      },
+      {
+        path:"/AddWebContent",
+        element:<Protected  Component={AddWebContent}/>
+      },
+      {
+        path:"/EditwebContent",
+        element:<Protected  Component={EditwebContent}/>
       },
       {
         path:"/userprofile/:id",
