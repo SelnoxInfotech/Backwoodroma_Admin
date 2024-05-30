@@ -1085,9 +1085,6 @@ input:focus+label {
   width: 100%;
 }
 
-.country_main_div {
-  width: 98%;
-}
 
 .img_store_lince {
   width: 200px;
@@ -1643,12 +1640,6 @@ input:focus+label {
   border: 2px dashed #9e9b9b;
   padding: 57px;
 }
-
-.img_store2 {
- 
-  left: 0px;
-}
-
 .upload_img {
   position: relative;
   bottom: 27px;
@@ -1659,10 +1650,6 @@ input:focus+label {
   position: relative;
   text-align: start;
   margin-top: 10px;
-}
-
-.country_main_divs {
-  width: 92%;
 }
 
 .loader4 {

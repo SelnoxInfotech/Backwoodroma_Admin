@@ -5,11 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Cookies from 'universal-cookie';
 import axios from "axios"
 import { FormControl, } from "@material-ui/core";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState } from 'draft-js';
-import { convertToHTML } from 'draft-convert';
-import InputAdornment from '@mui/material/InputAdornment';
+import Editer from "../../Components/Editer/Editer"
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { IoLocationSharp } from "react-icons/io5"
 import CloseIcon from '@mui/icons-material/Close';
@@ -31,8 +27,7 @@ export default function Storepopup() {
     const cookies = new Cookies();
     const inputRef = useRef(null);
     const token_data = cookies.get('Token_access')
-    const [editorState, setEditorState] = React.useState(() => EditorState.createEmpty());
-    const [convertedContent, setConvertedContent] = React.useState(null);
+    const [editorState, setEditorState] = React.useState('');
     const [image, SetImage] = React.useState('');
     const [vendorlist, setvendorlist] = React.useState([])
     const [imageError, SetimageError] = React.useState(false)
@@ -79,39 +74,7 @@ export default function Storepopup() {
     const handleChange = (event) => {
 
         const value = event.target.value;
-        //     SetStore(prevStore => ({
-        //         ...prevStore,
-        //         Country_id: value
-        //     }));
-        //     getStatesOfCountry(value);
-        // }
-        // else if (event.target.name === "State_id") {
-        //     SetStore(prevStore => ({
-        //         ...prevStore,
-        //         State_id: value
-        //     }));
-        //     var result = _.find(Stat, function(user) { return user.isoCode ===  value; });
-        //     SetStore(prevStore => ({
-        //         ...prevStore,
-        //         State_id: value,
-        //         storeStateName:result.name
-        //     }));
        
-        //     SetCity(City.getCitiesOfState(result.countryCode,result.isoCode))
-        // }
-        // else if (event.target.name === "city_id") {
-
-        //     SetStore(prevStore => ({
-        //         ...prevStore,
-        //         StoreCity: value
-        //     }));
-
-        // }
-        // else {
-
-        // SetStore({
-        //     ...Store, [event.target.name]: value
-        // });
         SetStore(prevState => ({
             ...prevState,
             [event.target.name]: value
@@ -133,10 +96,7 @@ export default function Storepopup() {
         SetLicenceImage(event.target.files[0])
         SetLicError(false)
     };
-    React.useEffect(() => {
-        let html = convertToHTML(editorState.getCurrentContent());
-        setConvertedContent(html);
-    }, [editorState]);
+   
     const resetFileInput = () => {
         inputRef.current.value = null;
         SetImage(null)
@@ -171,6 +131,7 @@ export default function Storepopup() {
             SetLicError(true)
         }
         else {
+          
             const formdata = new FormData();
             formdata.append('Store_Name', Store.Store_Name);
             formdata.append('Store_Image', image);
@@ -186,11 +147,12 @@ export default function Storepopup() {
             formdata.append('Stores_Website', Store.Stores_Website);
             formdata.append('Stores_MobileNo', Store.Stores_MobileNo);
             formdata.append('Status', Store.Status);
-            formdata.append('Stores_Description', convertedContent);
+            formdata.append('Stores_Description', editorState);
             formdata.append('created_by', Store.created_by);
             const config = {
                 headers: { Authorization: `Bearer ${token_data}` }
             };
+         
             axios.post(
                 'https://api.cannabaze.com/AdminPanel/Add-Stores/',
                 formdata,
@@ -376,6 +338,7 @@ export default function Storepopup() {
                                                 placeholder="Select Store Type"
                                                 sx={{
                                                     width: '100%',
+                                                    backgroundColor:'#fff',
                                                     '& .MuiOutlinedInput-root': {
                                                         fontSize: '16px',
                                                         '& fieldset': {
@@ -416,47 +379,49 @@ export default function Storepopup() {
                         </div>
                         <div className='lg_ip_feild '>
                             <label>Store Address:</label>
-                            <Controller
-                                control={control}
-                                name="Store_Address"
-                                rules={{ required: { value: !Boolean(Store?.Store_Address), message: 'Invalid Address' } }}
-                                render={(field) => (
-                                    <Autocomplete
-                                        freeSolo
-                                        disableClearable
-                                        options={placePredictions}
+                            <Box className={classes.locationBox}>
+                                <Controller
+                                    control={control}
+                                    name="Store_Address"
+                                    rules={{ required: { value: !Boolean(Store?.Store_Address), message: 'Invalid Address' } }}
+                                    render={(field) => (
+                                        <Autocomplete
+                                            freeSolo
+                                            disableClearable
+                                            options={placePredictions}
 
-                                        onChange={(event, value) => {
-                                            handlechnage(event, value);
-                                            field.onChange(value);
-                                        }}
-                                        renderOption={(props, option) => (
-                                            <li {...props} >
-                                                <IoLocationSharp />{option.description}
-                                            </li>
-                                        )}
-                                        getOptionLabel={(option) => option?.description || ""}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                onChange={(e) => {
-                                                    SetStore({
-                                                        ...Store,
-                                                        "Store_Address": ""
-                                                    });
+                                            onChange={(event, value) => {
+                                                handlechnage(event, value);
+                                                field.onChange(value);
+                                            }}
+                                            renderOption={(props, option) => (
+                                                <li {...props} >
+                                                    <IoLocationSharp />{option.description}
+                                                </li>
+                                            )}
+                                            getOptionLabel={(option) => option?.description || ""}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    onChange={(e) => {
+                                                        SetStore({
+                                                            ...Store,
+                                                            "Store_Address": ""
+                                                        });
 
-                                                    getPlacePredictions({ input: e.target.value });
-                                                }}
-                                                type="text"
-                                                className={classes.textFieldFocusBorderColor}
-                                                placeholder="Enter Location.."
-                                                helperText={errors.Store_Address?.message}
-                                                error={Boolean(errors?.Store_Address)}
-                                            />
-                                        )}
-                                    />
-                                )}
-                            />
+                                                        getPlacePredictions({ input: e.target.value });
+                                                    }}
+                                                    type="text"
+                                                    className={classes.textFieldFocusBorderColor}
+                                                    placeholder="Enter Location.."
+                                                    helperText={errors.Store_Address?.message}
+                                                    error={Boolean(errors?.Store_Address)}
+                                                />
+                                            )}
+                                        />
+                                    )}
+                                />
+                            </Box>
                         </div>
                         <div className=' row  country_main_div'>
                             <div className="col-sm-4">
@@ -503,6 +468,7 @@ export default function Storepopup() {
                                         className={classes.textFieldFocusBorderColor}
                                         sx={{
                                             width: '100%',
+                                            backgroundColor:'#fff',
                                             '& .MuiOutlinedInput-root': {
                                                 fontSize: '16px',
 
@@ -626,42 +592,42 @@ export default function Storepopup() {
                             <div className="col-sm-6">
                                 <div className='lg_ip_feild'>
                                     <label>Store MobileNo:</label>
-                                    <Controller
-                                        render={({ name, onChange, value }) => (
-                                            <MuiPhoneNumber
-                                                name={name}
-                                                value={value}
-                                                onChange={((e) => {
-                                                    onChange(e);
-                                                    mobile(e);
-                                                })}
-                                                id="Stores_MobileNo"
-                                                defaultCountry={"us"}
-                                                style={{ width: "100%" }}
-                                                margin="normal"
-                                                error={Boolean(errors?.Stores_MobileNo)}
-                                                helperText={errors.Stores_MobileNo?.message}
-                                            />
-                                        )}
-                                        name="Stores_MobileNo"
-                                        control={control}
-                                        // onChange={mobile}
-                                        defaultValue=""
-                                        // ref={mobile}
-                                        rules={
-                                            {
-                                                required: "Enter valid phone number",
-                                                minLength: {
-                                                    value: 10,
-                                                    message: "Please enter minimum 10 digits"
-                                                },
-                                                maxLength: {
-                                                    value: 20,
-                                                    message: "Please enter valid mobile number"
+                                    <Box className={classes.mobilenobox}>
+                                        <Controller
+                                            render={({ name, onChange, value }) => (
+                                                <MuiPhoneNumber
+                                                    name={name}
+                                                    value={value}
+                                                    onChange={((e) => {
+                                                        onChange(e);
+                                                        mobile(e);
+                                                    })}
+                                                    id="Stores_MobileNo"
+                                                    defaultCountry={"us"}
+                                                    style={{ width: "100%" }}
+                                                    
+                                                    error={Boolean(errors?.Stores_MobileNo)}
+                                                    helperText={errors.Stores_MobileNo?.message}
+                                                />
+                                            )}
+                                            name="Stores_MobileNo"
+                                            control={control}
+                                            defaultValue=""
+                                            rules={
+                                                {
+                                                    required: "Enter valid phone number",
+                                                    minLength: {
+                                                        value: 10,
+                                                        message: "Please enter minimum 10 digits"
+                                                    },
+                                                    maxLength: {
+                                                        value: 20,
+                                                        message: "Please enter valid mobile number"
+                                                    }
                                                 }
                                             }
-                                        }
-                                    />
+                                        />
+                                    </Box>
                                 </div>
                             </div>
                         </div>
@@ -699,12 +665,13 @@ export default function Storepopup() {
                                 }}
                             >
 
-                                <Editor
-                                    editorState={editorState}
-                                    onEditorStateChange={setEditorState}
-                                    toolbarClassName="toolbarClassName"
-                                    wrapperClassName="wrapperClassName"
-                                    editorClassName="editorClassName"
+                                <Editer
+                                    // editorState={editorState}
+                                    // onEditorStateChange={setEditorState}
+                                    // toolbarClassName="toolbarClassName"
+                                    // wrapperClassName="wrapperClassName"
+                                    // editorClassName="editorClassName"
+                                    SetDescription={setEditorState} Description={editorState}
                                 />
                             </Box>
 
@@ -749,7 +716,7 @@ export default function Storepopup() {
                             <TextField  type="text" placeholder='Add LicenceNo' id="LicenceNo" variant="outlined"  name='LicenceNo' value={Store.LicenceNo} style={{ minWidth: "90%", fontSize: 15 }}
                                 onChange={handleChange}
                                 className={classes.textFieldFocusBorderColor}
-                                InputProps={{ startAdornment: <InputAdornment position="start"> </InputAdornment>, style: { fontSize: 14 } }}
+                                // InputProps={{ startAdornment: <InputAdornment position="start"> </InputAdornment>, style: { fontSize: 14 } }}
                                 label={massage.LicenceNo}
                                 sx={{
                                     width: '100%',
@@ -817,6 +784,7 @@ export default function Storepopup() {
                                                     placeholder="Select Store Type"
                                                     sx={{
                                                         width: '100%',
+                                                        backgroundColor:'#fff',
                                                         '& .MuiOutlinedInput-root': {
                                                             fontSize: '16px',
                                                             '& fieldset': {
@@ -958,6 +926,7 @@ export default function Storepopup() {
                                 size="small"
                                 inputProps={{ 'aria-label': 'Without label' }} sx={{
                                     width: '100%',
+                                    backgroundColor:'#fff',
                                     '& .MuiOutlinedInput-root': {
                                         fontSize: '16px',
 
@@ -1017,6 +986,7 @@ export default function Storepopup() {
                                                 placeholder="Select Store Type"
                                                 sx={{
                                                     width: '100%',
+                                                    backgroundColor:'#fff',
                                                     '& .MuiOutlinedInput-root': {
                                                         fontSize: '16px',
                                                         '& fieldset': {

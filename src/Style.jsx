@@ -43,6 +43,51 @@ const useStyles = makeStyles(theme =>(
           },
         }
       },
+      locationBox:{
+        width:'100%',
+        "& .MuiAutocomplete-root":{
+          width:'100%',
+          backgroundColor:'#fff',
+          "& .MuiFormControl-root":{
+            "& .MuiInputBase-root":{
+              padding:'4px !important' ,
+            }
+          }
+        }
+       
+      },
+      mobilenobox:{
+         backgroundColor:'#fff',
+         "& .MuiFormControl-root":{
+         
+          "& .MuiInputBase-root":{
+            padding:'5px',
+            border:'1px solid gray',
+            borderRadius:'4px',
+            "&.Mui-focused":{
+               border:'2px solid #31B655 !important',
+            },
+            "&::before":{
+              display:'none',
+            },
+            "&::after":{
+              borderColor:'#31B655',
+              border:'1px solid #31B655',
+              display:'none',
+            },
+            "& .MuiButtonBase-root":{
+                "& svg":{
+                  margin:'0'
+                }
+            },
+            "& .MuiInputBase-input":{
+               fontSize:'16px',
+            }
+          },
+         
+ 
+         }
+      },
       signupMuiPhone: {
         "&.MuiTextField-root": {
           width: "50%",

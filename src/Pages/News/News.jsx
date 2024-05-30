@@ -121,34 +121,32 @@ export default function News() {
     });
    
     return (
-       
-                <SectionCard>
-                        <div className='d-flex justify-content-between align-items-center w-100 mb-3'>
-                            <h2 className='pagetitle'> <SlSocialDropbox color='#31B655' size={25}/> Latest News
-                            </h2>
-                           {state?.Roles?.AddBlogs &&   <button className="topbutton" onClick={()=>{navigate('/addnews')}}> + Add News </button>}
-                        </div>
-                        <div className='col-12' >
-                            <Box className={classes.DataTableBoxStyle} >
-                                <ThemeProvider theme={CustomFontTheme}>
-                                 
-                                        <DataGrid rows={rows} columns={columns} 
-                                            disableColumnMenu
-                                            disableColumnFilter
-                                            disableColumnSelector
-                                            className={classes.DataTableStyle}
-                                            pageSize={pageSize}
-                                            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                                            rowsPerPageOptions={[ 10, 20]}
-                                            pagination
-                                            autoHeight
-                                            disableSelectionOnClick 
-                                        />
-                                   
-                                </ThemeProvider>
-                            </Box>
-                        </div>
-                </SectionCard>
-         
+        <SectionCard>
+            <div className='d-flex justify-content-between align-items-center w-100 mb-3'>
+                <h2 className='pagetitle'> <SlSocialDropbox color='#31B655' size={25}/> Latest News
+                </h2>
+                {state?.Roles?.AddBlogs &&   <button className="topbutton" onClick={()=>{navigate('/addnews')}}> + Add News </button>}
+            </div>
+            <div className='col-12' >
+                <Box className={classes.DataTableBoxStyle} >
+                    <ThemeProvider theme={CustomFontTheme}>
+                        
+                            <DataGrid rows={rows} columns={columns} 
+                                disableColumnMenu
+                                disableColumnFilter
+                                disableColumnSelector
+                                className={classes.DataTableStyle}
+                                pageSize={pageSize}
+                                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                                rowsPerPageOptions={[ 10, 20]}
+                                pagination
+                                autoHeight
+                                disableSelectionOnClick 
+                            />
+                        
+                    </ThemeProvider>
+                </Box>
+            </div>
+        </SectionCard>
     );
 }
