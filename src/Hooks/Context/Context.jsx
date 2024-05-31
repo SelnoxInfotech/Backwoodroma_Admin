@@ -11,7 +11,11 @@ const initialUser = {
   api:"",
   datesSelect:"Year",
   CustomeStartDate: "",
-  CustomeEndDate:""
+  CustomeEndDate:"",
+  SearchbarData:function (i) {
+    console.log("hello conetxt how are you " + i)
+    return "rrrr"
+  }
 }
 function Context(props) {
   const cookies = new Cookies();

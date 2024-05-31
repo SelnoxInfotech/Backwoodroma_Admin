@@ -29,11 +29,12 @@ export default function Search() {
           Product Search
         </label>
         <input
-          onChange={handleInput}
+          id="product-search"
+          // onChange={handleInput}
           value={searchVal}
           type="text"
           name="product-search"
-          id="product-search"
+          // id="product-search"
           placeholder="Search Products"
         />
         <i
