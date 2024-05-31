@@ -29,7 +29,7 @@ const WebContent = () => {
     const [isLoggedIn, setLoading] = useState(false);
     const [editer , setediter] =  React.useState(false)
     const [data, Setdata] = React.useState({
-        Type: "dispensary",
+        Type: "",
         Country: "",
         State: "",
         City: "",
@@ -38,7 +38,6 @@ const WebContent = () => {
     const [Content, SetDescription] = React.useState(``);
     const [city, setcity] = React.useState([]);
     const [state, setstate] = React.useState(() => {
-        // const saved = _.find(country, function (o) { return data?.state === o.isoCode });
         return [];
     });
 
@@ -162,7 +161,6 @@ const WebContent = () => {
         setediter(true)
        }
     }
-
     return (
         <SectionCard >
             <div className='col-12 Add_Category m-2  mb-3 px-4'>
@@ -182,7 +180,7 @@ const WebContent = () => {
                                         <Controller
                                             name="Type"
                                             control={control}
-                                            rules={{ equired: "Store Type is required", }}
+                                            rules={{ required: "Type is required", }}
                                             defaultValue={data.Type || ''}
                                             render={(field) => (
                                                 <>
@@ -223,7 +221,7 @@ const WebContent = () => {
                                                         <MenuItem value={"dispensary"} style={{ fontSize: 15 }}>Dispensary</MenuItem>
                                                         <MenuItem value={"delivery"} style={{ fontSize: 15 }}>Delivery</MenuItem>
                                                     </Select>
-                                                    {/* {errors.Store_Type && <FormHelperText error>{errors.Store_Type.message}</FormHelperText>} */}
+                                                    {errors.Type && <FormHelperText error>{errors.Type.message}</FormHelperText>}
                                                 </>
                                             )}
                                         />
@@ -438,7 +436,7 @@ const WebContent = () => {
                                         }}
                                     >
                                         <Editortoolbar Description={Content} SetDescription={SetDescription} />
-                                       {editer && <p style={{color:'red'}}>sdfsd</p>  }
+                                       {editer && <p style={{color:'red'}}>Content is required</p>  }
                                     </Box>
                                 </div>
                             </div>
@@ -473,12 +471,12 @@ const WebContent = () => {
                                             }
 
                                         </div>
-                                        <button className='addfaqbtn' onClick={() => {
+                                        <p className='addfaqbtn' onClick={() => {
                                             setFaq([...Faq, {
                                                 title: '',
                                                 answer: ''
                                             }])
-                                        }}>Add FAQs</button>
+                                        }}>Add FAQs</p>
                                     </div>
                                 </div>
                             }

@@ -35,7 +35,7 @@
 .webcontentform .locationcontainerstyle .stdropdown-tools {
   display: none;
 }
-.webcontentform .faqs button.addfaqbtn {
+.webcontentform .faqs p.addfaqbtn {
   width: 120px;
   border: none;
   background-color: #31B655;
