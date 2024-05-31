@@ -41,7 +41,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 function BootstrapDialogTitle(props) {
 }
 export default function Editstaff(props) {
-
+console.log(props.MobileNo)
     const { register, handleSubmit, watch, errors,setError,clearErrors,getValues,setValue, control } =   useForm();
     const cookies = new Cookies();
     const token_data = cookies.get("Token_access");
@@ -388,10 +388,10 @@ export default function Editstaff(props) {
                                                         name="MobilePhone"
                                                         control={control}
                                                         className={classes.StandardTextFieldStyle}
-                                                        defaultValue={props.data.MobilePhone !== null ? props.data.MobilePhone  :""}
+                                                        defaultValue={props?.data?.MobileNo !== null ? props.data.MobileNo  :""}
                                                         fullWidth
                                                         rules={{
-                                                            required: "phone number Required",
+                                                          
                                                             minLength: {
                                                             value: 8,
                                                             message: "Please enter minimum 10 digits",

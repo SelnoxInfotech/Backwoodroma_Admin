@@ -9,9 +9,9 @@ Aos.init({
 const Deletepopup = ({setdeleteoprn ,setsisDelete}) => {
 
   return (
-      <div className='deleteconfirmpopup' data-aos={'zoom-in'}>
+      <div className='deleteconfirmpopup' >
           <ClickAwayListener onClickAway={()=>{setdeleteoprn(false)}}>
-              <div className='deletepopup' >
+              <div className='deletepopup' data-aos={'zoom-in'}>
                   <div className='Iconsdelete'>
                     <span className='dangericon'> <RxCrossCircled/></span>
                   </div>
