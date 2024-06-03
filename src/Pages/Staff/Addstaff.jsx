@@ -19,6 +19,8 @@ import { SlSocialDropbox } from "react-icons/sl";
 import "./Stall.css";
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
+
+
 const Addusers = () => {
   const classes = useStyles();
   const navigate = useNavigate()
@@ -145,7 +147,6 @@ const Addusers = () => {
                 ),
               }}
               name="username"
-              // onChange={() => Setduplicate('')}
               inputRef={register({
                 required: "This Field is required*.",
               })}
@@ -165,7 +166,7 @@ const Addusers = () => {
                   size="small"
                   onChange={onChange}
                   id="Mobile"
-                  defaultCountry={"in"}
+                  defaultCountry={"us"}
                   style={{ width: "100%" }}
                   margin="normal"
                   error={Boolean(errors?.MobilePhone)}
@@ -336,7 +337,9 @@ const Addusers = () => {
                 name="Roles"
                 control={control}
                 defaultValue={''}
+                error={!Boolean(multipleroles?.length) && !!errors.Roles}
                 rules={{ required: 'Please Assign Role' }}
+                helperText={errors.Roles && errors.Roles.message}
               />
               {/* {/ <FormHelperText>{method.errors.Store_Type?.message}</FormHelperText> /} */}
             </FormControl>

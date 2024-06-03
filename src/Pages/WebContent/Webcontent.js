@@ -19,6 +19,7 @@ const Webcontent = () => {
     const classes = useStyles()
     const [totel, setTotal] = useState([])
     const [pageSize, setPageSize] = useState(10)
+    const [sucsesopen, setsucsesopen] = useState(false)
     const [deleteId, setdeleteId] = useState('')
     const [deleteoptn , setdeleteoprn] = useState(false)
     const [isdelete , setsisDelete] = useState(false)
@@ -54,14 +55,9 @@ const Webcontent = () => {
                         }
                     }}
                     >
-                        <Link to={"/EditwebContent"} state={params.row}>  <FaEdit></FaEdit></Link>
-                        <RiDeleteBin6Line onClick={() =>{ setdeleteoprn(true); setdeleteId(params.row.id)}}></RiDeleteBin6Line>
-                        {/* <Link  to={"/EditwebContent"} state={params.row}>  <RiDeleteBin6Line></RiDeleteBin6Line></Link> */}
-                        {/* <EditwebContent></EditwebContent> */}
-
-                        {/* {state.Roles.EditStore && <StoreEdit data={params.row}></StoreEdit> }
-                        { state.Roles.DeleteStore && <StoreDelete data={params.row} ></StoreDelete> }
-                        {   state.Roles.ViewStore && <StoreView></StoreView> } */}
+                        <Link to={"/EditwebContent"} state={params.row}>  <FaEdit size={18} color='#31B655'></FaEdit></Link>
+                        <RiDeleteBin6Line size={18} color='#ff0000' onClick={() =>{ setdeleteoprn(true); setdeleteId(params.row.id)}}></RiDeleteBin6Line>
+                        
 
                     </Box>
                     {/* } */}
@@ -125,14 +121,15 @@ useEffect(()=>{
         }).then((response) => {
             setdeleteoprn('')
            setsisDelete(false)
+           setsucsesopen(true)
             if (response.status === 200) {
                 axios("https://api.cannabaze.com/AdminPanel/Get-Webpagedescription/", {
-
                     headers: {
                         'Authorization': `Bearer ${token_data}`
                     }
                 }).then(response => {
                     setTotal(response.data)
+                    
                 })
             }
         })
@@ -171,6 +168,7 @@ useEffect(()=>{
                 </div>
             </SectionCard>
             {   deleteoptn &&  <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete} />}
+            {sucsesopen && <Successfullypopup setsucsesopen={setsucsesopen}  />}
 
         </div>
     );

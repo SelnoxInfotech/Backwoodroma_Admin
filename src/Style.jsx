@@ -683,8 +683,9 @@ const useStyles = makeStyles(theme =>(
            fontSize:'16px',
            padding:'10px 15px',
         },
-        "& .Mui-focused .MuiOutlinedInput-notchedOutline":{
-           border:'1px solid #31B655',
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline":{
+           border:'2px solid #31B655',
+           borderColor:'#31B655'
         }
       },
       selectrolesoptions:{
@@ -708,7 +709,7 @@ const useStyles = makeStyles(theme =>(
           width: "100%",
           color:"#31B655",
           backgroundColor:'#fff',
-          borderRadius:"20px",
+          borderRadius:"5px",
           border:'1px solid #31B655'
         },
         "& .MuiLoadingButton-root:hover": {     

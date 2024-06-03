@@ -21,25 +21,19 @@ const Successfullypopup = ({setsucsesopen ,link='' , popupset=''}) => {
 
   return (
     <div>
-       
-   
         <div className='sucsconfirmpopup'>
-        <ClickAwayListener onClickAway={()=>{  closefun()  }}>
-            <div className='sucspopup'>
-                {/* <span className='closebtn'>X</span> */}
-                <div className='Iconssucs'>
-                    <span className='dangericon'> <IoCheckmarkCircleOutline /></span>
+            <ClickAwayListener onClickAway={()=>{  closefun()  }}>
+                <div className='sucspopup'>
+                    <div className='Iconssucs'>
+                        <span className='dangericon'> <IoCheckmarkCircleOutline /></span>
+                    </div>
+                    <p >successfully your Changes has been saved</p>
+                    <div className='d-flex gap-4'>
+                        <button className='flex-fill popupbtn' onClick={()=>{closefun(false)}}>Done</button>
+                    </div>
                 </div>
-                <p >successfully your Changes has been saved</p>
-                <div className='d-flex gap-4'>
-                    {/* <button className='flex-fill popupbtn'>sucs</button> */}
-                    <button className='flex-fill popupbtn' onClick={()=>{closefun(false)}}>Done</button>
-                </div>
-            </div>
-    </ClickAwayListener>
-
+            </ClickAwayListener>
         </div>
-
     </div>
   )
 }
