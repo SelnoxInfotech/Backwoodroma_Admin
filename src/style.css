@@ -873,4 +873,48 @@
   font-size: 12px;
   font-weight: 500;
   color: rgb(182, 0, 0);
+}
+
+.Subscribe .emaillisy {
+  border: 1px solid rgba(0, 0, 0, 0.2274509804);
+  width: 600px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 auto;
+  margin-top: 40px;
+  min-height: 600px;
+}
+.Subscribe .emaillisy ul {
+  padding: 0;
+  list-style-type: none;
+}
+.Subscribe .emaillisy ul li {
+  list-style-type: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2274509804);
+  padding: 10px;
+  display: flex;
+}
+.Subscribe .emaillisy ul li span {
+  color: #5a5a5a;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  display: inline-block;
+}
+.Subscribe .emaillisy ul li span:nth-child(1) {
+  width: 60%;
+}
+.Subscribe .emaillisy ul li span:nth-child(2) {
+  width: 40%;
+}
+.Subscribe .emaillisy ul li:last-child {
+  border-bottom: none;
+}
+.Subscribe .emaillisy ul li.emailheading {
+  background-color: #31B655;
+}
+.Subscribe .emaillisy ul li.emailheading span {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
 }/*# sourceMappingURL=style.css.map */

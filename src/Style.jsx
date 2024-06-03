@@ -685,7 +685,7 @@ const useStyles = makeStyles(theme =>(
         },
         "&.Mui-focused .MuiOutlinedInput-notchedOutline":{
            border:'2px solid #31B655',
-           borderColor:'#31B655'
+           borderColor:'#31B655 !important',
         }
       },
       selectrolesoptions:{

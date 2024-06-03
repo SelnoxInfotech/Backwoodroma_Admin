@@ -6,6 +6,7 @@ import { Select, MenuItem } from "@mui/material";
 import Box from "@mui/material/Box";
 import MuiPhoneNumber from "material-ui-phone-number";
 import { AiOutlineMail } from "react-icons/ai";
+import FormHelperText from '@mui/material/FormHelperText';
 import { useForm, Controller } from "react-hook-form";
 import LoadingButton from "@mui/lab/LoadingButton";
 import IconButton from "@mui/material/IconButton";
@@ -72,7 +73,7 @@ const Addusers = () => {
       }
       else if (error.response.data.error === "{'username': [ErrorDetail(string='user with this username already exists.', code='unique')]}") {
         setError( 'username', {
-          type: "manual",
+          type: "custom",
           message:"username id already exists",
         })
     }
@@ -122,6 +123,7 @@ const Addusers = () => {
 
     return () => clearTimeout(getData)
   }
+  
   return (
     <div className="adduserForm_container section_card">
       <div className="formsadduser">
@@ -138,7 +140,7 @@ const Addusers = () => {
               placeholder="Type User Name"
               fullWidth
               className={classes.StandardTextFieldStyle}
-              onChange={(e)=>chackduplicate(e)}
+              onChange={(e)=>{chackduplicate(e)}}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -180,7 +182,6 @@ const Addusers = () => {
               defaultValue=""
               fullWidth
               rules={{
-                required: "Enter valid phone number",
                 minLength: {
                   value: 8,
                   message: "Please enter minimum 10 digits",
@@ -318,12 +319,12 @@ const Addusers = () => {
               <Controller
                 render={(props) => (
                   <Select
-                   multiple
+                     multiple
                     className={classes.selectformbox}
                     error={!Boolean(multipleroles?.length) && !!errors.Roles}
                     helperText={errors.Roles && errors.Roles.message}
                     value={multipleroles}
-                    onChange={multipleroleschnage}
+                    onChange={(e)=>{multipleroleschnage(e)  ; props.onChange(e)}}
                   >
                     {roleoptions.map((item, index) => {
                       return (
@@ -339,9 +340,9 @@ const Addusers = () => {
                 defaultValue={''}
                 error={!Boolean(multipleroles?.length) && !!errors.Roles}
                 rules={{ required: 'Please Assign Role' }}
-                helperText={errors.Roles && errors.Roles.message}
+                helperText={Boolean(errors.Roles) && errors.Roles.message}
               />
-              {/* {/ <FormHelperText>{method.errors.Store_Type?.message}</FormHelperText> /} */}
+              <FormHelperText error={Boolean(errors.Roles)}>{errors?.Roles?.message}</FormHelperText>
             </FormControl>
 
 

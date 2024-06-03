@@ -7,7 +7,10 @@ import { GrProductHunt } from "react-icons/gr";
 import { FiPackage } from "react-icons/fi";
 import Cookies from 'universal-cookie'
 import {  IoIosArrowUp  } from "react-icons/io";
+import { GoCodeReview } from "react-icons/go";
+import { TfiEmail } from "react-icons/tfi";
 import { IoNewspaperSharp } from "react-icons/io5";
+import { FaUsers } from "react-icons/fa6";
 import { MdContentPaste } from "react-icons/md";
 import Icon from "@material-ui/core/Icon";
 import { BiLogIn } from "react-icons/bi";
@@ -241,7 +244,7 @@ const Sidebar = ({ sidebaropen, setsidebaropen }) => {
                               >
                               <FaClipboardList ></FaClipboardList>
                               </Icon> */}
-              <span className={" sidebar_text"}>Review</span>
+              <span className={" sidebar_text"}>Comment</span>
             </li>
           </NavLink>
           {/* <NavLink to={"/aboutus"} onClick={closebar} activeClassName="active">
@@ -363,14 +366,38 @@ const Sidebar = ({ sidebaropen, setsidebaropen }) => {
             <span className={" sidebar_text"}>Web Content</span>
           </li>
         </NavLink>
-        <NavLink to={"/Settings"} onClick={closebar} activeClassName="active">
+        <NavLink to={"/allcustomer"} onClick={closebar} activeClassName="active">
+          <li button className={" active_bar "}>
+            <Icon className={classes.sidebarIcon + ""}>
+            <FaUsers />
+            </Icon>
+            <span className={" sidebar_text"}>All Customer</span>
+          </li>
+        </NavLink>
+        <NavLink to={"/Review"} onClick={closebar} activeClassName="active">
+          <li button className={" active_bar "}>
+            <Icon className={classes.sidebarIcon + ""}>
+              <GoCodeReview></GoCodeReview>
+            </Icon>
+            <span className={" sidebar_text"}>Review</span>
+          </li>
+        </NavLink>
+        <NavLink to={"/subscribe"} onClick={closebar} activeClassName="active">
+          <li button className={" active_bar "}>
+            <Icon className={classes.sidebarIcon + ""}>
+              <TfiEmail></TfiEmail>
+            </Icon>
+            <span className={" sidebar_text"}>Subscribe</span>
+          </li>
+        </NavLink>
+        {/* <NavLink to={"/Settings"} onClick={closebar} activeClassName="active">
           <li button className={" active_bar "}>
             <Icon className={classes.sidebarIcon + ""}>
               <MdPreview></MdPreview>
             </Icon>
             <span className={" sidebar_text"}>Settings</span>
           </li>
-        </NavLink>
+        </NavLink> */}
       </ul>
       <div className="userDetails">
         <div className="usersidebarprofile">

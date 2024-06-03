@@ -27,6 +27,8 @@ import PromotionalBanner from '../Pages/PromotionalBanner/PromotionalBanner';
 import PromotionalBannerList from '../Pages/PromotionalBanner/PromotionalBannerList';
 import Aboutus from '../Pages/Aboutus/Aboutus';
 import Dummy from "../Pages/dummy"
+import Subscribe from '../Pages/Subscribe/Subscribe'
+import Customer from '../Pages/Customer/Customer';
 import Layout from '../Layout/Layout';
 import Rolelist from '../Pages/Role/Rolelist';
 import RoleDetailsAndPermission from '../Pages/Role/RoleDetailsAndPermission/RoleDetailsAndPermission';
@@ -274,6 +276,14 @@ const routesConfig = [
       {
         path:"/updateroles",
         element:<Protected  Component={Updaterolesandpermission}/>
+      },
+      {
+        path:"/subscribe",
+        element:<Protected  Component={Subscribe}/>
+      },
+      {
+        path:"/allcustomer",
+        element:<Protected  Component={Customer}/>
       },
     ],
   },

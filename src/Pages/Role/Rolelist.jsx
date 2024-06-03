@@ -18,7 +18,7 @@ import { Headerbutton } from '../../molecules/Button/index'
 import { SectionCard } from '../../molecules/SectionCard/Index';
 const Rolelist = () => {
     let navigate = useNavigate();
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize, setPageSize] = useState(10);
     const [sucsesopen, setsucsesopen] = useState(false)
     const [unsucsesopen, setunsucsesopen] = useState(false)
     const [deleteoptn, setdeleteoprn] = useState(false)

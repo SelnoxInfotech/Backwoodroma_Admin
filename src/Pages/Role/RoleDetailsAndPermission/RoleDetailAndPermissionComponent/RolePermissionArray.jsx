@@ -121,7 +121,7 @@ const RolePermissionArray = [
 
     },
     {
-        RoleName: "Reports", 
+        RoleName: "Review",
         id: 11,
         roles: [{
             All: false,
@@ -133,7 +133,7 @@ const RolePermissionArray = [
 
     },
     {
-        RoleName: "Inqueries", 
+        RoleName: "Blogs Subcategory", 
         id: 12,
         roles: [{
             All: false,
@@ -145,7 +145,7 @@ const RolePermissionArray = [
 
     },
     {
-        RoleName: "Messages", 
+        RoleName: "Blogs Category", 
         id: 13,
         roles: [{
             All: false,
@@ -184,6 +184,30 @@ const RolePermissionArray = [
     {
         RoleName: "Roles", 
         id: 16,
+        roles: [{
+            All: false,
+            Edit: false ,
+            Delete: false,
+            Add:false,
+            View:false,
+        },]
+
+    },
+    {
+        RoleName: "Subscribe", 
+        id: 17,
+        roles: [{
+            All: false,
+            Edit: false ,
+            Delete: false,
+            Add:false,
+            View:false,
+        },]
+
+    },
+    {
+        RoleName: "Customer", 
+        id: 18,
         roles: [{
             All: false,
             Edit: false ,

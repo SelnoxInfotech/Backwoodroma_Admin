@@ -41,7 +41,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 function BootstrapDialogTitle(props) {
 }
 export default function Editstaff(props) {
-console.log(props.MobileNo)
     const { register, handleSubmit, watch, errors,setError,clearErrors,getValues,setValue, control } =   useForm();
     const cookies = new Cookies();
     const token_data = cookies.get("Token_access");
@@ -358,18 +357,6 @@ console.log(props.MobileNo)
                                                 <label className='label'>
                                                 Phone Number:
                                                 </label>
-                                        
-{/*                                             
-                                                    <MuiPhoneNumber
-                                                    name={'MobilePhone'}
-                                                    value={Brand.MobilePhone}
-                                                    size="small"
-                                                    id="Phone"
-                                                    defaultCountry={"us"}
-                                                    style={{ width: "100%" }}
-                                                    margin="normal"
-                                                    onChange={(e)=>{setBrand({...Brand , Phone:e })}}
-                                                /> */}
                                                  <Controller
                                                         render={({ name, onChange, value }) => (
                                                             <MuiPhoneNumber

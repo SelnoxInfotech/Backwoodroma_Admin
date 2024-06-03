@@ -906,3 +906,46 @@ cursor: pointer;
     color: rgb(182, 0, 0);
    }
 }
+.Subscribe .emaillisy{
+  border: 1px solid #0000003a;
+  width: 600px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 auto;
+  margin-top: 40px;
+ min-height: 600px;
+  ul{
+     padding: 0;
+     list-style-type: none;
+     li{
+        list-style-type: none;
+        border-bottom: 1px solid #0000003a;
+        padding: 10px ;
+        display: flex;
+         span{
+          color: #5a5a5a;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 1.5;
+          display: inline-block;
+          &:nth-child(1){
+            width: 60%;
+          }
+          &:nth-child(2){
+            width: 40%;
+          }
+         }
+         &:last-child{
+          border-bottom: none;
+         }
+     }
+     li.emailheading{
+      background-color: #31B655;
+      span{
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+      }
+     }
+  }
+}

@@ -52,11 +52,6 @@ export default function Store() {
 
         })
     }, [token_data, state])
-
-   
-   console.log(state.SearchbarData("how are yopu"))
-
-
     const Submit = (params) => {
         if (state.Roles.EditStore) {
             const formdata = new FormData();

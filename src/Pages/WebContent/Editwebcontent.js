@@ -23,7 +23,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const WebContent = () => {
     const location = useLocation();
-    // console.log(location.state)
     const cookies = new Cookies();
     const Navigate = useNavigate()
     const { enqueueSnackbar } = useSnackbar();
@@ -43,11 +42,7 @@ const WebContent = () => {
     }, [Content])
     const classes = useStyles()
     const [isfaq, setIsaq] = useState(Boolean(location.state.Faq[0].title))
-    // console.log(Boolean(location.state.Faq[0].title))
-    // const [Faq, setFaq] = React.useState([{
-    //     title: '',
-    //     answer: ''
-    // }]);
+    
     const [Faq, setFaq] = React.useState(  () => {
         const saved = Boolean(location.state.Faq[0].title);
         return (saved && location.state.Faq )|| [];

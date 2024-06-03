@@ -13,7 +13,6 @@ const initialUser = {
   CustomeStartDate: "",
   CustomeEndDate:"",
   SearchbarData:function (i) {
-    console.log("hello conetxt how are you " + i)
     return "rrrr"
   }
 }
