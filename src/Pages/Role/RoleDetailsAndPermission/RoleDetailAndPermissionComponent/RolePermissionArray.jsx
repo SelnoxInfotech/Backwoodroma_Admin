@@ -49,7 +49,7 @@ const RolePermissionArray = [
 
     },
     {
-        RoleName: "Customers", 
+        RoleName: "Web Content", 
         id: 5,
         roles: [{
             All: false,

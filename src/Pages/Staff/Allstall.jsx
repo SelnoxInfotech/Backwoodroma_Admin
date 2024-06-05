@@ -16,6 +16,7 @@ const Allstall = () => {
     const token_data = cookies.get("Token_access");
     const [deleteoptn , setdeleteoprn] = useState(false)
     const [isdelete , setsisDelete] = useState(false)
+    const [loader, setloader] = React.useState(true);
     const [reviewid , setreviewid] = useState('')
     const [userdata , setuserdata]= useState([]);
     const [pageSize, setPageSize] = React.useState(10);
@@ -126,6 +127,7 @@ const Allstall = () => {
     },
     ];
     React.useEffect(()=>{
+      setloader(true)
       axios.get('https://api.cannabaze.com/AdminPanel/AllStaff/',{
             headers: {
               Authorization: `Bearer ${token_data}`,
@@ -135,7 +137,10 @@ const Allstall = () => {
           return {...data , sno:index+1}
         })
         setuserdata(a)
-      })
+        setloader(false)
+      }).catch((error)=>[
+        setloader(false)
+      ])
     },[token_data])
     const rows = userdata
     const CustomFontTheme = createTheme({
@@ -203,6 +208,10 @@ const Allstall = () => {
                 </div>
             </div>
             {   deleteoptn &&  <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete}  />}
+            {
+            loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+            </div>
+          }
     </div>
   )
 }

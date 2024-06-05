@@ -15,21 +15,14 @@ export default function NewsCategory(props) {
   const [deleteoptn , setdeleteoprn] = React.useState(false)
   const [isdelete , setsisDelete] = React.useState(false)
   const { state ,dispatch } = useContext(Createcontext)
+  const [loader, setloader] = React.useState(true);
   const [categoryid , Setcategoryid] = React.useState('')
   const [sucsesopen , setsucsesopen] = React.useState(false)
   const [unsucsesopen , setunsucsesopen] = React.useState(false)
   const cookies = new Cookies();
   const token_data = cookies.get("Token_access");
   const [totel, setTotal] = React.useState([]);
-  useEffect(() => {
-    axios("https://api.cannabaze.com/AdminPanel/Get-NewsCategory/", {
-      headers: {
-        Authorization: `Bearer ${token_data}`,
-      },
-    }).then((response) => {
-      setTotal([...response.data]);
-    });
-  }, []);
+
   useEffect(()=>{
     if(isdelete){
      
@@ -52,13 +45,17 @@ export default function NewsCategory(props) {
     }
   },[isdelete])
   useEffect(() => {
+    setloader(true)
     axios("https://api.cannabaze.com/AdminPanel/Get-NewsCategory/", {
       headers: {
         Authorization: `Bearer ${token_data}`,
       },
     }).then((response) => {
       setTotal([...response.data]);
-    });
+      setloader(false)
+    }).catch((error)=>{
+      setloader(false)
+    })
   }, [state.api]);
   return (
     <div>
@@ -67,7 +64,7 @@ export default function NewsCategory(props) {
           <h2 className="pagetitle">
             <SlSocialDropbox color="#31B655" size={25} /> News Category
           </h2>
-          <span>{<AddNewsCategory></AddNewsCategory>}</span>
+        { state.Roles.AddBlogsCategory && <span>{<AddNewsCategory></AddNewsCategory>}</span>}
         </div>
         </SectionCard>
         <div className="col-12">
@@ -80,12 +77,17 @@ export default function NewsCategory(props) {
                     <div className="listitems">
                         <p>{item.name}</p>
                       <div className="gap-3 d-flex">
-                        <span >
-                            <NewsCategoryEditbox  data={item} />
-                        </span>
-                        <span onClick={()=>{setdeleteoprn(true) ;Setcategoryid(item.id)}}>
-                            <RiDeleteBin6Line  size={16} />
-                        </span>
+                        {
+                          state.Roles.EditBlogsCategory &&
+                             <span >
+                                <NewsCategoryEditbox  data={item} />
+                            </span>
+                         }
+                         {   state.Roles.DeleteBlogsCategory &&
+                            <span onClick={()=>{setdeleteoprn(true) ;Setcategoryid(item.id)}}>
+                                <RiDeleteBin6Line  size={16} />
+                            </span>
+                         }
                       </div>
                     </div>
                   </li>
@@ -95,7 +97,8 @@ export default function NewsCategory(props) {
             </ul>
           </div>
         </div>
-
+        {loader &&  <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+          </div>}
         {   deleteoptn &&  <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete} />}
         {   sucsesopen && <Successfullypopup  setsucsesopen={setsucsesopen} link={''}/>}
         {   unsucsesopen && <Unsuccesspopup setsucsesopen={setunsucsesopen} link={''}/>}

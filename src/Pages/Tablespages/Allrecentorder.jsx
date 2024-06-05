@@ -12,27 +12,29 @@ import { IoAlertCircleOutline } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 import { BsTelephone } from "react-icons/bs";
 const Allrecentorder = () => {
-  const [recentorder, setRecentorder] = useState([])
-  const [error, seterror] = useState(false)
-  const cookies = new Cookies();
-  const token_data = cookies.get("Token_access");
-  const [pageSize, setPageSize] = React.useState(10)
-  const classes = useStyles()
-  function noimagefun(ev){
-    // ev.target.src = "image/blank_Image.webp"
-    seterror((error)=>{
-      return true
-    })
-  }
-
+        const [recentorder, setRecentorder] = useState([])
+        const [error, seterror] = useState(false)
+        const cookies = new Cookies();
+        const [loader, setloader] = React.useState(true);
+        const token_data = cookies.get("Token_access");
+        const [pageSize, setPageSize] = React.useState(10)
+        const classes = useStyles()
+        function noimagefun(ev){
+          seterror((error)=>{
+            return true
+          })
+        }
         useEffect(() => {
+          setloader(true)
           Axios.get('https://api.cannabaze.com/AdminPanel/AllRecentOrder/', {
             headers: {
               'Authorization': `Bearer ${token_data}`
             }
           }).then((res) => {
-        
+            setloader(false)
             setRecentorder(res.data)
+          }).catch((error)=>{
+            setloader(false)
           })
         }, [token_data])
         const CustomFontTheme = createTheme({
@@ -51,10 +53,6 @@ const Allrecentorder = () => {
         },
   
         });
-
-
-
-
         const columns = [
             {
               field: 'OrderId',
@@ -187,47 +185,51 @@ const Allrecentorder = () => {
                 return <IoAlertCircleOutline  color='#31b655' fontSize={23}/>
               }
             },
-          ];
+        ];
+        const rows = recentorder
 
-          const rows = recentorder
   return (
     <div className=' my-4 '>
-    <div className='py-4 section_card'>
-        <div  className='d-flex justify-content-between align-content-center px-4'> 
-            <h3 className='pagetitle'><SlSocialDropbox color='#31B655' size={25}/>All Recent Order </h3>
-            <div className='btnsgroup'>
-            {/* <Link to={'/addstaff'}>
-                <button className="topbutton">Top Product</button>
-            </Link> */}
+      <div className='py-4 section_card'>
+          <div  className='d-flex justify-content-between align-content-center px-4'> 
+              <h3 className='pagetitle'><SlSocialDropbox color='#31B655' size={25}/>All Recent Order </h3>
+              <div className='btnsgroup'>
+              {/* <Link to={'/addstaff'}>
+                  <button className="topbutton">Top Product</button>
+              </Link> */}
+              </div>
+          </div>
+          <div className='d-flex justify-content-end py-3 align-content-center'>
+          
+          </div>
+          <div className='allusertable'>
+              <Box className={classes.DataTableBoxStyle} >
+                          <ThemeProvider theme={CustomFontTheme}>
+                              <DataGrid
+                                  rows={rows}
+                                  columns={columns}
+                                  getRowId={(row) => row.OrderId}
+                                  pageSize={pageSize}
+                                  onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                                  pageSizeOptions={[ 10, 25, 50]}
+                                  pagination
+                                  disableRowSelectionOnClick
+                                  disableColumnMenu
+                                  disableColumnFilter
+                                  disableColumnSelector
+                                  autoHeight
+                                  disableSelectionOnClick 
+                                  rowSelection={false}
+                                  className={classes.DataTableStyle}
+                              />
+                          </ThemeProvider>
+              </Box>
+          </div>
+      </div>
+      {
+            loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
             </div>
-        </div>
-        <div className='d-flex justify-content-end py-3 align-content-center'>
-        
-        </div>
-        <div className='allusertable'>
-            <Box className={classes.DataTableBoxStyle} >
-                        <ThemeProvider theme={CustomFontTheme}>
-                            <DataGrid
-                                rows={rows}
-                                columns={columns}
-                                getRowId={(row) => row.OrderId}
-                                pageSize={pageSize}
-                                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                                pageSizeOptions={[ 10, 25, 50]}
-                                pagination
-                                disableRowSelectionOnClick
-                                disableColumnMenu
-                                disableColumnFilter
-                                disableColumnSelector
-                                autoHeight
-                                disableSelectionOnClick 
-                                rowSelection={false}
-                                className={classes.DataTableStyle}
-                            />
-                        </ThemeProvider>
-            </Box>
-        </div>
-    </div>
+          }
     </div>
   )
 }

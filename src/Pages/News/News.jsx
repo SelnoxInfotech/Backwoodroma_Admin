@@ -21,6 +21,7 @@ export default function News() {
     const cookies = new Cookies();
     const token_data = cookies.get('Token_access')
     const [pageSize, setPageSize] = React.useState(10)
+    const [loader, setloader] = React.useState(true);
     function modifystr(str) {
         str = str.replace(/[^a-zA-Z0-9/ ]/g, "-");
         str = str.trim().replaceAll(' ', "-");
@@ -43,6 +44,7 @@ export default function News() {
     }
     const [totel, setTotal] = React.useState([])
     React.useEffect(() => {
+        setloader(true)
         axios("https://api.cannabaze.com/AdminPanel/Get-News/", {
 
             headers: {
@@ -51,8 +53,9 @@ export default function News() {
 
         }).then(response => {
             setTotal(response.data)
-
-
+            setloader(false)
+        }).catch(()=>{
+            setloader(false)
         })
     }, [state.api])
 
@@ -121,6 +124,7 @@ export default function News() {
     });
    
     return (
+        <>
         <SectionCard>
             <div className='d-flex justify-content-between align-items-center w-100 mb-3'>
                 <h2 className='pagetitle'> <SlSocialDropbox color='#31B655' size={25}/> Latest News
@@ -148,5 +152,8 @@ export default function News() {
                 </Box>
             </div>
         </SectionCard>
+          {loader &&  <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+          </div>}
+          </>
     );
 }

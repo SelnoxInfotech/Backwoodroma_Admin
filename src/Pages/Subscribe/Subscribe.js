@@ -4,20 +4,26 @@ import { SlSocialDropbox } from "react-icons/sl";
 import axios from 'axios'
 const Subscribe = () => {
 const [email,setemail] = useState([])
+const [loader, setloader] = React.useState(true);
 const cookies = new Cookies();
 const token_data = cookies.get("Token_access");
     useEffect(()=>{
+        setloader(true)
         axios.get(`https://api.cannabaze.com/AdminPanel/Get-Subscribe/`,{
             headers: {
                 'Authorization': `Bearer ${token_data}`
             }
         }).then((res)=>{
             setemail(res.data.data)
+            setloader(false)
+        }).catch((error)=>{
+            setloader(false)
         })
     },[])
   return (
-    <div className='py-4 section_card'>
-        <div className='px-4'>  <h3 className='pagetitle'><SlSocialDropbox color='#31B655' size={25}/> Subscribe </h3> </div>
+    <div>
+     <div className='py-4 section_card'>
+         <div className='px-4'>  <h3 className='pagetitle'><SlSocialDropbox color='#31B655' size={25}/> Subscribe </h3> </div>
         <div className='Subscribe'>
             <div className='emaillisy'>
                 <ul>
@@ -32,6 +38,11 @@ const token_data = cookies.get("Token_access");
                 </ul>
             </div>
         </div>
+        </div>
+        {
+            loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+            </div>
+          }
     </div>
   )
 }  

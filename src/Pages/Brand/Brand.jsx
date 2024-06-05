@@ -20,9 +20,10 @@ export default function Brand() {
     const token_data = cookies.get('Token_access')
     const [totel, setTotal] = React.useState([])
     const [pageSize, setPageSize] = React.useState(5)
-   const classes = useStyles()
-
+    const [loader, setloader] = React.useState(true);
+    const classes = useStyles()
     React.useEffect(() => {
+        setloader(true)
         axios("https://api.cannabaze.com/AdminPanel/Get-Brand/", {
 
             headers: {
@@ -31,17 +32,19 @@ export default function Brand() {
 
         }).then(response => {
             setTotal(response.data)
-
+            setloader(false)
+        }).catch(()=>{
+            setloader(false)
         })
 
 
 
     }, [token_data, state])
-
-
-
     const Submit = (params) => {
-        if(state.Roles.EditBrand ){const formdata = new FormData();
+        if(state.Roles.EditBrand ){
+            setloader(true)
+            
+        const formdata = new FormData();
         formdata.append('Brand_description', params.row.Brand_description);
         formdata.append('Link', params.row.Link);
         formdata.append("Status", params.row.Status === "Active" ? "Hide" : "Active");
@@ -56,14 +59,13 @@ export default function Brand() {
             formdata,
             config
         ).then(() => {
-
-
+            setloader(false)
             dispatch({ type: 'api', api: true })
-        })}
+        }).catch((error)=>{
+            setloader(false)
+        })
+    }
     };
-
-
-
     const columns = [
      
         { field: 'name', headerName: 'Brand Name', editable: false, headerClassName: 'super-app-theme--header', minWidth: 80, flex: 1,sortable:false, },
@@ -138,9 +140,7 @@ export default function Brand() {
         },
 
     ];
-
     const rows = totel;
-
     const CustomFontTheme = createTheme({
         typography: {
             fontSize: 25,
@@ -157,8 +157,11 @@ export default function Brand() {
             }
         }
     });
+
+    
     return (
-        <SectionCard >
+        <>
+        <SectionCard>
             <div className='col-12 mb-3 d-flex justify-content-between align-content-center '>
                 <h2 className='pagetitle '> <SlSocialDropbox color='#31B655' size={25}/>  Brand  </h2>
                 { state.Roles.AddBrand  && <span> <h2> <Brandpopup></Brandpopup> </h2></span>}
@@ -187,5 +190,10 @@ export default function Brand() {
                 </Box>
             </div>
         </SectionCard> 
+          {
+            loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+            </div>
+          }
+          </>
     );
 }

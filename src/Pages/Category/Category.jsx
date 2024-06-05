@@ -41,19 +41,22 @@ export default function Category(props) {
 
     });
     const [totel, setTotal] = React.useState([])
+    const [loader, setloader] = React.useState(true);
     const cookies = new Cookies();
     const [pageSize, setPageSize] = React.useState(10)
     const [reviewid , setreviewid] = useState('')
     const token_data = cookies.get('Token_access')
     useEffect(() => {
-
+        setloader(true)
         axios("https://api.cannabaze.com/AdminPanel/Get-Category/", {
             headers: {
                 'Authorization': `Bearer ${token_data}`
             }
         }).then(response => {
-
+            setloader(false)
             setTotal([...response.data])
+        }).catch((error)=>{
+            setloader(false)
         })
 
     }, [state, token_data])
@@ -190,6 +193,7 @@ export default function Category(props) {
         }
     },[isdelete])
     return (
+        <React.Fragment>
         <SectionCard>
             
                 <div className='col-12 p-0 Add_Category d-flex justify-content-between align-items-center px-4'>
@@ -219,5 +223,10 @@ export default function Category(props) {
                 </div>
                 {   deleteoptn &&  <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete} />}
         </SectionCard>
+        {
+            loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+            </div>
+          }
+          </React.Fragment>
     )
 }

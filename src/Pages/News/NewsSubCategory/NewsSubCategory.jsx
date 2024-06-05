@@ -17,6 +17,7 @@ import { SectionCard } from '../../../molecules/SectionCard/Index';
 export default function NewsSubCategory() {
     const classes = useStyles()
     const { state} = useContext(Createcontext)
+  const [loader, setloader] = React.useState(true);
     const cookies = new Cookies();
     const token_data = cookies.get('Token_access')
     const CustomFontTheme = createTheme({
@@ -37,7 +38,7 @@ export default function NewsSubCategory() {
 
     const [totel, setTotal] = React.useState([])
     React.useEffect(() => {
-     
+        setloader(true)
         axios("https://api.cannabaze.com/AdminPanel/Get-NewsSubCategory", {
 
             headers: {
@@ -46,7 +47,9 @@ export default function NewsSubCategory() {
 
         }).then(response => {
             setTotal(response.data.data)
-
+            setloader(false)
+        }).catch(()=>{
+            setloader(false)
         })
     }, [])
     
@@ -92,7 +95,7 @@ return (
 
                         <div className='col-12 p-3 d-flex justify-content-between align-items-center'>
                             <h2 className='pagetitle'> <SlSocialDropbox color='#31B655' size={25}/>   News Sub Category</h2>
-                            <span> <h2> <AddNewsCategory></AddNewsCategory></h2></span>
+                           {state.Roles.AddBlogsSubcategory && <span> <h2> <AddNewsCategory></AddNewsCategory></h2></span>}
                         </div>
 
                         {/* <div className='col-12' >
@@ -126,8 +129,8 @@ return (
                                 <p>{item.name}</p>  
                                 <p>{item.category_name}</p>
                                 <div className="gap-3 d-flex">
-                                    {/* <span >   <x  data={item} />  </span> */}
-                                    {/* <span onClick={()=>{setdeleteoprn(true) ;Setcategoryid(item.id)}}>
+                                     {/* <span >   <x  data={item} />  </span> 
+                                     <span onClick={()=>{setdeleteoprn(true) ;Setcategoryid(item.id)}}>
                                         <RiDeleteBin6Line  size={16} />
                                     </span> */}
                                 </div>
@@ -139,6 +142,8 @@ return (
                         </ul>
                     </div>
                 </div>
+                {loader &&  <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+          </div>}
         </div>
 )
 }

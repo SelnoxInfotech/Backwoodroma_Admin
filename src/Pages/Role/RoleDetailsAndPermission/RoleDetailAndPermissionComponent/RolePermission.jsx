@@ -22,9 +22,6 @@ const RolePermission = ({rolepermision , setrolepermision ,setdescchceck ,descch
            setrolepermision({ ...rolepermision , [name] : !rolepermision[name] })
        }
     }
-
-
-    console.log(rolepermision ,'rolepermision')
     return (
         <div className="col-12 rolePermission_container">
             <form>
@@ -41,8 +38,8 @@ const RolePermission = ({rolepermision , setrolepermision ,setdescchceck ,descch
                        {
                         RolePermissionArray.map((item)=>{
                            
-                            return  <div className="rolePermissionItems">
-                                { !(  Object.values(state.Roles).includes(false) && item.RoleName ==="Roles" ) &&   <>  <div className="roleTitle">{item.RoleName === "SalesAndAnalytics" ? 'Sales & Analytics' : item.RoleName }</div>
+                            return  <>
+                                { !(  Object.values(state.Roles).includes(false) && item.RoleName ==="Roles" ) &&   <div className="rolePermissionItems">  <div className="roleTitle">{item.RoleName === "SalesAndAnalytics" ? 'Sales & Analytics' : item.RoleName }</div>
                                                 <div className="permissionChecked">
                                                         <div className="roleinputbox">
                                                             <input type="checkbox"  id={`all${item.id}`} checked={(rolepermision[`View${item.RoleName.replaceAll(' ' , '')}`] && rolepermision[`Add${item.RoleName.replaceAll(' ' , '')}`]) && (rolepermision[`Delete${item.RoleName.replaceAll(' ' , '')}`] && rolepermision[`Edit${item.RoleName.replaceAll(' ' , '')}`])}   onClick={(e)=>checkedfunction(e.target.name , 'All')} name={`${item.RoleName.replaceAll(' ' , '').replaceAll(' ','')}`} />
@@ -65,10 +62,10 @@ const RolePermission = ({rolepermision , setrolepermision ,setdescchceck ,descch
                                                             <label htmlFor={`delete${item.id}`}>Delete</label>
                                                         </div>
                                                 </div>
-                                                </>
+                                                </div>
                                              
                                 }
-                              </div>
+                              </>
                         })
                        }
                     </div>

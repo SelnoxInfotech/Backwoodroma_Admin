@@ -36,9 +36,11 @@ export default function SubCategory() {
     },
   });
  const classes = useStyles()
+  const [loader, setloader] = React.useState(true);
   const [totel, setTotal] = React.useState([]);
   React.useEffect(() => {
     const cookies = new Cookies();
+    setloader(true)
     const token_data = cookies.get("Token_access");
     axios("https://api.cannabaze.com/AdminPanel/Get-SubCategory/", {
       headers: {
@@ -46,7 +48,10 @@ export default function SubCategory() {
       },
     }).then((response) => {
       setTotal(response.data);
-    });
+      setloader(false)
+    }).catch((error)=>{
+      setloader(false)
+    })
   }, [state]);
   const Submit = (params) => {
     const cookies = new Cookies();
@@ -196,6 +201,7 @@ export default function SubCategory() {
 
   const rows = totel;
   return (
+    <React.Fragment>
     <SectionCard>
       <div className="row">
         <div className='col-12  mb-3'>
@@ -234,5 +240,10 @@ export default function SubCategory() {
         </div>
       </div>
     </SectionCard>
+      {
+      loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+      </div>
+      }
+    </React.Fragment>
   );
 }

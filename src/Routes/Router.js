@@ -36,6 +36,7 @@ import Allstall from '../Pages/Staff/Allstall';
 import Vendorlist from '../Pages/Vendor/Vendorlist';
 import Topproducts from '../Pages/Tablespages/Topproducts';
 import Allrecentorder from '../Pages/Tablespages/Allrecentorder'
+import BlogComment from '../Pages/News/BlogComment/BlogComment'
 import Topstore from '../Pages/Tablespages/Topstore';
 import AllReview from '../Pages/Tablespages/AllReview';
 import WebContent from '../Pages/WebContent/Webcontent';
@@ -244,6 +245,10 @@ const routesConfig = [
       {
         path:"/AddWebContent",
         element:<Protected  Component={AddWebContent}/>
+      },
+      {
+        path:"/comments",
+        element:<Protected  Component={BlogComment}/>
       },
       {
         path:"/EditwebContent",

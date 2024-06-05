@@ -4,8 +4,8 @@ import useStyles from '../../Style';
 import { ThemeProvider , Box ,createTheme } from "@mui/material";
 import { SlSocialDropbox } from "react-icons/sl";
 import {useLocation} from 'react-router-dom'
-// import "./Stall.css"
 const Topproducts = () => {
+    const [loader, setloader] = React.useState(true);
     const location = useLocation()
     const classes= useStyles()
     const columns = [
@@ -98,8 +98,6 @@ const Topproducts = () => {
   
     ];
     const rows = location?.state
-   
-
     const CustomFontTheme = createTheme({
       typography: {
           fontSize: 25
@@ -115,7 +113,9 @@ const Topproducts = () => {
           },
       },
 
-      });
+    });
+    
+
   return (
     <div className=' my-4 '>
             <div className='py-4 section_card'>
@@ -158,6 +158,10 @@ const Topproducts = () => {
                     </Box>
                 </div>
             </div>
+            {
+            false && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+            </div>
+          }
     </div>
   )
 }

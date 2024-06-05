@@ -29,7 +29,6 @@ export default function Login_logout() {
     const [show, setOpen] = useState(false);
     const [isLoggedIn, setLoading] = useState(false);
     const [OTP, setotp] = useState("");
-    // const [timer, setTimer] = useState(30);
     const [timer, setTimer] = useState(10); 
     React.useEffect(function () {
         Aos.init({ duration: 500 });
@@ -81,11 +80,8 @@ export default function Login_logout() {
         })
         .then((response) => {
             setLoading(false);
-            
             setOpen(true);
-            // timerfun()
             setTimer(30)
-
             if (Boolean(inputs.rememberMe)) {
                 let date = new Date();
                 date.setTime(date.getTime() + (60 * 60 * 8000));
@@ -116,14 +112,13 @@ export default function Login_logout() {
     const onOtpSubmit= (data)=>{
       
       setOpen(false);
-      axios.post("https://api.cannabaze.com/AdminPanel/VerifyOtp/", { email: data.Email, OTP: data.otp })
-      .then((response) => {
+      axios.post("https://api.cannabaze.com/AdminPanel/VerifyOtp/", { email: data.Email, OTP: data.otp }).then((response) => {
           if (response.data.data === "invalid Otp") {
               setOpen(true);
-              
               Setinvalid(true)
           } else {
-              if (Boolean(response.data.permission.length !== 0) || response?.data?.is_superuser) {
+         
+                if (Boolean(response.data.permission.length !== 0) || response?.data?.is_superuser) {
                   if (!response.data.is_superuser && Boolean(response.data.permission.length === 0)) {
                       setloginsucces(true)
                       setTimeout(()=>{

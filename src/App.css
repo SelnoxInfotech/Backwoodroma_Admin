@@ -1652,28 +1652,8 @@ input:focus+label {
   margin-top: 10px;
 }
 
-.loader4 {
-  width:75px;
-  height:75px;
-  display:inline-block;
-  padding:0px;
-  border-radius:100%;
-  border:10px solid;
-  border-top-color:#31B655;
-  border-bottom-color:rgba(255,255,255, 0.3);
-  border-left-color:#31B655;
-  border-right-color:rgba(255,255,255, 0.3);
-  -webkit-animation: loader4 1s ease-in-out infinite;
-  animation: loader4 1s ease-in-out infinite;
-}
-@keyframes loader4 {
-  from {transform: rotate(0deg);}
-  to {transform: rotate(360deg);}
-}
-@-webkit-keyframes loader4 {
-  from {-webkit-transform: rotate(0deg);}
-  to {-webkit-transform: rotate(360deg);}
-}
+
+
 
 .loadercontainer{
   width: 100vw;

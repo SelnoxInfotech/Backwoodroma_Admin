@@ -89,8 +89,7 @@ const PromotionalBannerList = () => {
                            {detailstype==='Promotional' ? <Promotionallist Setloader={Setloader}/>: <Offeredlist Setloader={Setloader}/>}
 
                         </SectionCard>
-                        {loader && <div className="loadercontainer">
-                        <div className="loader4"></div>
+                         {loader &&  <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
                         </div>}
                         <Bannerupdatemodel openupdate={openupdate} bannertype={bannertype} setOpenupdate={setOpenupdate} Setloader={Setloader} data={editdata}/>
         </div>

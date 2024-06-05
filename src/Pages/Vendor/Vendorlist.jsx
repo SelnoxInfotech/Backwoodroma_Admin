@@ -41,6 +41,7 @@ const Vendorlist = () => {
     const token_data = cookies.get('Token_access')
     const [pageSize, setPageSize] = React.useState(10)
     const { state, dispatch } = React.useContext(Createcontext)
+    const [loader, setloader] = React.useState(true);
     const [sucsesopen , setsucsesopen] = useState(false)
     const [unsucsesopen , setunsucsesopen] = useState(false)
     const [deleteoptn , setdeleteoprn] = useState(false)
@@ -83,7 +84,7 @@ const Vendorlist = () => {
         }
     },[isdelete])
      React.useEffect(() => {
-
+        setloader(true)
         axios("https://api.cannabaze.com/AdminPanel/Get-AllVendor/", {
 
             headers: {
@@ -104,8 +105,10 @@ const Vendorlist = () => {
                     ...item
                 }
             })
-         
+            setloader(false)
             setTotal(newdata)
+        }).catch((error)=>{
+            setloader(false)
         })
 
     }, [state, token_data])
@@ -261,6 +264,7 @@ const Vendorlist = () => {
         )
     }
   return (
+    <>
     <SectionCard>
          <div className='col-12  mb-3'>
            <h2 className='pagetitle'> <SlSocialDropbox color='#31B655' size={25}/>  Vendor List</h2>
@@ -304,6 +308,11 @@ const Vendorlist = () => {
      {   unsucsesopen && <Unsuccesspopup setsucsesopen={setunsucsesopen} link={'/Roles'}/>}
      {   deleteoptn &&  <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete} />}
     </SectionCard>
+     {
+        loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+        </div>
+      }
+      </>
   )
 }
 

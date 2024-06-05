@@ -14,6 +14,7 @@ import { FaUsers } from "react-icons/fa6";
 import { MdContentPaste } from "react-icons/md";
 import Icon from "@material-ui/core/Icon";
 import { BiLogIn } from "react-icons/bi";
+import { IoIosLock , IoIosUnlock  } from "react-icons/io";
 import Createcontext from "../../Hooks/Context/Context";
 import "./Sidebar.css";
 import useStyles from "../../Style";
@@ -82,7 +83,11 @@ const Sidebar = ({ sidebaropen, setsidebaropen }) => {
         }}>
 
           {
-            !sidebaropen ?  <div className="w-100 text-end p-4"><span onClick={()=>setStick(!stick)} >{stick? <FaHandPaper size={28} color="#31B655"/>:<FaRegHand size={28} color="#31B655"/>}</span></div>
+            !sidebaropen ?  <div className="w-100 p-4 d-flex justify-content-between align-items-centerce">
+              <div className="cannabzelogo"><img src="./image/cannabazelogo.png"/></div>
+              <div className="cannabzelogomini"><img src="./image/icon2.png"/></div>
+              <span className="navbarlock" onClick={()=>setStick(!stick)} >{stick? <IoIosLock size={28} color="#31B655"/>:<IoIosUnlock size={28} color="#31B655"/>}</span>
+              </div>
                : <div className="w-100 text-end p-4"><span onClick={()=>setsidebaropen(false)} ><RxCross2 size={28} color="#31B655"/></span></div>
         
            }
@@ -233,43 +238,39 @@ const Sidebar = ({ sidebaropen, setsidebaropen }) => {
                               >
                               <FaRegUser ></FaRegUser>
                               </Icon> */}
-              <span className={" sidebar_text"}>All News</span>
+              <span className={" sidebar_text"}>Blogs</span>
             </li>
           </NavLink>
 }
-          <NavLink to={"/Review"} onClick={closebar} activeClassName="active">
-            <li button className={" active_bar suboption"}>
-              {/* <Icon
-                              className={ classes.sidebarIcon + ' sidebar_text'}
-                              >
-                              <FaClipboardList ></FaClipboardList>
-                              </Icon> */}
-              <span className={" sidebar_text"}>Comment</span>
-            </li>
-          </NavLink>
-          {/* <NavLink to={"/aboutus"} onClick={closebar} activeClassName="active">
-            <li button className={" active_bar suboption"}>
-              <span className={" sidebar_text"}>About us</span>
-            </li>
-          </NavLink> */}
-          <NavLink
-            to={"/NewsCategory"}
-            onClick={closebar}
-            activeClassName="active"
-          >
-            <li button className={" active_bar suboption"}>
-              <span className={" sidebar_text"}>Category</span>
-            </li>
-          </NavLink>
-          <NavLink
-            to={"/NewsSubCategory"}
-            onClick={closebar}
-            activeClassName="active"
-          >
-            <li button className={" active_bar suboption"}>
-              <span className={" sidebar_text"}>Sub Category</span>
-            </li>
-          </NavLink>
+          {(state.Roles.ViewComments || (state.Roles.AddComments || state.Roles.EditComments || state.Roles.DeleteComments) )&&
+            <NavLink to={"/comments"} onClick={closebar} activeClassName="active">
+              <li button className={" active_bar suboption"}>
+                <span className={"sidebar_text"}>Comment</span>
+              </li>
+            </NavLink>
+          }
+          {(state.Roles.ViewBlogsCategory  || (state.Roles.AddBlogsCategory || state.Roles.EditBlogsCategory || state.Roles.DeleteBlogsCategory) )&&
+              <NavLink
+                to={"/NewsCategory"}
+                onClick={closebar}
+                activeClassName="active"
+              >
+                <li button className={" active_bar suboption"}>
+                  <span className={" sidebar_text"}>Category</span>
+                </li>
+              </NavLink>
+          }
+          {(state.Roles.ViewBlogsSubcategory || (state.Roles.AddBlogsSubcategory || state.Roles.EditBlogsSubcategory || state.Roles.DeleteBlogsSubcategory) )&&
+                <NavLink
+                  to={"/NewsSubCategory"}
+                  onClick={closebar}
+                  activeClassName="active"
+                >
+                  <li button className={" active_bar suboption"}>
+                    <span className={" sidebar_text"}>Sub Category</span>
+                  </li>
+                </NavLink>
+          }
         </div>
         {(state.Roles.ViewStaff || (state.Roles.AddStaff || state.Roles.EditStaff || state.Roles.DeleteStaff) )&&
         <li
@@ -297,11 +298,6 @@ const Sidebar = ({ sidebaropen, setsidebaropen }) => {
           
               <NavLink to={"/addstaff"} onClick={closebar} activeClassName="active">
                 <li button className={" active_bar  suboption"}>
-                  {/* <Icon
-                                    className={ classes.sidebarIcon + ' sidebar_text'}
-                                    >
-                                    <FaRegUser ></FaRegUser>
-                                    </Icon> */}
                   <span className={" sidebar_text"}>Add Staff</span>
                 </li>
               </NavLink>}
@@ -309,11 +305,6 @@ const Sidebar = ({ sidebaropen, setsidebaropen }) => {
              {(state.Roles.ViewStaff || (state.Roles.AddStaff || state.Roles.EditStaff || state.Roles.DeleteStaff) )&&
           <NavLink to={"/allstaff"} onClick={closebar} activeClassName="active">
             <li button className={" active_bar suboption"}>
-              {/* <Icon
-                                className={ classes.sidebarIcon + ' sidebar_text'}
-                                >
-                                <FaClipboardList ></FaClipboardList>
-                                </Icon> */}
               <span className={" sidebar_text"}>All Staff</span>
             </li>
           </NavLink>}
@@ -366,6 +357,7 @@ const Sidebar = ({ sidebaropen, setsidebaropen }) => {
             <span className={" sidebar_text"}>Web Content</span>
           </li>
         </NavLink>
+        {(state.Roles.ViewCustomer || (state.Roles.AddCustomer || state.Roles.EditCustomer || state.Roles.DeleteCustomer) )&&
         <NavLink to={"/allcustomer"} onClick={closebar} activeClassName="active">
           <li button className={" active_bar "}>
             <Icon className={classes.sidebarIcon + ""}>
@@ -374,6 +366,8 @@ const Sidebar = ({ sidebaropen, setsidebaropen }) => {
             <span className={" sidebar_text"}>All Customer</span>
           </li>
         </NavLink>
+}
+        {(state.Roles.ViewReview || (state.Roles.AddReview || state.Roles.EditReview || state.Roles.DeleteReview) )&&
         <NavLink to={"/Review"} onClick={closebar} activeClassName="active">
           <li button className={" active_bar "}>
             <Icon className={classes.sidebarIcon + ""}>
@@ -382,22 +376,17 @@ const Sidebar = ({ sidebaropen, setsidebaropen }) => {
             <span className={" sidebar_text"}>Review</span>
           </li>
         </NavLink>
-        <NavLink to={"/subscribe"} onClick={closebar} activeClassName="active">
-          <li button className={" active_bar "}>
-            <Icon className={classes.sidebarIcon + ""}>
-              <TfiEmail></TfiEmail>
-            </Icon>
-            <span className={" sidebar_text"}>Subscribe</span>
-          </li>
-        </NavLink>
-        {/* <NavLink to={"/Settings"} onClick={closebar} activeClassName="active">
-          <li button className={" active_bar "}>
-            <Icon className={classes.sidebarIcon + ""}>
-              <MdPreview></MdPreview>
-            </Icon>
-            <span className={" sidebar_text"}>Settings</span>
-          </li>
-        </NavLink> */}
+       }
+        { state.Roles.ViewSubscribe &&
+          <NavLink to={"/subscribe"} onClick={closebar} activeClassName="active">
+            <li button className={" active_bar "}>
+              <Icon className={classes.sidebarIcon + ""}>
+                <TfiEmail></TfiEmail>
+              </Icon>
+              <span className={" sidebar_text"}>Subscribe</span>
+            </li>
+          </NavLink>
+        }
       </ul>
       <div className="userDetails">
         <div className="usersidebarprofile">

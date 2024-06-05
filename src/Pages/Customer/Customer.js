@@ -17,13 +17,13 @@ const Customer = () => {
     const [reviewid , setreviewid] = useState('')
     const [userdata , setuserdata]= useState([]);
     const [pageSize, setPageSize] = React.useState(10);
+    const [loader, setloader] = React.useState(true);
+
     const columns=[
-        { field: 'sno', headerName: 'S No.', filterable: false,
       
-         width: 90 },
         {
-          field: 'Roles',
-          headerName: 'Roles',
+          field: 'username',
+          headerName: 'User Name',
           sortable:false,
           minWidth: 80,
           editable: false,
@@ -32,34 +32,35 @@ const Customer = () => {
           align: "left",
           renderCell: (params) => {
               const onClick = (e) => {
-                e.stopPropagation(); // don't select this row after clicking
+                e.stopPropagation(); 
               };
-              return <span>{params.row.Roles.join()}</span>
+              return  <div className='pendingUserProfile'>
+                <div className='userImage'>
+                  <div className='userImageCircle'>
+                    <img src={params.row.image} alt=''   onError={
+                 (e) => (e.target.src = "/image/blank_Image.webp")} />
+                  </div>
+                </div>
+                <div>
+                  <h4 className='userName'>{params.row.username}</h4>
+                </div>
+              </div>
           }
         },
+      
         {
-          field: 'Name',
-          headerName: 'Name',
-          minWidth: 120,
-          editable: false,
-          sortable:false,
-          flex:1,
-          headerAlign: "center",
-          align: "center",
-        },
-        {
-          field: 'Email',
+          field: 'email',
           headerName: 'Email',
           minWidth: 120,
           editable: false,
           sortable:false,
           flex:1,
-          headerAlign: "center",
-          align: "center",
+          headerAlign: "left",
+          align: "left",
         },
         {
-          field: 'MobileNo',
-          headerName: 'Phone Number',
+          field: 'created_at',
+          headerName: 'created Date',
           minWidth: 120,
           editable: false,
           sortable:false,
@@ -67,42 +68,9 @@ const Customer = () => {
           headerAlign: "center",
           align: "center",
         },
-        {
-            field: 'Status',
-            headerName: 'Status',
-            sortable:false,
-            minWidth: 80,
-            editable: false,
-            flex:1,
-            headerAlign: "center",
-            align: "center",
-        },
-        {
-          field: 'Edit', headerName: 'Action', type: 'button', minWidth: 80, flex: 1, editable: false, headerClassName: 'super-app-theme--header',sortable:false,
-          renderCell: (params) => (   
-                      
-                      <Box
-                          sx={{
-                              display:'flex',
-                              gap:'10px',
-                              '& .MuiOutlinedInput-root': {                   
-                                  '&.Mui-focused fieldset': {
-                                    
-                                  },
-                              },
-                              '& . MuiDataGrid-root .MuiDataGrid-cell:focus': {
-                                 
-                              }
-                          }}
-                      >
-                             {/* <Deletstaff data={params.row} ></Deletstaff> */}
-                             <RiDeleteBinLine color='#31B655' size={22} onClick={()=>{setdeleteoprn(true) ; setreviewid(params.row.ID)}}></RiDeleteBinLine>
-                             {/* <Editstaff data={params.row} setuserdata={setuserdata} ></Editstaff>  */}
-                      </Box>
-          )
-      },
+      
       ];
-    const rows = []
+    const rows = userdata
     const CustomFontTheme = createTheme({
         typography: {
             fontSize: 25,
@@ -119,8 +87,21 @@ const Customer = () => {
         },
   
       });
+      useEffect(()=>{
+        setloader(true)
+        axios.get('https://api.cannabaze.com/AdminPanel/Get-AllCustomer/',  {
+            headers: {
+              Authorization: `Bearer ${token_data}`,
+            },
+          }).then((response)=>{
+            setuserdata(response.data) 
+            setloader(false)   
+        }).catch(()=>{
+          setloader(false)
+        })
+      },[])
   return (
-    <div>
+   
           <div className=' my-4 '>
             <div className='py-4 section_card'>
                 <div  className='d-flex justify-content-between align-content-center px-4'> 
@@ -141,7 +122,7 @@ const Customer = () => {
                                     <DataGrid
                                         rows={rows}
                                         columns={columns}
-                                        getRowId={(row) => row.ID}
+                                        getRowId={(row) => row.id}
                                         initialState={{
                                         pagination: {
                                             paginationModel: {
@@ -168,7 +149,10 @@ const Customer = () => {
                 </div>
             </div>
            
-    </div>
+            {
+            loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+            </div>
+          }
     </div>
   )
 }

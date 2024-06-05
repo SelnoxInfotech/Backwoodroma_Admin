@@ -39,7 +39,8 @@ export default function Store() {
     const [totel, setTotal] = React.useState([])
     const [pageSize, setPageSize] = React.useState(10)
     const Navigate = useNavigate()
-
+    const [loader, setloader] = React.useState(true);
+    
     React.useEffect(() => {
         axios("https://api.cannabaze.com/AdminPanel/Get-Stores/", {
 
@@ -49,7 +50,9 @@ export default function Store() {
 
         }).then(response => {
             setTotal(response.data)
-
+            setloader(false)
+        }).catch((error)=>{
+            setloader(false)
         })
     }, [token_data, state])
     const Submit = (params) => {
@@ -180,6 +183,7 @@ export default function Store() {
         });
     }, [])
     return (
+        <>
         <SectionCard>
             <div className='row'>
                 <div className='col-12  mb-3 d-flex justify-content-between'>
@@ -212,6 +216,12 @@ export default function Store() {
 
                 </Box>
             </div>
+           
         </SectionCard>
+         {
+            loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+            </div>
+          }
+        </>
     );
 }

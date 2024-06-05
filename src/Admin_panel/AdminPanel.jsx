@@ -260,9 +260,6 @@ export default function AdminPanel() {
         }).then((res) => {
           setRecentorder(res.data.slice(0,6))
         })
-    
-
-
     }
   }, [Data])
   useEffect(()=>{

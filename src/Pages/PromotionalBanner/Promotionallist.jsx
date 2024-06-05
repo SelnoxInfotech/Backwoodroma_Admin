@@ -4,6 +4,7 @@ import Box from "@mui/material/Box"
 import { FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { IoEyeSharp } from "react-icons/io5";
+import Dialog from '@mui/material/Dialog';
 import useStyles from "../../Style"
 import { DataGrid  } from '@mui/x-data-grid';
 import { FaEdit } from 'react-icons/fa';
@@ -230,15 +231,15 @@ const Promotionallist = ({Setloader}) => {
             axios.get('https://api.cannabaze.com/AdminPanel/Get-PromotionalBanners/' , config ).then((response) => {
                 Setdatatable(response.data);
                 Setloader(false)
-              
             });
-        
         }).catch((error)=>{
             setunsucsesopen(true)
         })
     
         }
        },[isdelete])
+
+      
   return (
     <div>
 
@@ -257,13 +258,21 @@ const Promotionallist = ({Setloader}) => {
                     rowsPerPageOptions={[ 10, 20]}
                     pagination
                     className={classes.DataTableStyle}
-                   
+                    loading={!Boolean(datatable)}
                 />
             </Box>
+           
+           
             <Bannerupdatemodel openupdate={openupdate} bannertype={bannertype} setOpenupdate={setOpenupdate} Setloader={Setloader} data={editdata}/>
-            {   sucsesopen && <Successfullypopup  setsucsesopen={setsucsesopen} />}
-            {   unsucsesopen && <Unsuccesspopup setsucsesopen={setunsucsesopen} />}
-            {   deleteoptn &&  <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete} />}
+            <Dialog   open={sucsesopen}  keepMounted   onClose={()=>{}}  aria-describedby="alert-dialog-slide-description" >
+               {   sucsesopen && <Successfullypopup  setsucsesopen={setsucsesopen} />}
+            </Dialog>
+            <Dialog   open={unsucsesopen}  keepMounted  onClose={()=>{}}  aria-describedby="alert-dialog-slide-description" >
+               {   unsucsesopen && <Unsuccesspopup setsucsesopen={setunsucsesopen} />}
+            </Dialog>
+            <Dialog   open={deleteoptn}   keepMounted  onClose={()=>{}}  aria-describedby="alert-dialog-slide-description" >
+               {   deleteoptn &&  <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete} />}
+            </Dialog>
     </div>
    
   )

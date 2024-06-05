@@ -29,6 +29,7 @@ const Rolelist = () => {
     const { state } = useContext(Createcontext)
     const cookies = new Cookies();
     const token_data = cookies.get('Token_access')
+    const [loader, setloader] = React.useState(true);
 
     const CustomFontTheme = createTheme({
         typography: {
@@ -46,7 +47,6 @@ const Rolelist = () => {
         },
 
     });
-
     function calculateTImefromDate(value) {
         let diffTime = Math.abs(new Date().valueOf() - new Date(value).valueOf());
         let months = Math.trunc(diffTime / (24 * 60 * 60 * 1000) / 30);
@@ -93,10 +93,9 @@ const Rolelist = () => {
                 setsisDelete(false)
             })
         }
-
     }, [isdelete])
-
     useEffect(() => {
+        setloader(true)
         axios.get('https://api.cannabaze.com/AdminPanel/Get-RolesAndPermission/', {
             headers: {
                 'Authorization': `Bearer ${token_data}`
@@ -104,12 +103,13 @@ const Rolelist = () => {
         }).then((res) => {
             let a = res?.data.map((item, index) => { return { ...item, sno: (index + 1) } })
             SetRoleData(a)
+            setloader(false)
+        }).catch(()=>{
+            setloader(false)
         })
 
 
     }, [])
-
-
     const columns = [
         {
             field: 'sno',
@@ -136,7 +136,7 @@ const Rolelist = () => {
             field: 'Delete', headerName: 'Delete', editable: false, sortable: false, flex: 1, headerClassName: 'super-app-theme--header', headerAlign: 'center', align: 'center',
             renderCell: (params) => {
                
-                return <span onClick={() => { setdeleteoprn(true); setisdDelete(() => params.row.id) }} ><MdOutlineDeleteOutline size={22} color='red' />
+                return <span onClick={() => { setdeleteoprn(true); setisdDelete(params.row.id) }} ><MdOutlineDeleteOutline size={22} color='red' />
                 </span>
             }
         },
@@ -180,6 +180,10 @@ const Rolelist = () => {
             {sucsesopen && <Successfullypopup setsucsesopen={setsucsesopen} link={'/Roles'} />}
             {unsucsesopen && <Unsuccesspopup setsucsesopen={setunsucsesopen} link={'/Roles'} />}
             {deleteoptn && <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete} />}
+            {
+                loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+                </div>
+            }
         </React.Fragment>
     )
 }

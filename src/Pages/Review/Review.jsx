@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Cookies from "universal-cookie";
 import { ThemeProvider, Box, createTheme } from "@mui/material";
@@ -9,15 +9,17 @@ import { MdOutlineEmail } from "react-icons/md";
 import { BsTelephone } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoIosInformationCircleOutline } from "react-icons/io";
-import { useLocation } from 'react-router-dom'
-import Deletepopup from '../../Components/Component/Deletepopup'
-import Successfullypopup from '../../Components/Component/Successfullypopup'
+import { useLocation } from 'react-router-dom';
+import Deletepopup from '../../Components/Component/Deletepopup';
+import Successfullypopup from '../../Components/Component/Successfullypopup';
 import useStyles from '../../Style';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import Createcontext from '../../Hooks/Context/Context';
 const Review = () => {
   const classes = useStyles()
   const location = useLocation();
   const [recentorder, setRecentorder] = useState([])
+  const { state } = useContext(Createcontext);
   const cookies = new Cookies();
   const token_data = cookies.get("Token_access");
   const [pageSize, setPageSize] = React.useState(10)
@@ -26,6 +28,8 @@ const Review = () => {
   const [sucsesopen, setsucsesopen] = useState(false)
   const [reviewid, setreviewid] = useState({})
   const navigate = useNavigate()
+  const [loader, setloader] = React.useState(true);
+
   function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -69,17 +73,19 @@ const Review = () => {
   }, [isdelete])
 
   useEffect(() => {
+    setloader(true)
     Axios.post('https://api.cannabaze.com/AdminPanel/AllReviews/',
       { "SelectTime": "Year", "StartDate": "2023-02-01", "EndDate": "2024-02-01" }, {
       headers: {
         'Authorization': `Bearer ${token_data}`
       }
     }).then((res) => {
-
+      setloader(false)
       setRecentorder(res.data)
-    })
+    }).catch((error)=>{
+      setloader(false)
+  })
   }, [])
-
 
   const CustomFontTheme = createTheme({
     typography: {
@@ -101,7 +107,6 @@ const Review = () => {
     const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple'];
     return colors[Math.floor(Math.random() * colors.length)];
   }
-  
   const columns = [
     {
       sortable: true,
@@ -238,7 +243,8 @@ const Review = () => {
       flex: 1,
       renderCell: (params) => {
 
-        return <span className='d-flex gap-3'> <RiDeleteBin6Line onClick={() => { setreviewid(params.row.reviewtype); setdeleteoprn(true) }} color='#31B655' size={24} />
+        return <span className='d-flex gap-3'> 
+          {state.Roles.DeleteReview  && <RiDeleteBin6Line onClick={() => { setreviewid(params.row.reviewtype); setdeleteoprn(true) }} color='#31B655' size={24} />}
           <IoIosInformationCircleOutline color='#31B655' size={24} />
         </span>
       }
@@ -284,7 +290,10 @@ const Review = () => {
 
       {deleteoptn && <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete} />}
       {sucsesopen && <Successfullypopup setsucsesopen={setsucsesopen} />}
-
+      {
+            loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+            </div>
+          }
     </div>
   )
 }

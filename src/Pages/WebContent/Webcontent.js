@@ -23,6 +23,7 @@ const Webcontent = () => {
     const [deleteId, setdeleteId] = useState('')
     const [deleteoptn , setdeleteoprn] = useState(false)
     const [isdelete , setsisDelete] = useState(false)
+    const [loader, setloader] = React.useState(true);
 
     const columns = [
 
@@ -67,12 +68,12 @@ const Webcontent = () => {
         },
 
     ];
-useEffect(()=>{
-   
-    if(isdelete){
-        Delete(deleteId)
-    }
-},[isdelete])
+    useEffect(()=>{
+    
+        if(isdelete){
+            Delete(deleteId)
+        }
+    },[isdelete])
     const rows = totel || [];
     const CustomFontTheme = createTheme({
         typography: {
@@ -98,6 +99,7 @@ useEffect(()=>{
         });
     }, [])
     React.useEffect(() => {
+        setloader(true)
         axios("https://api.cannabaze.com/AdminPanel/Get-Webpagedescription/", {
 
             headers: {
@@ -106,8 +108,10 @@ useEffect(()=>{
 
         }).then(response => {
             setTotal(response.data)
-
-        })
+            setloader(false)
+        }).catch(()=>[
+            setloader(false)
+        ])
     }, [token_data])
 
     async function Delete(id) {
@@ -169,7 +173,10 @@ useEffect(()=>{
             </SectionCard>
             {   deleteoptn &&  <Deletepopup setdeleteoprn={setdeleteoprn} setsisDelete={setsisDelete} />}
             {sucsesopen && <Successfullypopup setsucsesopen={setsucsesopen}  />}
-
+            {
+            loader && <div className="loader_container">  <span className="newloader shine"><img src='/image/icon.png' alt='cannabaze logo' title='cannabaze logo' /></span>
+            </div>
+          }
         </div>
     );
 };

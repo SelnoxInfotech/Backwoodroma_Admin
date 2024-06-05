@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React,{useEffect, useState} from "react"
 import { IoMdArrowBack } from "react-icons/io"
 import { IconButton } from "@mui/material"
 import Box from "@mui/material/Box"
@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { MdOutlineCloudUpload } from "react-icons/md"
 import useStyles from "../../Style";
 import Cookies from 'universal-cookie';
-import { useNavigate  } from "react-router-dom"
+import { useLocation, useNavigate  } from "react-router-dom"
 import axios from "axios";
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
@@ -19,6 +19,7 @@ import { SlSocialDropbox } from "react-icons/sl";
 import {SectionCard} from '../../molecules/SectionCard/Index';
 const PromotionalBanner = () => {
     const navigate=useNavigate()
+    const location = useLocation()
     const Swal = require('sweetalert2')
     const cookies = new Cookies();
     const token_data = cookies.get('Token_access')
@@ -28,12 +29,15 @@ const PromotionalBanner = () => {
     const { register, handleSubmit, watch, errors,setError,clearErrors,getValues,setValue, control } =   useForm();
     const [fromdaa ,setformdata] = useState({
         title:'',
-        country:"",
-        state:"",
+        // country:"",
+        // state:"",
         link :"",
         mobile_immage:[],
         destop_immage:[],
     })
+    useEffect(()=>{
+
+    },[location.state])
     const classes = useStyles()
     const [loader, Setloader] = React.useState(false)
     const config = {
@@ -69,14 +73,13 @@ const PromotionalBanner = () => {
     }else{
         baseurl ="https://api.cannabaze.com/AdminPanel/Add-HomePageBanner/"
     }
-    let form_data = new FormData();
-        
+    let form_data = new FormData();     
     if(fromdaa.destop_immage.length !==0 &&  fromdaa.mobile_immage.length !==0){
         Setloader(true)
         form_data.append('Banner', fromdaa?.destop_immage[0], fromdaa?.destop_immage[0].name);
-        form_data.append('Country', data.country);
+        // form_data.append('Country', data.country);
         form_data.append('Link' ,data.link);
-        form_data.append('State',data.state );
+        // form_data.append('State',data.state );
         form_data.append('Title',data.title);
         form_data.append('mobile', fromdaa?.mobile_immage[0], fromdaa?.mobile_immage[0].name);
         axios.post( baseurl , form_data , config).then((res)=>{
@@ -108,7 +111,6 @@ const PromotionalBanner = () => {
         const s = fromdaa?.mobile_immage?.filter((item, index) => index !== e);
         setformdata({...fromdaa , mobile_immage:s});
     }
-
     const onSubmit = (data) => {
         if(Boolean(fromdaa.mobile_immage.length === 0 ) || Boolean(fromdaa.destop_immage.length === 0 )){
            if(Boolean(fromdaa.mobile_immage.length === 0 )){
@@ -119,35 +121,7 @@ const PromotionalBanner = () => {
         }else{
             submitFunction(data)
         }
-        // axios.post('https://api.cannabaze.com/AdminPanel/register/',{...data , Roles :multipleroles  ,  is_superuser: false, Status : status , user_type:"Admin"} ).then((res)=>{
-        //   navigate('/allstaff')
-        // }).catch((error)=>{
-        
-     
-        //   if ( error.response.data.error === "{'username': [ErrorDetail(string='user with this username already exists.', code='unique')], 'email': [ErrorDetail(string='user with this email already exists.', code='unique')]}") {
-        //     setError( 'username', {
-        //       type: "manual",
-        //       message:"username id already exists",
-        //     })
-        //     setError( 'email', {
-        //       type: "manual",
-        //       message:"email id already exists",
-        //     })
-        //   }
-        //   else if (error.response.data.error === "{'email': [ErrorDetail(string='user with this email already exists.', code='unique')]}") {
-        //     setError( 'email', {
-        //       type: "manual",
-        //       message:"email id already exists",
-        //     })
-        //   }
-        //   else if (error.response.data.error === "{'username': [ErrorDetail(string='user with this username already exists.', code='unique')]}") {
-        //     setError( 'username', {
-        //       type: "manual",
-        //       message:"username id already exists",
-        //     })
-        // }
-        // })
-      };
+    };
     return (
       <React.Fragment>
             <SectionCard className="p-5"> 
@@ -162,7 +136,7 @@ const PromotionalBanner = () => {
                                                 </div>
                                                 <TextField id="title" name="title" onChange={(e)=>{setformdata({...fromdaa , title : e.target.value})}} className={classes.textFieldFocusBorderColor} variant="outlined" fullWidth size="small"   inputRef={register({    })} />
                                             </div>
-                                            <div className="feild_box ">
+                                            {/* <div className="feild_box ">
                                             <label htmlFor="country" className="label_custom">Country</label>
                                                 <select ref={register({ })} className="promotionSelectWidth" name='country'  onChange={(e)=>{setformdata({...fromdaa , country : e.target.value})}} id="country">
                                                     <option value="USA">USA</option>
@@ -175,7 +149,7 @@ const PromotionalBanner = () => {
                                                     <option value="India">Uttar Pradesh</option>
                                                     <option value="India">Madhya Pradesh</option>
                                                 </select>
-                                            </div>
+                                            </div> */}
                                             <div className="feild_box">
                                             
                                             <label htmlFor="link" className="label_custom">Link*</label>
